@@ -11,7 +11,10 @@ public class testPhotographsOfItems extends ActivityInstrumentationTestCase2{
 	}
 
 	public void testViewPhoto(){
-		//not sure how to test
+		Item item = new Item();
+		String photoFile = “filename”;
+		item.add(photoFile)
+		assertTrue(item.hasPhoto());
 	}
 	
 	public void testDeletePhoto(){
