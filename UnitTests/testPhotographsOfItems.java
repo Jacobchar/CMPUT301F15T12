@@ -2,35 +2,35 @@ import android.test.ActivityInstrumentationTestCase2;
 
 public class testPhotographsOfItems extends ActivityInstrumentationTestCase2{
 	public void testAddPhoto(){
-		Item item = new Item();
+		Book book = new Book();
 		String photoFile = “filename”;
 		// assuming items can default to having no photo
-		assertFalse(item.hasPhoto(photoFile));
-		item.addPhoto(filename);
-		assertTrue(item.hasPhoto(photoFile);
+		assertFalse(book.hasPhoto(photoFile));
+		book.addPhoto(filename);
+		assertTrue(book.hasPhoto(photoFile);
 	}
 
 	public void testViewPhoto(){
-		Item item = new Item();
+		Book book = new Book();
 		String photoFile = “filename”;
-		item.add(photoFile)
-		assertTrue(item.hasPhoto());
+		book.add(photoFile)
+		assertTrue(book.hasPhoto());
 	}
 	
 	public void testDeletePhoto(){
-		Item item = new Item();
+		Book book = new Book();
 		String photoFile = “filename”;
-		item.addPhoto(filename);
-		assertTrue(item.hasPhoto(photoFile);
+		book.addPhoto(filename);
+		assertTrue(book.hasPhoto(photoFile);
 		item.deletePhoto();
-		assertFale(item.hasPhoto(photoFile);
+		assertFalse(book.hasPhoto(photoFile);
 	}
 
 	public void testCheckPhotoSize(){
-		Item item = new Item();
+		Book book = new Book();
 		String photoFile = “filename”;
-		item.addFile(photoFile);
-		assertTrue(item.checkFileSize() < 65536);
+		book.addFile(photoFile);
+		assertTrue(book.checkFileSize() < 65536);
 	}
 
 	public void testManualDownload(){
