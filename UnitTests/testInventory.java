@@ -1,12 +1,12 @@
 public class testInventory extends ActivityInstrumentationTestCase2 {
-
+	// Use Case 1.2
 	public void testAddBook() {
 		BookList bookList = new BookList();
 		Book book = new Book("Expensive Textbook", "Your mom", "Haven't read", "Erotica", 12);
 		bookList.addBook(book);
 		assertTrue(bookList.hasBook(book));
 	}
-
+	// Use Case 1.4
 	public void testDeleteBook() {
 		BookList bookList = new BookList();
 		Book book = new Book("Expensive Textbook", "Your mom", "Haven't read", "Erotica", 12);
