@@ -1,5 +1,5 @@
 public class testSearch extends ActivityInstrumentationTestCase2 {
-
+	// Use Case 3.3
 	public void testBookSearch() {
 		BookList bookList = new BookList();
 		Book book = new Book("Expensive Textbook", "Your mom", "Haven't read", "Erotica", 12);
@@ -8,7 +8,7 @@ public class testSearch extends ActivityInstrumentationTestCase2 {
 		Book book1 = searchedBook.searchBookByISBN(12);
 		assertEqual(book, book1);
 	}
-
+	// Use Case 2.1
 	public void testFriendSearch() {
 		FriendList friendList = new FriendList();
 		Friend friend = new Friend("David", 12);

@@ -1,5 +1,5 @@
 public class testFriendsList extends ActivityInstrumentationTestCase2 {
-
+	// Use Case 2.1
 	public void testAddFriend() {
 		FriendList friendList = new FriendList();
 		Friend friend = new Friend("David", 12);
@@ -11,7 +11,7 @@ public class testFriendsList extends ActivityInstrumentationTestCase2 {
 		int numFriends = friendList.numFriends();
 		assertEquals(1, numFriends);
 	}
-
+	// Use Case 2.5
 	public void testExterminateFriend() {
 		FriendList friendList = new FriendList();
 		Friend friend = new Friend("Bob", 14);
