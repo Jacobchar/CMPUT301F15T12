@@ -3,36 +3,32 @@ public class testFriendsList extends ActivityInstrumentationTestCase2 {
 	public void testAddFriend() {
 		FriendList friendList = new FriendList();
 		Friend friend = new Friend("David", 12);
-		friendList.addBook(friend);
-		assertTrue(friendList.hasBook(friend));
-
-		Friend friend2 = new Friend("David", 12);
-		friendList.addBook(friend2);
-		int numFriends = friendList.numFriends();
-		assertEquals(1, numFriends);
+		friendList.addFriend(friend);
+		assertTrue(friendList.hasFriend(friend));
 	}
 	// Use Case 2.5
-	public void testExterminateFriend() {
+	public void testRemoveFriend() {
 		FriendList friendList = new FriendList();
 		Friend friend = new Friend("Bob", 14);
-		friendList.addBook(friend);
-		friendList.DeleteBook(friend);
-		assertFalse(friendList.hasBook(friend));
+		friendList.addFriend(friend);
+		friendList.removeFriend(friend);
+		assertFalse(friendList.hasFriend(friend));
 	}
 
 	public void testHasFriend() {
 		FriendList friendList = new FriendList();
 		Friend friend = new Friend("Freddy", 16);
-		assertFalse(friendList.hasBook(friend));
-		friendList.addBook(friend);
-		assertTrue(friendList.hasBook(friend));
+		assertFalse(friendList.hasFriend(friend));
+		friendList.addFriend(friend);
+		assertTrue(friendList.hasFriend(friend));
 	}
+
 	public void testNumFriends() {
 		FriendList friendList = new FriendList();
 		Friend friend1 = new Friend("David", 12);
-		friendList.addBook(friend1);
+		friendList.addFriend(friend1);
 		Friend friend2 = new Friend("Leroy", 14);
-		friendList.addBook(friend2);
+		friendList.addFriend(friend2);
 		int numFriends = friendList.numFriends();
 		assertEquals(2, numFriends);
 	}
