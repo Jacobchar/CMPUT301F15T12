@@ -35,5 +35,5 @@ public class testPhotographsOfItems extends ActivityInstrumentationTestCase2{
 	}
 	// Use Case 5.4
 	public void testManualDownload(){
-		// Not sure how to test
+		// Not sure how to test yet
 	}
