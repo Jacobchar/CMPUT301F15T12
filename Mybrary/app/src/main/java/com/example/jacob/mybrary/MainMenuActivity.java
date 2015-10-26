@@ -1,9 +1,11 @@
 package com.example.jacob.mybrary;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -33,5 +35,13 @@ public class MainMenuActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void openSettingsActivity(View view) {
+
+        // note: FromActivity.class, ToActivity.class
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+
     }
 }

@@ -4,7 +4,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="#021123"
     tools:context="com.example.jacob.mybrary.MainMenuActivity">
 
     <Button
@@ -12,7 +11,8 @@
         android:layout_height="wrap_content"
         android:text="View Profile"
         android:id="@+id/profileViewButton"
-        android:layout_marginTop="114dp"
+        android:layout_marginTop="61dp"
+        android:background="#A0A5AB"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -21,31 +21,40 @@
         android:layout_height="wrap_content"
         android:text="Inventory"
         android:id="@+id/InventoryViewButton"
+        android:background="#A0A5AB"
         android:layout_below="@+id/profileViewButton"
-        android:layout_alignStart="@+id/profileViewButton" />
+        android:layout_alignStart="@+id/profileViewButton"
+        android:layout_marginTop="30dp" />
 
     <Button
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="Friends List"
         android:id="@+id/FriendsListViewButton"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/InventoryViewButton" />
+        android:background="#A0A5AB"
+        android:layout_below="@+id/InventoryViewButton"
+        android:layout_alignStart="@+id/InventoryViewButton"
+        android:layout_marginTop="31dp" />
 
     <Button
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="Trades List"
         android:id="@+id/TradeViewButton"
+        android:background="#A0A5AB"
         android:layout_below="@+id/FriendsListViewButton"
-        android:layout_alignStart="@+id/FriendsListViewButton" />
+        android:layout_alignStart="@+id/FriendsListViewButton"
+        android:layout_marginTop="27dp" />
 
     <Button
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="Settings"
         android:id="@+id/SettingsViewButton"
+        android:background="#A0A5AB"
+        android:onClick="openSettingsActivity"
         android:layout_below="@+id/TradeViewButton"
-        android:layout_alignStart="@+id/TradeViewButton" />
+        android:layout_alignStart="@+id/TradeViewButton"
+        android:layout_marginTop="25dp" />
 
 </RelativeLayout>

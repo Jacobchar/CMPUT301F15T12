@@ -6,7 +6,52 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.jacob.mybrary.SettingsActivity">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:rowCount="3"
+        android:columnCount="2"
+        android:id="@+id/gridView"
+        android:orientation="horizontal"
+        android:rowOrderPreserved="false"
+        android:columnOrderPreserved="false"
+        android:useDefaultMargins="true"
+        android:touchscreenBlocksFocus="false"
+        android:nestedScrollingEnabled="false"
+        android:longClickable="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="89dp">
+
+        <TextView
+            android:text="User Name: "
+            android:textSize="17sp"
+            android:id="@+id/UserNameText1"/>
+        <TextView
+            android:text="Input Username Code"
+            android:textSize="17sp"
+            android:background="#CCCCCC"
+            android:id="@+id/UserNameText2"/>
+
+        <TextView
+            android:text="Address: "
+            android:textSize="17sp"
+            android:id="@+id/AddressText1"/>
+        <TextView
+            android:text="Minimum"
+            android:textSize="17sp"
+            android:id="@+id/AddressText2"/>
+
+        <TextView
+            android:text="City: "
+            android:textSize="17sp"
+            android:id="@+id/CityText1"/>
+        <TextView
+            android:text="Cell 6"
+            android:textSize="17sp"
+            android:id="@+id/CityText2"/>
+
+
+    </GridLayout>
 
 </RelativeLayout>
