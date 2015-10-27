@@ -50,6 +50,8 @@ public class FriendsListActivity extends AppCompatActivity {
 
         // http://stackoverflow.com/questions/10903754/input-text-dialog-android
 
+        /*
+
         String promptString = "Enter the username of the friend you'd like to add: ";
 
         final AlertDialog infoDialog = new AlertDialog.Builder(this).create();
@@ -81,6 +83,8 @@ public class FriendsListActivity extends AppCompatActivity {
         });
 
         infoDialog.show();
+
+        */
 
     }
 }

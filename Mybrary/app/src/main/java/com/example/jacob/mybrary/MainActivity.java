@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public void openFriendsListActivity(View view) {
 
         // note: FromActivity.class, ToActivity.class
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, FriendsListActivity.class);
         startActivity(intent);
 
     }
