@@ -67,6 +67,9 @@ public class FriendsListActivity extends AppCompatActivity {
                 // validate that user exists
                 // add friend if user does exist
 
+                //final AlertDialog infoDialog2 = new AlertDialog.Builder(this).create();
+                infoDialog.setMessage("Added!");
+
             }
         });
 
