@@ -32,6 +32,7 @@
         android:text="Friends List"
         android:id="@+id/FriendsListViewButton"
         android:background="#A0A5AB"
+        android:onClick="openFriendsListActivity"
         android:layout_below="@+id/InventoryViewButton"
         android:layout_alignStart="@+id/InventoryViewButton"
         android:layout_marginTop="31dp" />

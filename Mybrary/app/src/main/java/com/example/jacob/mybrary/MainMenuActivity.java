@@ -37,6 +37,14 @@ public class MainMenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void openFriendsListActivity(View view) {
+
+        // note: FromActivity.class, ToActivity.class
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+
+    }
+
     public void openSettingsActivity(View view) {
 
         // note: FromActivity.class, ToActivity.class
@@ -44,4 +52,6 @@ public class MainMenuActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+
 }
