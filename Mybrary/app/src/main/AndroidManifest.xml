@@ -39,6 +39,11 @@
             android:label="@string/title_activity_view_individual_trade"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".ProposeTradeActivity"
+            android:label="@string/title_activity_propose_trade"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
     </application>
 
 </manifest>
