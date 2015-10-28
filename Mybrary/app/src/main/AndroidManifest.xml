@@ -17,16 +17,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainMenuActivity"
-            android:label="@string/title_activity_main_menu" >
-        </activity>
-        <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
             android:name=".FriendsListActivity"
             android:label="@string/title_activity_friends_list" >
+        </activity>
+        <activity
+            android:name=".InventoryActivity"
+            android:label="@string/title_activity_inventory"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".TradeListActivity"
+            android:label="@string/title_activity_trade_list"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 

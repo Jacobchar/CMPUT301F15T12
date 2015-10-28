@@ -6,4 +6,6 @@
     <string name="title_activity_main_menu">MainMenuActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_friends_list">FriendsListActivity</string>
+    <string name="title_activity_inventory">InventoryActivity</string>
+    <string name="title_activity_trade_list">TradeListActivity</string>
 </resources>
