@@ -28,7 +28,7 @@ public class UserTest extends ActivityInstrumentationTestCase2{
 
     public void testGetUUID(){
         User testUser = new User(name, phoneNum, gender, bio);
-        UUID testID = testUser.getUUID;
+        UUID testID = testUser.getUUID();
     }
 
     public void testGetName(){
