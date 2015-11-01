@@ -30,5 +30,6 @@ public class ConnectionManager {
     public boolean put(String path, String json) throws IOException {
         connection = (HttpURLConnection) connstr.openConnection();
 
+        return false;
     }
 }
