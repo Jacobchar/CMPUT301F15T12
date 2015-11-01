@@ -10,7 +10,7 @@ import java.net.URL;
  */
 public class ConnectionManager {
     private HttpURLConnection connection;
-    private URL connstr;
+    private String connstr;
 
     private static ConnectionManager ourInstance = new ConnectionManager();
 
@@ -19,17 +19,11 @@ public class ConnectionManager {
     }
 
     private ConnectionManager() {
-        try {
-            connstr = new URL("http://cmput301.softwareprocess.es:8080/cmput301f15t12/");
-        } catch (MalformedURLException e) {
-            // Hard-coded URL should never be malformed.
-            throw new RuntimeException(e);
-        }
+        connstr = "http://cmput301.softwareprocess.es:8080/cmput301f15t12/";
     }
 
-    public boolean put(String path, String json) throws IOException {
-        connection = (HttpURLConnection) connstr.openConnection();
-
-        return false;
+    public void put(String path, Integer id, String json) throws IOException {
+        URL url = new URL(connstr + path + id.toString());
+        connection = (HttpURLConnection) url.openConnection();
     }
 }
