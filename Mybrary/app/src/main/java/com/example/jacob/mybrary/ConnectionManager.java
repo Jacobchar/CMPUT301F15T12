@@ -3,11 +3,18 @@ package com.example.jacob.mybrary;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -97,6 +104,7 @@ public class ConnectionManager {
                 URL url = new URL(connstr + params[0]);
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
                 connection.setChunkedStreamingMode(0);
 
                 OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
@@ -104,7 +112,15 @@ public class ConnectionManager {
 
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 response = readStream(inputStream);
-            } catch (IOException e) {
+            } catch (FileNotFoundException fnfe) {
+                int rc = 0;
+                try {
+                    rc = connection.getResponseCode();
+                } catch (IOException ioe) {
+                    ex = fnfe;
+                }
+                ex = new RuntimeException(Integer.toString(rc));
+            } catch (Exception e) {
                 ex = e;
             } finally {
                 connection.disconnect();
@@ -138,7 +154,15 @@ public class ConnectionManager {
 
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 response = readStream(inputStream);
-            } catch (IOException e) {
+            } catch (FileNotFoundException fnfe) {
+                int rc = 0;
+                try {
+                    rc = connection.getResponseCode();
+                } catch (IOException ioe) {
+                    ex = fnfe;
+                }
+                ex = new RuntimeException(Integer.toString(rc));
+            } catch (Exception e) {
                 ex = e;
             } finally {
                 connection.disconnect();
@@ -177,7 +201,15 @@ public class ConnectionManager {
 
                 InputStream inputStream = new BufferedInputStream(connection.getInputStream());
                 response = readStream(inputStream);
-            } catch (IOException e) {
+            } catch (FileNotFoundException fnfe) {
+                int rc = 0;
+                try {
+                    rc = connection.getResponseCode();
+                } catch (IOException ioe) {
+                    ex = fnfe;
+                }
+                ex = new RuntimeException(Integer.toString(rc));
+            } catch (Exception e) {
                 ex = e;
             } finally {
                 connection.disconnect();

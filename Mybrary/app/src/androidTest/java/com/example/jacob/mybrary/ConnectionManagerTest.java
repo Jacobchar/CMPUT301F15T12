@@ -2,15 +2,20 @@ package com.example.jacob.mybrary;
 
 import android.test.AndroidTestCase;
 
-import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * Created by Dominic on 2015-10-31.
  *
  * Simple tests for ConnectionManager. More tests should be added for better coverage.
+ *
+ * Source for signals: http://stackoverflow.com/a/3802487
  */
 public class ConnectionManagerTest extends AndroidTestCase {
     public void testPut() {
+        final CountDownLatch signal1 = new CountDownLatch(1);
+        final CountDownLatch signal2 = new CountDownLatch(1);
+        final CountDownLatch signal3 = new CountDownLatch(1);
         ConnectionManager connectionManager = ConnectionManager.getInstance();
 
         String path = "testing/deadbeef";
@@ -19,9 +24,15 @@ public class ConnectionManagerTest extends AndroidTestCase {
         connectionManager.put(path, json, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-
+                signal1.countDown();
             }
         });
+
+        try {
+            signal1.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
 
         connectionManager.get(path, new NetworkResultsHandler() {
             @Override
@@ -33,15 +44,28 @@ public class ConnectionManagerTest extends AndroidTestCase {
                         "\"found\":true," +
                         "\"_source\":{\"Name\":\"Name1\"}" +
                         "}");
+                signal2.countDown();
             }
         });
+
+        try {
+            signal2.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
 
         connectionManager.remove(path, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-
+                signal3.countDown();
             }
         });
+
+        try {
+            signal3.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
     }
 
 //    public void testQuery() {
@@ -69,6 +93,9 @@ public class ConnectionManagerTest extends AndroidTestCase {
 //    }
 
     public void testGet() {
+        final CountDownLatch signal1 = new CountDownLatch(1);
+        final CountDownLatch signal2 = new CountDownLatch(1);
+        final CountDownLatch signal3 = new CountDownLatch(1);
         ConnectionManager connectionManager = ConnectionManager.getInstance();
 
         String path = "testing/deadbeef";
@@ -77,9 +104,15 @@ public class ConnectionManagerTest extends AndroidTestCase {
         connectionManager.put(path, json, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-
+                signal1.countDown();
             }
         });
+
+        try {
+            signal1.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
 
         connectionManager.get(path, new NetworkResultsHandler() {
             @Override
@@ -92,18 +125,34 @@ public class ConnectionManagerTest extends AndroidTestCase {
                         "\"found\":true,\n" +
                         "\"_source\":{\"Name\":\"Name1\"}\n" +
                         "}");
+                signal2.countDown();
             }
         });
+
+        try {
+            signal2.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
 
         connectionManager.remove(path, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-
+                signal3.countDown();
             }
         });
+
+        try {
+            signal3.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
     }
 
     public void testRemove() {
+        final CountDownLatch signal1 = new CountDownLatch(1);
+        final CountDownLatch signal2 = new CountDownLatch(1);
+        final CountDownLatch signal3 = new CountDownLatch(1);
         ConnectionManager connectionManager = ConnectionManager.getInstance();
 
         String path = "testing/deadbeef";
@@ -111,21 +160,41 @@ public class ConnectionManagerTest extends AndroidTestCase {
         connectionManager.put(path, json, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-
+                signal1.countDown();
             }
         });
+
+        try {
+            signal1.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
 
         connectionManager.remove(path, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-
+                signal2.countDown();
             }
         });
+
+        try {
+            signal2.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
+
         connectionManager.get(path, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
                 assertEquals(result, "{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\",\"_id\":\"1\",\"found\":false}");
+                signal3.countDown();
             }
         });
+
+        try {
+            signal3.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
     }
 }
