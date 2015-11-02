@@ -1,7 +1,26 @@
 package com.example.jacob.mybrary;
 
-/**
- * Created by Dominic on 2015-10-31.
- */
-public class Inventory {
+public class Inventory{
+
+    private Collection<Books> inventoryList;
+    private ArrayList observers;
+
+    Book getBookByName(String name){
+    }
+
+    Collection<Book> getBooks(){
+    }
+
+    Integer numCopies(Book book){
+        return book.quantity;
+    }
+
+    Integer sizeInventory(){
+    }
+
+    Boolean hasBook(Book book){
+    }
+
+    void updateObservers(){}
+
 }
