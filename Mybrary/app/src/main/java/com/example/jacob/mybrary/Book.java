@@ -1,17 +1,23 @@
 package com.example.jacob.mybrary;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.UUID;
 
 public class Book {
 
-	private String name;
-    private Integer quantity;
-    private String category;
-    private boolean sharedWithOthers;
-    private Collection<String> comments;
-    private UUID itemID;
-    private Photo photo;
-    private ArrayList observers;
+    public String name;
+    public Integer quantity;
+    public String category;
+    public boolean sharedWithOthers;
+    public Collection<String> comments;
+    public UUID itemID;
+    public Photo photo;
+    public ArrayList observers;
+
+    public void Book(){
+        this.itemID = generateNewUUID();
+    }
 
     public void Book(String name, Integer quantity, String category, boolean sharedWithOthers){
         this.name = name;
@@ -23,7 +29,7 @@ public class Book {
     }
 
     UUID generateNewUUID(){
-        UUID id = new UUID();
+        UUID id = UUID.randomUUID();
         return id;
     }
 
