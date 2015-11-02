@@ -65,29 +65,25 @@ public class ConnectionManagerTest extends AndroidTestCase {
         }
     }
 
-//    public void testQuery() {
-//        ConnectionManager connectionManager = ConnectionManager.getInstance();
-//
-//        try {
-//            connectionManager.put("testing/", 1, "{\"val\":1}");
-//            connectionManager.put("testing/", 2, "{\"val\":2}");
-//            connectionManager.put("testing/", 3, "{\"val\":3}");
-//        } catch (IOException e) {
-//            fail();
-//        }
-//
-//        String query = "{\"query\":{\"query_string\":{\"value\":\"2\"}}}";
-//        String value = connectionManager.query("testing/", query);
-//        assertEquals(value, "{\"took\":1,\"timed_out\":false,\"_shards\":" +
-//                "{\"total\":1,\"successful\":1,\"failed\":0},\"hits\":" +
-//                "{\"total\":1,\"max_score\":1.0,\"hits\":" +
-//                "[{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\"," +
-//                "\"_id\":\"2\",\"_score\":1.0,\"_source\":{\"val\":2}}]}}");
-//
-//        connectionManager.remove("testing/", 1);
-//        connectionManager.remove("testing/", 2);
-//        connectionManager.remove("testing/", 3);
-//    }
+    public void testQuery() {
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+        
+        connectionManager.put("testing/1", "{\"val\":1}");
+        connectionManager.put("testing/2", "{\"val\":2}");
+        connectionManager.put("testing/3", "{\"val\":3}");
+
+        String query = "{\"query\":{\"query_string\":{\"value\":\"2\"}}}";
+        String value = connectionManager.query("testing/", query);
+        assertEquals(value, "{\"took\":1,\"timed_out\":false,\"_shards\":" +
+                "{\"total\":1,\"successful\":1,\"failed\":0},\"hits\":" +
+                "{\"total\":1,\"max_score\":1.0,\"hits\":" +
+                "[{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\"," +
+                "\"_id\":\"2\",\"_score\":1.0,\"_source\":{\"val\":2}}]}}");
+
+        connectionManager.remove("testing/", 1);
+        connectionManager.remove("testing/", 2);
+        connectionManager.remove("testing/", 3);
+    }
 
     public void testGet() {
         final CountDownLatch signal1 = new CountDownLatch(1);
