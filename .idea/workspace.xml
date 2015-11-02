@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aefa3d38-f125-4457-a9ec-cdcd9862ea3d" name="Default" comment="Fixed quotation marks">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/CMPUT301F15T12.iml" afterPath="$PROJECT_DIR$/.idea/CMPUT301F15T12.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="aefa3d38-f125-4457-a9ec-cdcd9862ea3d" name="Default" comment="Fixed quotation marks" />
     <ignored path="CMPUT301F15T12.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,11 +31,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ItemController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ItemController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Mybrary/app/src/main/java/com/example/jacob/mybrary/ItemController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.034129694">
-              <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
               <folding>
                 <element signature="e#239#240#0" expanded="true" />
                 <element signature="e#277#278#0" expanded="true" />
@@ -49,6 +46,16 @@
                 <element signature="e#557#558#0" expanded="true" />
                 <element signature="e#604#605#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Photo.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Mybrary/app/src/main/java/com/example/jacob/mybrary/Photo.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.32423207">
+              <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -72,6 +79,7 @@
         <option value="$PROJECT_DIR$/Mybrary/app/src/main/java/com/example/jacob/mybrary/Book.java" />
         <option value="$PROJECT_DIR$/Mybrary/app/src/androidTest/java/com/example/jacob/mybrary/testConfiguration.java" />
         <option value="$PROJECT_DIR$/Mybrary/app/src/main/java/com/example/jacob/mybrary/ItemController.java" />
+        <option value="$PROJECT_DIR$/Mybrary/app/src/main/java/com/example/jacob/mybrary/Photo.java" />
       </list>
     </option>
   </component>
@@ -683,8 +691,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Mybrary/app/src/main/java/com/example/jacob/mybrary/ItemController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.034129694">
-          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="11" column="29" selection-start-line="11" selection-start-column="29" selection-end-line="11" selection-end-column="29" />
           <folding>
             <element signature="e#239#240#0" expanded="true" />
             <element signature="e#277#278#0" expanded="true" />
@@ -695,6 +703,14 @@
             <element signature="e#557#558#0" expanded="true" />
             <element signature="e#604#605#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Mybrary/app/src/main/java/com/example/jacob/mybrary/Photo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32423207">
+          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
