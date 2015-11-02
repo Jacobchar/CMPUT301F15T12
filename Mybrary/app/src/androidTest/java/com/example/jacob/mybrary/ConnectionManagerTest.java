@@ -37,13 +37,10 @@ public class ConnectionManagerTest extends AndroidTestCase {
         connectionManager.get(path, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-                assertEquals(result, "{\"_index\":\"cmput301f15t12\"," +
-                        "\"_type\":\"testing\"," +
-                        "\"_id\":\"3735928559\"," +
-                        "\"_version\":1," +
-                        "\"found\":true," +
-                        "\"_source\":{\"Name\":\"Name1\"}" +
-                        "}");
+                assertTrue(result.contains("\"_type\":\"testing\""));
+                assertTrue(result.contains("\"_id\":\"deadbeef\""));
+                assertTrue(result.contains("\"found\":true"));
+                assertTrue(result.contains("\"_source\":{\"Name\":\"Name1\"}"));
                 signal2.countDown();
             }
         });
@@ -117,14 +114,10 @@ public class ConnectionManagerTest extends AndroidTestCase {
         connectionManager.get(path, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-                assertEquals(result, "{\n" +
-                        "\"_index\":\"cmput301f15t12\",\n" +
-                        "\"_type\":\"testing\",\n" +
-                        "\"_id\":\"3735928559\",\n" +
-                        "\"_version\":1,\n" +
-                        "\"found\":true,\n" +
-                        "\"_source\":{\"Name\":\"Name1\"}\n" +
-                        "}");
+                assertTrue(result.contains("\"_type\":\"testing\""));
+                assertTrue(result.contains("\"_id\":\"deadbeef\""));
+                assertTrue(result.contains("\"found\":true"));
+                assertTrue(result.contains("\"_source\":{\"Name\":\"Name1\"}"));
                 signal2.countDown();
             }
         });
@@ -186,7 +179,7 @@ public class ConnectionManagerTest extends AndroidTestCase {
         connectionManager.get(path, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-                assertEquals(result, "{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\",\"_id\":\"1\",\"found\":false}");
+                assertEquals(result, "{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\",\"_id\":\"deadbeef\",\"found\":false}");
                 signal3.countDown();
             }
         });

@@ -21,6 +21,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
+import okio.BufferedSink;
+
 /**
  * Created by Dominic on 2015-10-31.
  *
@@ -29,7 +31,6 @@ import android.os.AsyncTask;
  * when appropriate.
  */
 public class ConnectionManager {
-    private HttpURLConnection connection;
     private final String connstr;
 
     private static ConnectionManager ourInstance = new ConnectionManager();
@@ -99,33 +100,21 @@ public class ConnectionManager {
         protected String doInBackground(String... params) {
             // params[0] == path
             // params[1] == json
-            String response = "";
+
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            OkHttpClient client = new OkHttpClient();
             try {
-                URL url = new URL(connstr + params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setDoOutput(true);
-                connection.setRequestMethod("POST");
-                connection.setChunkedStreamingMode(0);
-
-                OutputStream outputStream = new BufferedOutputStream(connection.getOutputStream());
-                outputStream.write(params[1].getBytes());
-
-                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-                response = readStream(inputStream);
-            } catch (FileNotFoundException fnfe) {
-                int rc = 0;
-                try {
-                    rc = connection.getResponseCode();
-                } catch (IOException ioe) {
-                    ex = fnfe;
-                }
-                ex = new RuntimeException(Integer.toString(rc));
+                RequestBody requestBody = RequestBody.create(JSON, params[1]);
+                Request request = new Request.Builder()
+                        .url(connstr + params[0])
+                        .post(requestBody)
+                        .build();
+                Response response = client.newCall(request).execute();
+                return response.body().string();
             } catch (Exception e) {
                 ex = e;
-            } finally {
-                connection.disconnect();
+                return "";
             }
-            return response;
         }
 
         protected void onPostExecute(String result) {
@@ -147,27 +136,19 @@ public class ConnectionManager {
 
         protected String doInBackground(String... params) {
             // params[0] == path
-            String response = "";
-            try {
-                URL url = new URL(connstr + params[0]);
-                connection = (HttpURLConnection) url.openConnection();
 
-                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-                response = readStream(inputStream);
-            } catch (FileNotFoundException fnfe) {
-                int rc = 0;
-                try {
-                    rc = connection.getResponseCode();
-                } catch (IOException ioe) {
-                    ex = fnfe;
-                }
-                ex = new RuntimeException(Integer.toString(rc));
+            OkHttpClient client = new OkHttpClient();
+            try {
+                Request request = new Request.Builder()
+                        .url(connstr + params[0])
+                        .build();
+                Response response = client.newCall(request).execute();
+
+                return response.body().string();
             } catch (Exception e) {
                 ex = e;
-            } finally {
-                connection.disconnect();
+                return "";
             }
-            return response;
         }
 
         protected void onPostExecute(String result) {
@@ -190,31 +171,20 @@ public class ConnectionManager {
         // Source: http://stackoverflow.com/a/1051105
         protected String doInBackground(String... params) {
             // params[0] == path
-            String response = "";
-            try {
-                URL url = new URL(connstr + params[0]);
-                connection = (HttpURLConnection) url.openConnection();
-                connection.setDoOutput(true);
-                connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded" );
-                connection.setRequestMethod("DELETE");
-                connection.connect();
 
-                InputStream inputStream = new BufferedInputStream(connection.getInputStream());
-                response = readStream(inputStream);
-            } catch (FileNotFoundException fnfe) {
-                int rc = 0;
-                try {
-                    rc = connection.getResponseCode();
-                } catch (IOException ioe) {
-                    ex = fnfe;
-                }
-                ex = new RuntimeException(Integer.toString(rc));
+            OkHttpClient client = new OkHttpClient();
+            try {
+                Request request = new Request.Builder()
+                        .url(connstr + params[0])
+                        .delete()
+                        .build();
+                Response response = client.newCall(request).execute();
+
+                return response.body().string();
             } catch (Exception e) {
                 ex = e;
-            } finally {
-                connection.disconnect();
+                return "";
             }
-            return response;
         }
 
         protected void onPostExecute(String result) {
