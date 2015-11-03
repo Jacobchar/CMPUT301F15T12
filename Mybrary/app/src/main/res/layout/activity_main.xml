@@ -46,7 +46,8 @@
         android:background="#A0A5AB"
         android:layout_below="@+id/FriendsListViewButton"
         android:layout_alignStart="@+id/FriendsListViewButton"
-        android:layout_marginTop="27dp" />
+        android:layout_marginTop="27dp"
+        android:onClick="openTradeListActivity" />
 
     <Button
         android:layout_width="230dp"
