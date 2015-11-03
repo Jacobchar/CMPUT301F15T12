@@ -12,6 +12,19 @@ public class Inventory {
     private Collection<Book> inventoryList;
     private ArrayList observers;
 
+    Collection<Book> getBooks(){
+        return inventoryList;
+    }
+
+    public void addBook(Book book){
+        inventoryList.add(book);
+    }
+
+    Integer sizeInventory(){
+        return inventoryList.size();
+    }
+
+
     Book getBookByName(String name){
 
         Book book;
@@ -19,16 +32,12 @@ public class Inventory {
 
         while (e.hasNext()){
             book = (Book) e.next();
-            if (book.name == name){
+            if (book.getName() == name){
                 return book;
             }
         }
 
         return null;
-    }
-
-    Collection<Book> getBooks(){
-        return inventoryList;
     }
 
     Integer numCopies(Book inputBook){
@@ -37,16 +46,12 @@ public class Inventory {
 
         while (e.hasNext()){
             book = (Book) e.next();
-            if (book.itemID == inputBook.itemID){
-                return book.quantity;
+            if (book.getItemID() == inputBook.getItemID()){
+                return book.getQuantity();
             }
         }
 
         return 0;
-    }
-
-    Integer sizeInventory(){
-        return inventoryList.size();
     }
 
     Boolean hasBook(Book inputBook){
@@ -55,7 +60,7 @@ public class Inventory {
 
         while (e.hasNext()){
             book = (Book) e.next();
-            if (book.itemID == inputBook.itemID){
+            if (book.getItemID() == inputBook.getItemID()){
                 return true;
             }
         }

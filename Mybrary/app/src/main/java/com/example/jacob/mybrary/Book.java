@@ -8,16 +8,17 @@ import java.util.UUID;
 
 public class Book {
 
-    public String name;
-    public Integer quantity;
-    public String category;
-    public boolean sharedWithOthers;
-    public Collection<String> comments;
-    public UUID itemID;
+    private String name;
+    private Integer quantity;
+    private String category;
+    private boolean sharedWithOthers;
+    private Collection<String> comments;
+    private UUID itemID;
+
     public Photo photo;
     public ArrayList observers;
 
-    public void Book(){
+    public Book(){
         this.name = "N/A";
         this.quantity = 0;
         this.category = "N/A";
@@ -26,7 +27,8 @@ public class Book {
         this.itemID = generateNewUUID();
     }
 
-    public void Book(String name, Integer quantity, String category, boolean sharedWithOthers){
+
+    public Book(String name, Integer quantity, String category, boolean sharedWithOthers){
         this.name = name;
         this.quantity = quantity;
         this.category = category;
@@ -35,16 +37,16 @@ public class Book {
         this.itemID = generateNewUUID();
     }
 
-    UUID generateNewUUID(){
+    public UUID generateNewUUID(){
         UUID id = UUID.randomUUID();
         return id;
     }
 
-    void addNewComment(String comment){
+    public void addNewComment(String comment){
         this.comments.add(comment);
     }
 
-    void updateObservers(){
+    private void updateObservers(){
 
     }
 
@@ -52,6 +54,48 @@ public class Book {
 
         return itemID.compareTo(((Book) book).itemID);
 
+    }
+
+    /* Endless Getters and Setters */
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean isSharedWithOthers() {
+        return sharedWithOthers;
+    }
+
+    public void setSharedWithOthers(boolean sharedWithOthers) {
+        this.sharedWithOthers = sharedWithOthers;
+    }
+
+    public Collection<String> getComments() {
+        return comments;
+    }
+
+    public void setComments(Collection<String> comments) {
+        this.comments = comments;
+    }
+
+    public UUID getItemID() {
+        return itemID;
+    }
+
+    public void setItemID(UUID itemID) {
+        this.itemID = itemID;
     }
 
 }
