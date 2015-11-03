@@ -66,23 +66,64 @@ public class ConnectionManagerTest extends AndroidTestCase {
     }
 
     public void testQuery() {
+        final CountDownLatch signal1 = new CountDownLatch(1);
+        final CountDownLatch signal2 = new CountDownLatch(1);
+        final CountDownLatch signal3 = new CountDownLatch(1);
+
+        NetworkResultsHandler empty = new NetworkResultsHandler() {
+            @Override
+            public void run(String result) {
+
+            }
+        };
+
         ConnectionManager connectionManager = ConnectionManager.getInstance();
         
-        connectionManager.put("testing/1", "{\"val\":1}");
-        connectionManager.put("testing/2", "{\"val\":2}");
-        connectionManager.put("testing/3", "{\"val\":3}");
+        connectionManager.put("testing/1", "{\"val\":1}", empty);
+        connectionManager.put("testing/2", "{\"val\":2}", empty);
+        connectionManager.put("testing/3", "{\"val\":3}", new NetworkResultsHandler() {
+            @Override
+            public void run(String result) {
+                signal1.countDown();
+            }
+        });
+
+        try {
+            signal1.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
 
         String query = "{\"query\":{\"query_string\":{\"value\":\"2\"}}}";
-        String value = connectionManager.query("testing/", query);
-        assertEquals(value, "{\"took\":1,\"timed_out\":false,\"_shards\":" +
-                "{\"total\":1,\"successful\":1,\"failed\":0},\"hits\":" +
-                "{\"total\":1,\"max_score\":1.0,\"hits\":" +
-                "[{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\"," +
-                "\"_id\":\"2\",\"_score\":1.0,\"_source\":{\"val\":2}}]}}");
+        connectionManager.query("testing/", query, new NetworkResultsHandler() {
+            @Override
+            public void run(String result) {
+                assertEquals(result, "{\"took\":1,\"timed_out\":false,\"_shards\":" +
+                        "{\"total\":1,\"successful\":1,\"failed\":0},\"hits\":" +
+                        "{\"total\":1,\"max_score\":1.0,\"hits\":" +
+                        "[{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\"," +
+                        "\"_id\":\"2\",\"_score\":1.0,\"_source\":{\"val\":2}}]}}");
 
-        connectionManager.remove("testing/", 1);
-        connectionManager.remove("testing/", 2);
-        connectionManager.remove("testing/", 3);
+                signal2.countDown();
+            }
+        });
+
+        try {
+            signal2.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
+
+
+        connectionManager.remove("testing/1", empty);
+        connectionManager.remove("testing/2", empty);
+        connectionManager.remove("testing/3", empty);
+
+        try {
+            signal3.await();
+        } catch (InterruptedException e) {
+            fail();
+        }
     }
 
     public void testGet() {
