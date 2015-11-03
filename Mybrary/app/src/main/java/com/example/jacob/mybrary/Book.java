@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
 
+/* Created By Victoria */
+
 public class Book {
 
     public String name;
@@ -16,6 +18,11 @@ public class Book {
     public ArrayList observers;
 
     public void Book(){
+        this.name = "N/A";
+        this.quantity = 0;
+        this.category = "N/A";
+        this.sharedWithOthers = false;
+
         this.itemID = generateNewUUID();
     }
 
@@ -38,6 +45,12 @@ public class Book {
     }
 
     void updateObservers(){
+
+    }
+
+    public int compareTo(Object book) {
+
+        return itemID.compareTo(((Book) book).itemID);
 
     }
 

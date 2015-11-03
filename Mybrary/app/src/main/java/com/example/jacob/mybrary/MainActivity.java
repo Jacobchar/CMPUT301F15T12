@@ -54,4 +54,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void openInventoryActivity(View view) {
+
+        // note: FromActivity.class, ToActivity.class
+        Intent intent = new Intent(this, InventoryActivity.class);
+        startActivity(intent);
+
+    }
+
+
 }

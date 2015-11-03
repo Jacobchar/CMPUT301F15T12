@@ -1,34 +1,33 @@
 package com.example.jacob.mybrary;
 
 import android.widget.Button;
-import java.util.ArrayList;
-import java.util.Collection;
+
+/* Created By Victoria */
 
 public class ItemController {
 
-    private Book thisBook = new Book();
     private Button addPhoto;
     private Button addComment;
     private Button share;
     private Button changeCategory;
 
-    void addPhoto(Photo photo){
-        thisBook.photo = photo;
+    void addPhoto(Photo photo, Book book){
+        book.photo = photo;
     }
 
-    void addComment(String comment){
-        thisBook.comments.add(comment);
+    void addComment(String comment, Book book){
+        book.comments.add(comment);
     }
 
-    void share(){
-        thisBook.sharedWithOthers = true;
+    void share(Book book){
+        book.sharedWithOthers = true;
     }
 
-    void dontShare(){
-        thisBook.sharedWithOthers = false;
+    void hide(Book book){
+        book.sharedWithOthers = false;
     }
 
-    void changeCategory(String newCategory){
-        thisBook.category = newCategory;
+    void changeCategory(String newCategory, Book book){
+        book.category = newCategory;
     }
 }

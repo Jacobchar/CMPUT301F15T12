@@ -2,13 +2,14 @@ package com.example.jacob.mybrary;
 
 import android.graphics.Bitmap;
 
+/*  Created By Victoria
+This is to be done later, in project pt 5 */
+
 public class Photo {
 
     private Integer size;
     private String format;
     private String encodedImage;
-
-    /* This is to be done later, in project 5 */
 
 
     Boolean checkValidFormat(String format){
