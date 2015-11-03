@@ -4,6 +4,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.UUID;
 
 /**
@@ -26,45 +27,71 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         Book book = new Book(name, quantity, category, sharedWithOthers);
     }
 
-    public void testGetID(){
-        Book testBook = new Book(name, quantity, category, sharedWithOthers);
-        UUID testID = testBook.itemID;
-    }
-
-
-    /*
-
-    public void testGetUUID(){
-        User testUser = new User(name, phoneNum, gender, bio);
-        UUID testID = testUser.getUUID();
-    }
+    /* Test Getters and Setters */
 
     public void testGetName(){
-        User testUser = new User(name, phoneNum, gender, bio);
-        String gotName = testUser.getName();
-        assertEquals(gotName, name);
+        Book testBook = new Book(name, quantity, category, sharedWithOthers);
+        assertEquals(testBook.getName(), name);
     }
 
-    public void testGetPhoneNumber(){
-        User testUser = new User(name, phoneNum, gender, bio);
-        String gotPhoneNum = testUser.getPhoneNumber();
-        assertEquals(gotPhoneNum, phoneNum);
+    public void testSetName(){
+        Book testBook = new Book("", quantity, category, sharedWithOthers);
+        testBook.setName(name);
+        assertEquals(testBook.getName(), name);
     }
 
-    public void testGetGender(){
-        User testUser = new User(name, phoneNum, gender, bio);
-        String gotGender = testUser.getGender();
-        assertEquals(gotGender, gender);
+    public void testGetQuantity() {
+        Book testBook = new Book(name, quantity, category, sharedWithOthers);
+        assertEquals(testBook.getQuantity(), quantity);
     }
 
-    public void testGetBio(){
-        User testUser = new User(name, phoneNum, gender, bio);
-        String gotBio = testUser.getBio();
-        assertEquals(gotBio, bio);
+    public void testSetQuantity() {
+        Book testBook = new Book(name, 0, category, sharedWithOthers);
+        testBook.setQuantity(quantity);
+        assertEquals(testBook.getQuantity(), quantity);
     }
 
-    */
+    public void testGetCategory() {
+        Book testBook = new Book(name, quantity, category, sharedWithOthers);
+        assertEquals(testBook.getCategory(), category);
+    }
 
+    public void testSetCategory() {
+        Book testBook = new Book(name, quantity, "", sharedWithOthers);
+        testBook.setCategory(category);
+        assertEquals(testBook.getCategory(), category);
+    }
+
+    public void testGetID(){
+        Book testBook = new Book(name, quantity, category, sharedWithOthers);
+        UUID testID = testBook.getItemID();
+    }
+
+    public void testGetSharedWithOthers(){
+        Book testBook = new Book(name, quantity, category, sharedWithOthers);
+        assertEquals(testBook.isSharedWithOthers(), sharedWithOthers);
+    }
+
+    public void testSetSharedWithOthers(){
+        Book testBook = new Book(name, quantity, category, false);
+        testBook.setSharedWithOthers(sharedWithOthers);
+        assertEquals(testBook.isSharedWithOthers(), sharedWithOthers);
+    }
+
+    public void testAddNewComment(){
+        String comment = "Test";
+        Book testBook = new Book(name, quantity, category, sharedWithOthers);
+        testBook.addNewComment(comment);
+
+        Collection<String> t = testBook.getComments();
+        Iterator i = t.iterator();
+
+        while (i.hasNext()){
+            Book book = (Book) i.next();
+            assertEquals(book.getComments().size(), testBook.getComments().size());
+        }
+
+    }
 
 }
 

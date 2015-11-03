@@ -46,8 +46,12 @@ public class Book {
         this.comments.add(comment);
     }
 
-    private void updateObservers(){
+    public Collection<String> getComments() {
+        return comments;
+    }
 
+    private void updateObservers(){
+        // to be implemented
     }
 
     public int compareTo(Object book) {
@@ -82,14 +86,6 @@ public class Book {
         this.sharedWithOthers = sharedWithOthers;
     }
 
-    public Collection<String> getComments() {
-        return comments;
-    }
-
-    public void setComments(Collection<String> comments) {
-        this.comments = comments;
-    }
-
     public UUID getItemID() {
         return itemID;
     }
@@ -97,5 +93,15 @@ public class Book {
     public void setItemID(UUID itemID) {
         this.itemID = itemID;
     }
+
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
 
 }

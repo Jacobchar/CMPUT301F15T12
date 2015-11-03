@@ -16,18 +16,18 @@ public class ItemController {
     }
 
     void addComment(String comment, Book book){
-        book.comments.add(comment);
+        book.getComments().add(comment);
     }
 
     void share(Book book){
-        book.sharedWithOthers = true;
+        book.setSharedWithOthers(true);
     }
 
     void hide(Book book){
-        book.sharedWithOthers = false;
+        book.setSharedWithOthers(false);
     }
 
     void changeCategory(String newCategory, Book book){
-        book.category = newCategory;
+        book.setCategory(newCategory);
     }
 }
