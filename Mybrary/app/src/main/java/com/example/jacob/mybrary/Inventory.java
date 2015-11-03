@@ -1,14 +1,20 @@
 package com.example.jacob.mybrary;
 
-public class Inventory{
+import java.util.ArrayList;
+import java.util.Collection;
 
-    private Collection<Books> inventoryList;
+public class Inventory {
+
+    private Collection<Book> inventoryList;
     private ArrayList observers;
 
     Book getBookByName(String name){
+        Book book = new Book();
+        return book;
     }
 
     Collection<Book> getBooks(){
+        return inventoryList;
     }
 
     Integer numCopies(Book book){
@@ -16,11 +22,14 @@ public class Inventory{
     }
 
     Integer sizeInventory(){
+        return 1;
     }
 
     Boolean hasBook(Book book){
+        return true;
     }
 
     void updateObservers(){}
+
 
 }

@@ -1,5 +1,7 @@
 package com.example.jacob.mybrary;
 
+import android.graphics.Bitmap;
+
 public class Photo {
 
     private Integer size;
@@ -10,7 +12,7 @@ public class Photo {
 
 
     Boolean checkValidFormat(String format){
-
+        return true;
     }
 
     Boolean checkValidSize(Integer size){
@@ -23,8 +25,8 @@ public class Photo {
     }
 
     String convertImageToJson(Bitmap image){
-
-
+        return "";
     }
+
 
 }
