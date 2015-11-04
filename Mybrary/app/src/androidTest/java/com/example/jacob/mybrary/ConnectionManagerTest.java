@@ -78,7 +78,7 @@ public class ConnectionManagerTest extends AndroidTestCase {
         };
 
         ConnectionManager connectionManager = ConnectionManager.getInstance();
-        
+
         connectionManager.put("testing/1", "{\"val\":1}", empty);
         connectionManager.put("testing/2", "{\"val\":2}", empty);
         connectionManager.put("testing/3", "{\"val\":3}", new NetworkResultsHandler() {
@@ -94,15 +94,13 @@ public class ConnectionManagerTest extends AndroidTestCase {
             fail();
         }
 
-        String query = "{\"query\":{\"query_string\":{\"value\":\"2\"}}}";
+        String query = "{\"query\":{\"query_string\":{\"default_field\":\"val\",\"query\":2}}}";
         connectionManager.query("testing/", query, new NetworkResultsHandler() {
             @Override
             public void run(String result) {
-                assertEquals(result, "{\"took\":1,\"timed_out\":false,\"_shards\":" +
-                        "{\"total\":1,\"successful\":1,\"failed\":0},\"hits\":" +
-                        "{\"total\":1,\"max_score\":1.0,\"hits\":" +
-                        "[{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\"," +
-                        "\"_id\":\"2\",\"_score\":1.0,\"_source\":{\"val\":2}}]}}");
+                assertTrue(result.contains("\"hits\":{\"total\":1"));
+                assertTrue(result.contains("\"_id\":\"2\""));
+                assertTrue(result.contains("\"_source\":{\"val\":2}"));
 
                 signal2.countDown();
             }
@@ -117,7 +115,12 @@ public class ConnectionManagerTest extends AndroidTestCase {
 
         connectionManager.remove("testing/1", empty);
         connectionManager.remove("testing/2", empty);
-        connectionManager.remove("testing/3", empty);
+        connectionManager.remove("testing/3", new NetworkResultsHandler() {
+            @Override
+            public void run(String result) {
+                signal3.countDown();
+            }
+        });
 
         try {
             signal3.await();

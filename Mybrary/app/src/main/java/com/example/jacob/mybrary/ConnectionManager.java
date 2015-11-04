@@ -44,7 +44,9 @@ public class ConnectionManager {
     }
 
     public void query(String path, String query, NetworkResultsHandler onComplete) {
-
+        // TODO: Validate input strings
+        QueryTask queryTask = new QueryTask(onComplete);
+        queryTask.execute(path, query);
     }
 
     public void remove(String path, NetworkResultsHandler onComplete) {
@@ -150,6 +152,44 @@ public class ConnectionManager {
                 Request request = new Request.Builder()
                         .url(connstr + params[0])
                         .delete()
+                        .build();
+                Response response = client.newCall(request).execute();
+
+                return response.body().string();
+            } catch (Exception e) {
+                ex = e;
+                return "";
+            }
+        }
+
+        protected void onPostExecute(String result) {
+            if (ex == null) {
+                onComplete.run(result);
+            } else {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+
+    private class QueryTask extends AsyncTask<String, Void, String> {
+        Throwable ex;
+        NetworkResultsHandler onComplete;
+
+        public QueryTask(NetworkResultsHandler handler) {
+            onComplete = handler;
+        }
+
+        protected String doInBackground(String... params) {
+            // params[0] == path
+            // params[1] == query
+
+            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+            OkHttpClient client = new OkHttpClient();
+            try {
+                RequestBody requestBody = RequestBody.create(JSON, params[1]);
+                Request request = new Request.Builder()
+                        .url(connstr + params[0] + "_search")
+                        .post(requestBody)
                         .build();
                 Response response = client.newCall(request).execute();
 
