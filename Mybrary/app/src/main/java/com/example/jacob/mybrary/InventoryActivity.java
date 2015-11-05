@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class InventoryActivity extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class InventoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-
+        fillInventory();
     }
 
     void deleteBook(){
@@ -49,7 +50,11 @@ public class InventoryActivity extends AppCompatActivity {
 
         inventory = i.getBooks();
 
-        adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventory);
+        Book[] inventoryArray = new Book[inventory.size()];
+        inventoryArray = (Book[]) inventory.toArray();
+
+        adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventoryArray);
+
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
