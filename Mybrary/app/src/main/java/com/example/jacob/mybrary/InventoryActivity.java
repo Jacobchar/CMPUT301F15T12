@@ -38,18 +38,20 @@ public class InventoryActivity extends AppCompatActivity {
         String name = "";
         Inventory i = new Inventory();
 
-        // get name from user
-
         Boolean bool = i.deleteBookByName(name);
 
-        // was deletion successful?
+        adapter.notifyDataSetChanged();
+
     }
 
     void fillInventory(){
 
         listView = (ListView) findViewById(R.id.inventoryListView); // controller?
 
+        Book book = new Book("testName", 0, "It's A Book", true);
+
         Inventory i = new Inventory();
+        i.addBook(book);
         inventory = i.getBooks();
 
         adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventory);
@@ -57,6 +59,7 @@ public class InventoryActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
+
 
 
 

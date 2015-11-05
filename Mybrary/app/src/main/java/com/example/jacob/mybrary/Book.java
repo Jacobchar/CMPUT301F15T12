@@ -37,6 +37,29 @@ public class Book {
         this.itemID = generateNewUUID();
     }
 
+    @Override
+    public String toString(){
+        String string = "";
+
+        string = "Name: " + ", Quantity: " + ", Category: ";
+
+        // sharedWithOthers
+        if (sharedWithOthers) {
+            string = string + " , is shared with others, ";
+        } else {
+            string = string + ", isn't shared with others, ";
+        }
+
+        // loop through comments
+        if (comments.size() == 0) {
+            string = string + ", No comments.";
+        } else {
+
+        }
+
+        return string;
+    }
+
     public UUID generateNewUUID(){
         UUID id = UUID.randomUUID();
         return id;

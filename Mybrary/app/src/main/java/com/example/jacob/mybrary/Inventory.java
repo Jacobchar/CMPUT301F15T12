@@ -19,7 +19,9 @@ public class Inventory {
     }
 
     public void addBook(Book book){
+
         inventoryList.add(book);
+
     }
 
     Integer sizeInventory(){
