@@ -14,7 +14,8 @@
         android:layout_marginTop="61dp"
         android:background="#A0A5AB"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="openProfileActivity"/>
 
     <Button
         android:layout_width="230dp"
