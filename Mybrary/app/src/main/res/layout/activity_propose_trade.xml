@@ -51,7 +51,8 @@
         android:text="Send Request"
         android:id="@+id/sendRequestButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="sendRequestButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,7 +71,8 @@
         android:text="Add Yours"
         android:id="@+id/addYoursButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="addYourOfferButton" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -79,7 +81,8 @@
         android:text="Add Theirs"
         android:id="@+id/addTheirsButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="addTheirOfferButton" />
 
 </RelativeLayout>
 

@@ -50,7 +50,8 @@
         android:text="Modify"
         android:id="@+id/modifyButton"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="modifyTradeButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -69,7 +70,8 @@
         android:text="Accept"
         android:id="@+id/acceptButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="acceptTradeButton" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -78,6 +80,7 @@
         android:text="Decline"
         android:id="@+id/declineButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="declineTradeButton" />
 
 </RelativeLayout>

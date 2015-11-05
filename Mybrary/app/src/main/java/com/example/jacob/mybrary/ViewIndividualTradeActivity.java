@@ -16,4 +16,16 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
 
     }
 
+    public void modifyTradeButton(View v){
+
+    }
+
+    public void acceptTradeButton(View v){
+
+    }
+
+    public void declineTradeButton(View v){
+        
+    }
+
 }
