@@ -14,25 +14,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/editLayout">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="USERNAME"
-                    android:id="@+id/usernaneTitleView"
-                    android:layout_alignParentStart="true" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:id="@+id/usernameTextView"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toEndOf="@+id/usernaneTitleView"
-                    android:layout_weight="1" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,8 +30,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nameTextView"
-                    android:layout_below="@+id/usernameTextView"
+                    android:id="@+id/nameEditView"
+                    android:layout_below="@+id/usernameEditView"
                     android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@+id/nameTitleView" />
 
@@ -63,8 +47,8 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/cityTextView"
-                    android:layout_below="@+id/nameTextView"
+                    android:id="@+id/cityEditView"
+                    android:layout_below="@+id/nameEditView"
                     android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@+id/cityTitleView" />
 
@@ -82,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="phone"
                     android:ems="10"
-                    android:id="@+id/phoneTextView"
+                    android:id="@+id/phoneEditView"
                     android:layout_below="@+id/cityTextView"
                     android:layout_toEndOf="@+id/phoneTitleView" />
 
@@ -100,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:ems="10"
-                    android:id="@+id/emailTextView"
+                    android:id="@+id/emailEditView"
                     android:layout_below="@+id/phoneTextView"
                     android:layout_alignParentEnd="true"
                     android:layout_alignStart="@+id/nameTextView" />
@@ -117,7 +101,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/genderTextView"
+                    android:id="@+id/genderEditView"
                     android:layout_below="@+id/emailTextView"
                     android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@+id/genderTitleView" />
@@ -134,7 +118,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bioTextView"
+                    android:id="@+id/bioEditView"
                     android:layout_below="@+id/genderTextView"
                     android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@+id/bioTitleView" />
@@ -150,6 +134,7 @@
         android:text="Set Profile"
         android:id="@+id/setProfileButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:onClick="setUser"/>
 
 </RelativeLayout>
