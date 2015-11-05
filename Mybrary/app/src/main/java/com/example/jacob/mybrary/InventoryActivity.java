@@ -23,11 +23,11 @@ import java.util.ArrayList;
 
 public class InventoryActivity extends AppCompatActivity {
 
-    // cite LonelyTwitter here
+    // used LonelyTwitter here
 
-    ArrayAdapter<Book> adapter;
-    ListView listView;
-    ArrayList<Book> inventory;
+    private ArrayAdapter<Book> adapter;
+    private ListView listView;
+    private ArrayList<Book> inventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +95,11 @@ public class InventoryActivity extends AppCompatActivity {
     }
 
     public void addNewItem(){
+
+    }
+
+    public void update(){
+
 
     }
 
