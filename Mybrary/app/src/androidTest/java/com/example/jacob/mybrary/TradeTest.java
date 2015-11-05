@@ -12,11 +12,9 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
     public TradeTest (){
         super(Trade.class);
     }
-
-    // Checks that the items were swapped between inventories.
     public void testOneToOneTrade(){
-        User user1 = new User("Bob", "12345", "Spirit","Likes Trades");
-        User user2 = new User("Harry","123456","Male","Dislikes Trades");
+        User user1 = new User("Bob","Username1","Email1", "12345", "Spirit","Likes Trades","Chicago");
+        User user2 = new User("Harry","Username2","Email2", "123456","Male","Dislikes Trades", "Chicago");
 
         Book book1 = new Book("Files",1,"Documentary",false);
         Book book2 = new Book("Murphy",1,"Law",false);
@@ -53,8 +51,8 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testManyToOneTrade(){
-        User user1 = new User("Bob", "12345", "Spirit","Likes Trades");
-        User user2 = new User("Harry","123456","Male","Dislikes Trades");
+        User user1 = new User("Bob","Username1","Email1", "12345", "Spirit","Likes Trades","Chicago");
+        User user2 = new User("Harry","Username2","Email2", "123456","Male","Dislikes Trades", "Chicago");
 
         Book book1 = new Book("Files",1,"Documentary",false);
         Book book2 = new Book("Murphy",1,"Law",false);
@@ -92,8 +90,8 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testNoneToOneTrade(){
-        User user1 = new User("Bob", "12345", "Spirit","Likes Trades");
-        User user2 = new User("Harry","123456","Male","Dislikes Trades");
+        User user1 = new User("Bob","Username1","Email1", "12345", "Spirit","Likes Trades","Chicago");
+        User user2 = new User("Harry","Username2","Email2", "123456","Male","Dislikes Trades", "Chicago");
 
         Book book1 = new Book("Files",1,"Documentary",false);
 
@@ -125,8 +123,8 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testUserNotAccepted(){
-        User user1 = new User("Bob", "12345", "Spirit","Likes Trades");
-        User user2 = new User("Harry","123456","Male","Dislikes Trades");
+        User user1 = new User("Bob","Username1","Email1", "12345", "Spirit","Likes Trades","Chicago");
+        User user2 = new User("Harry","Username2","Email2", "123456","Male","Dislikes Trades", "Chicago");
 
         Book book1 = new Book("Files",1,"Documentary",false);
         Book book2 = new Book("Murphy",1,"Law",false);
@@ -160,8 +158,8 @@ public class TradeTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testNeitherUserAccepted(){
-        User user1 = new User("Bob", "12345", "Spirit","Likes Trades");
-        User user2 = new User("Harry","123456","Male","Dislikes Trades");
+        User user1 = new User("Bob","Username1","Email1", "12345", "Spirit","Likes Trades","Chicago");
+        User user2 = new User("Harry","Username2","Email2", "123456","Male","Dislikes Trades", "Chicago");
 
         Book book1 = new Book("Files",1,"Documentary",false);
         Book book2 = new Book("Murphy",1,"Law",false);
