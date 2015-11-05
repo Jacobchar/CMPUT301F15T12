@@ -2,6 +2,7 @@ package com.example.jacob.mybrary;
 
 import android.test.AndroidTestCase;
 
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -13,220 +14,85 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ConnectionManagerTest extends AndroidTestCase {
     public void testPut() {
-        final CountDownLatch signal1 = new CountDownLatch(1);
-        final CountDownLatch signal2 = new CountDownLatch(1);
-        final CountDownLatch signal3 = new CountDownLatch(1);
         ConnectionManager connectionManager = ConnectionManager.getInstance();
 
         String path = "testing/deadbeef";
         String json = "{\"Name\":\"Name1\"}";
 
-        connectionManager.put(path, json, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                signal1.countDown();
-            }
-        });
-
         try {
-            signal1.await();
-        } catch (InterruptedException e) {
-            fail();
-        }
+        connectionManager.put(path, json);
 
-        connectionManager.get(path, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                assertTrue(result.contains("\"_type\":\"testing\""));
-                assertTrue(result.contains("\"_id\":\"deadbeef\""));
-                assertTrue(result.contains("\"found\":true"));
-                assertTrue(result.contains("\"_source\":{\"Name\":\"Name1\"}"));
-                signal2.countDown();
-            }
-        });
+        String result = connectionManager.get(path);
 
-        try {
-            signal2.await();
-        } catch (InterruptedException e) {
-            fail();
-        }
+        assertTrue(result.contains("\"_type\":\"testing\""));
+        assertTrue(result.contains("\"_id\":\"deadbeef\""));
+        assertTrue(result.contains("\"found\":true"));
+        assertTrue(result.contains("\"_source\":{\"Name\":\"Name1\"}"));
 
-        connectionManager.remove(path, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                signal3.countDown();
-            }
-        });
-
-        try {
-            signal3.await();
-        } catch (InterruptedException e) {
+        connectionManager.remove(path);
+        } catch (IOException e) {
             fail();
         }
     }
 
     public void testQuery() {
-        final CountDownLatch signal1 = new CountDownLatch(1);
-        final CountDownLatch signal2 = new CountDownLatch(1);
-        final CountDownLatch signal3 = new CountDownLatch(1);
-
-        NetworkResultsHandler empty = new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-
-            }
-        };
-
         ConnectionManager connectionManager = ConnectionManager.getInstance();
 
-        connectionManager.put("testing/1", "{\"val\":1}", empty);
-        connectionManager.put("testing/2", "{\"val\":2}", empty);
-        connectionManager.put("testing/3", "{\"val\":3}", new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                signal1.countDown();
-            }
-        });
-
         try {
-            signal1.await();
-        } catch (InterruptedException e) {
-            fail();
-        }
+            connectionManager.put("testing/1", "{\"val\":1}");
+            connectionManager.put("testing/2", "{\"val\":2}");
+            connectionManager.put("testing/3", "{\"val\":3}");
 
-        String query = "{\"query\":{\"query_string\":{\"default_field\":\"val\",\"query\":2}}}";
-        connectionManager.query("testing/", query, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                assertTrue(result.contains("\"hits\":{\"total\":1"));
-                assertTrue(result.contains("\"_id\":\"2\""));
-                assertTrue(result.contains("\"_source\":{\"val\":2}"));
-
-                signal2.countDown();
-            }
-        });
-
-        try {
-            signal2.await();
-        } catch (InterruptedException e) {
-            fail();
-        }
+            String query = "{\"query\":{\"query_string\":{\"default_field\":\"val\",\"query\":2}}}";
+            String result = connectionManager.query("testing/", query);
+            assertTrue(result.contains("\"hits\":{\"total\":1"));
+            assertTrue(result.contains("\"_id\":\"2\""));
+            assertTrue(result.contains("\"_source\":{\"val\":2}"));
 
 
-        connectionManager.remove("testing/1", empty);
-        connectionManager.remove("testing/2", empty);
-        connectionManager.remove("testing/3", new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                signal3.countDown();
-            }
-        });
-
-        try {
-            signal3.await();
-        } catch (InterruptedException e) {
+            connectionManager.remove("testing/1");
+            connectionManager.remove("testing/2");
+            connectionManager.remove("testing/3");
+        } catch (IOException e) {
             fail();
         }
     }
 
     public void testGet() {
-        final CountDownLatch signal1 = new CountDownLatch(1);
-        final CountDownLatch signal2 = new CountDownLatch(1);
-        final CountDownLatch signal3 = new CountDownLatch(1);
         ConnectionManager connectionManager = ConnectionManager.getInstance();
 
         String path = "testing/deadbeef";
         String json = "{\"Name\":\"Name1\"}";
 
-        connectionManager.put(path, json, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                signal1.countDown();
-            }
-        });
-
         try {
-            signal1.await();
-        } catch (InterruptedException e) {
-            fail();
-        }
+            connectionManager.put(path, json);
 
-        connectionManager.get(path, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                assertTrue(result.contains("\"_type\":\"testing\""));
-                assertTrue(result.contains("\"_id\":\"deadbeef\""));
-                assertTrue(result.contains("\"found\":true"));
-                assertTrue(result.contains("\"_source\":{\"Name\":\"Name1\"}"));
-                signal2.countDown();
-            }
-        });
+            String result = connectionManager.get(path);
+            assertTrue(result.contains("\"_type\":\"testing\""));
+            assertTrue(result.contains("\"_id\":\"deadbeef\""));
+            assertTrue(result.contains("\"found\":true"));
+            assertTrue(result.contains("\"_source\":{\"Name\":\"Name1\"}"));
 
-        try {
-            signal2.await();
-        } catch (InterruptedException e) {
-            fail();
-        }
-
-        connectionManager.remove(path, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                signal3.countDown();
-            }
-        });
-
-        try {
-            signal3.await();
-        } catch (InterruptedException e) {
+            connectionManager.remove(path);
+        } catch (IOException e) {
             fail();
         }
     }
 
     public void testRemove() {
-        final CountDownLatch signal1 = new CountDownLatch(1);
-        final CountDownLatch signal2 = new CountDownLatch(1);
-        final CountDownLatch signal3 = new CountDownLatch(1);
         ConnectionManager connectionManager = ConnectionManager.getInstance();
 
         String path = "testing/deadbeef";
         String json = "{\"Name\":\"Name1\"}";
-        connectionManager.put(path, json, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                signal1.countDown();
-            }
-        });
 
         try {
-            signal1.await();
-        } catch (InterruptedException e) {
-            fail();
-        }
+            connectionManager.put(path, json);
 
-        connectionManager.remove(path, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                signal2.countDown();
-            }
-        });
+            connectionManager.remove(path);
 
-        try {
-            signal2.await();
-        } catch (InterruptedException e) {
-            fail();
-        }
-
-        connectionManager.get(path, new NetworkResultsHandler() {
-            @Override
-            public void run(String result) {
-                assertEquals(result, "{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\",\"_id\":\"deadbeef\",\"found\":false}");
-                signal3.countDown();
-            }
-        });
-
-        try {
-            signal3.await();
-        } catch (InterruptedException e) {
+            String result = connectionManager.get(path);
+            assertEquals(result, "{\"_index\":\"cmput301f15t12\",\"_type\":\"testing\",\"_id\":\"deadbeef\",\"found\":false}");
+        } catch (IOException e) {
             fail();
         }
     }

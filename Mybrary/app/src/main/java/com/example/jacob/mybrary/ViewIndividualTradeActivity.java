@@ -1,5 +1,6 @@
 package com.example.jacob.mybrary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -17,7 +18,9 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     }
 
     public void modifyTradeButton(View v){
-
+        // note: FromActivity.class, ToActivity.class
+        Intent intent = new Intent(this, ProposeTradeActivity.class);
+        startActivity(intent);
     }
 
     public void acceptTradeButton(View v){
@@ -25,7 +28,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     }
 
     public void declineTradeButton(View v){
-        
+
     }
 
 }

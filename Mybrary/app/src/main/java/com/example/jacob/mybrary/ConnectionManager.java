@@ -11,6 +11,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
+import java.io.IOException;
+
 /**
  * Created by Dominic on 2015-10-31.
  *
@@ -31,28 +33,56 @@ public class ConnectionManager {
         connstr = "http://cmput301.softwareprocess.es:8080/cmput301f15t12/";
     }
 
-    public void put(String path, String json, NetworkResultsHandler onComplete) {
+    public String put(String path, String json) throws IOException{
         // TODO: Validate input strings
-        PutTask putTask = new PutTask(onComplete);
-        putTask.execute(path, json);
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(connstr + path)
+                .post(requestBody)
+                .build();
+        Response response = client.newCall(request).execute();
+        return response.body().string();
     }
 
-    public void get(String path, NetworkResultsHandler onComplete) {
+    public String get(String path) throws IOException {
         // TODO: Validate input strings
-        GetTask getTask = new GetTask(onComplete);
-        getTask.execute(path);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(connstr + path)
+                .build();
+        Response response = client.newCall(request).execute();
+
+        return response.body().string();
     }
 
-    public void query(String path, String query, NetworkResultsHandler onComplete) {
+    public String query(String path, String query) throws IOException{
         // TODO: Validate input strings
-        QueryTask queryTask = new QueryTask(onComplete);
-        queryTask.execute(path, query);
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+
+        RequestBody requestBody = RequestBody.create(JSON, query);
+        Request request = new Request.Builder()
+                .url(connstr + path + "_search")
+                .post(requestBody)
+                .build();
+        Response response = client.newCall(request).execute();
+
+        return response.body().string();
     }
 
-    public void remove(String path, NetworkResultsHandler onComplete) {
+    public String remove(String path) throws IOException{
         // TODO: Validate input strings
-        RemoveTask removeTask = new RemoveTask(onComplete);
-        removeTask.execute(path);
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(connstr + path)
+                .delete()
+                .build();
+        Response response = client.newCall(request).execute();
+
+        return response.body().string();
     }
 
     // Source: http://developer.android.com/training/basics/network-ops/connecting.html
@@ -62,150 +92,5 @@ public class ConnectionManager {
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
         return networkInfo != null && networkInfo.isConnected();
-    }
-
-    private class PutTask extends AsyncTask<String, Void, String> {
-        Throwable ex;
-        NetworkResultsHandler onComplete;
-
-        public PutTask(NetworkResultsHandler handler) {
-            onComplete = handler;
-        }
-
-        protected String doInBackground(String... params) {
-            // params[0] == path
-            // params[1] == json
-
-            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            OkHttpClient client = new OkHttpClient();
-            try {
-                RequestBody requestBody = RequestBody.create(JSON, params[1]);
-                Request request = new Request.Builder()
-                        .url(connstr + params[0])
-                        .post(requestBody)
-                        .build();
-                Response response = client.newCall(request).execute();
-                return response.body().string();
-            } catch (Exception e) {
-                ex = e;
-                return "";
-            }
-        }
-
-        protected void onPostExecute(String result) {
-            if (ex == null) {
-                onComplete.run(result);
-            } else {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    private class GetTask extends AsyncTask<String, Void, String> {
-        Throwable ex;
-        NetworkResultsHandler onComplete;
-
-        public GetTask(NetworkResultsHandler handler) {
-            onComplete = handler;
-        }
-
-        protected String doInBackground(String... params) {
-            // params[0] == path
-
-            OkHttpClient client = new OkHttpClient();
-            try {
-                Request request = new Request.Builder()
-                        .url(connstr + params[0])
-                        .build();
-                Response response = client.newCall(request).execute();
-
-                return response.body().string();
-            } catch (Exception e) {
-                ex = e;
-                return "";
-            }
-        }
-
-        protected void onPostExecute(String result) {
-            if (ex == null) {
-                onComplete.run(result);
-            } else {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    private class RemoveTask extends AsyncTask<String, Void, String> {
-        Throwable ex;
-        NetworkResultsHandler onComplete;
-
-        public RemoveTask(NetworkResultsHandler handler) {
-            onComplete = handler;
-        }
-
-        // Source: http://stackoverflow.com/a/1051105
-        protected String doInBackground(String... params) {
-            // params[0] == path
-
-            OkHttpClient client = new OkHttpClient();
-            try {
-                Request request = new Request.Builder()
-                        .url(connstr + params[0])
-                        .delete()
-                        .build();
-                Response response = client.newCall(request).execute();
-
-                return response.body().string();
-            } catch (Exception e) {
-                ex = e;
-                return "";
-            }
-        }
-
-        protected void onPostExecute(String result) {
-            if (ex == null) {
-                onComplete.run(result);
-            } else {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    private class QueryTask extends AsyncTask<String, Void, String> {
-        Throwable ex;
-        NetworkResultsHandler onComplete;
-
-        public QueryTask(NetworkResultsHandler handler) {
-            onComplete = handler;
-        }
-
-        protected String doInBackground(String... params) {
-            // params[0] == path
-            // params[1] == query
-
-            final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-            OkHttpClient client = new OkHttpClient();
-            try {
-                RequestBody requestBody = RequestBody.create(JSON, params[1]);
-                Request request = new Request.Builder()
-                        .url(connstr + params[0] + "_search")
-                        .post(requestBody)
-                        .build();
-                Response response = client.newCall(request).execute();
-
-                return response.body().string();
-            } catch (Exception e) {
-                ex = e;
-                return "";
-            }
-        }
-
-        protected void onPostExecute(String result) {
-            if (ex == null) {
-                onComplete.run(result);
-            } else {
-                throw new RuntimeException(ex);
-            }
-        }
     }
 }
