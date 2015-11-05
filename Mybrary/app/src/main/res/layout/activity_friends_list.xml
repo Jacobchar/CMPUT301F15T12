@@ -17,15 +17,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="How am I going to populate this data??"
-        android:id="@+id/questionTextView"
-        android:layout_marginTop="60dp"
-        android:layout_below="@+id/friendsNameTextView"
-        android:layout_centerHorizontal="true" />
-
     <Button
         android:layout_height="wrap_content"
         android:text="Add New Friend"
@@ -36,4 +27,12 @@
         android:layout_width="230dp"
         android:onClick="addNewFriend"
         android:background="#A0A5AB"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listView"
+        android:layout_below="@+id/friendsNameTextView"
+        android:layout_alignStart="@+id/friendsNameTextView"
+        android:layout_above="@+id/addNewFriendButton" />
 </RelativeLayout>
