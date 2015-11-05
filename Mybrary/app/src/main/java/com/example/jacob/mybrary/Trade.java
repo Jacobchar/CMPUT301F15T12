@@ -6,6 +6,7 @@ import java.util.UUID;
 /**
  * Created by davidross on 2015-11-02.
  * Completes trades by removing an item from one user1, and adding the same item to user2
+ * provided both users have accepted the trade
  */
 
 public class Trade {
