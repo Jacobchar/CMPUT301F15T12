@@ -2,7 +2,7 @@ package com.example.jacob.mybrary;
 
 import java.util.UUID;
 
-//User Class
+//Class to hold the data for an individual user of the app
 public class User {
     private String name;
     private String username;
