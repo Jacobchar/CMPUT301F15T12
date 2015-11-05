@@ -8,6 +8,7 @@ import java.util.UUID;
 //Tests for the User Class
 public class UserTest extends ActivityInstrumentationTestCase2{
     private String name = "TestUser";
+    private String username = "TestUsername"
     private String phoneNum = "555-5555";
     private String gender = "Male";
     private String bio = "Likes to take long walks on the beach";
@@ -17,41 +18,47 @@ public class UserTest extends ActivityInstrumentationTestCase2{
     }
 
     public void testCreateUser(){
-        User testUser = new User(name, phoneNum, gender, bio);
+        User testUser = new User(name, username, phoneNum, gender, bio);
     }
 
     public void testGetInventory(){
-        User testUser = new User(name, phoneNum, gender, bio);
+        User testUser = new User(name, username, phoneNum, gender, bio);
         Inventory testInventory = testUser.getInventory();
         //Getting items from an empty inventory should return an empty list, not null
         //assertTrue(testInventory.getItems().equals(null));
     }
 
     public void testGetUUID(){
-        User testUser = new User(name, phoneNum, gender, bio);
+        User testUser = new User(name, username, phoneNum, gender, bio);
         UUID testID = testUser.getUUID();
     }
 
     public void testGetName(){
-        User testUser = new User(name, phoneNum, gender, bio);
+        User testUser = new User(name, username, phoneNum, gender, bio);
         String gotName = testUser.getName();
         assertEquals(gotName, name);
     }
+    
+    public void testGetUsername(){
+        User testUser = new User(name, username, phoneNum, gender, bio);
+        String gotUsername = testUser.getUsername();
+        assertEquals(gotUsername, username)
+    }
 
     public void testGetPhoneNumber(){
-        User testUser = new User(name, phoneNum, gender, bio);
+        User testUser = new User(name, username, phoneNum, gender, bio);
         String gotPhoneNum = testUser.getPhoneNumber();
         assertEquals(gotPhoneNum, phoneNum);
     }
 
     public void testGetGender(){
-        User testUser = new User(name, phoneNum, gender, bio);
+        User testUser = new User(name, username, phoneNum, gender, bio);
         String gotGender = testUser.getGender();
         assertEquals(gotGender, gender);
     }
 
     public void testGetBio(){
-        User testUser = new User(name, phoneNum, gender, bio);
+        User testUser = new User(name, username, phoneNum, gender, bio);
         String gotBio = testUser.getBio();
         assertEquals(gotBio, bio);
     }
