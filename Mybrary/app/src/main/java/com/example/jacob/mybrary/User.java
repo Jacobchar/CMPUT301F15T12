@@ -5,14 +5,16 @@ import java.util.UUID;
 //User Class
 public class User {
     private String name;
+    private String username;
     private String phoneNumber;
     private String gender;
     private String bio;
     private UUID myUUID;
     private Inventory inventory;
 
-    public User(String name, String phoneNumber, String gender, String bio) {
+    public User(String name, String username, String phoneNumber, String gender, String bio) {
         this.name = name;
+        this.username = username;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.bio = bio;
@@ -21,6 +23,10 @@ public class User {
 
     public String getName() {
         return name;
+    }
+    
+    public String getUsername(){
+        return username;
     }
 
     public String getPhoneNumber() {
