@@ -21,7 +21,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.bio = bio;
-        this.city = city
+        this.city = city;
         this.inventory = new Inventory();
     }
 
