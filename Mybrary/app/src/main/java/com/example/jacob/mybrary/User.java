@@ -5,7 +5,6 @@ import java.util.UUID;
 //Class to hold the data for an individual user of the app
 public class User {
     private String name;
-    private String username;
     private String emailAddress;
     private String phoneNumber;
     private String gender;
@@ -14,9 +13,8 @@ public class User {
     private UUID myUUID;
     private Inventory inventory;
 
-    public User(String name, String username, String emailAddress, String phoneNumber, String gender, String bio, String city) {
+    public User(String name, String emailAddress, String phoneNumber, String gender, String bio, String city) {
         this.name = name;
-        this.username = username;
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
         this.gender = gender;
@@ -27,10 +25,6 @@ public class User {
 
     public String getName() {
         return name;
-    }
-    
-    public String getUsername(){
-        return username;
     }
     
     public String getEmailAddress(){
