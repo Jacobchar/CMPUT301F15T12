@@ -10,4 +10,6 @@
     <string name="title_activity_trade_list">TradeListActivity</string>
     <string name="title_activity_view_individual_trade">ViewIndividualTradeActivity</string>
     <string name="title_activity_propose_trade">ProposeTradeActivity</string>
+    <string name="title_activity_view_user">ViewUserActivity</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
 </resources>
