@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/editLayout">
+            android:id="@+id/textLayout">
 
 
             <TextView
@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/nameTextView"
+                android:text="blank"
                 android:layout_below="@+id/usernameTextView"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_alignParentEnd="true"
@@ -49,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/cityTextView"
+                android:text="blank"
                 android:layout_below="@+id/nameTextView"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_alignParentEnd="true"
@@ -66,9 +68,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
                 android:id="@+id/phoneTextView"
+                android:text="121"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_below="@+id/cityTextView"
                 android:layout_toEndOf="@+id/phoneTitleView" />
@@ -86,7 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:ems="10"
+                android:text="blank"
                 android:id="@+id/emailTextView"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_below="@+id/phoneTextView"
@@ -106,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/genderTextView"
+                android:text="blank"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_below="@+id/emailTextView"
                 android:layout_alignParentEnd="true"
@@ -125,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:id="@+id/bioTextView"
+                android:text="blank"
                 android:layout_below="@+id/genderTextView"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/bioTitleView" />

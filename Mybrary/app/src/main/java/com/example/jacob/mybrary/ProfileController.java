@@ -22,23 +22,8 @@ public class ProfileController {
     }
 
     public void updateUser(User user, Context context){
-        saveUserInFile(user, context);
+       //save User
     }
 
-    public void saveUserInFile(User user, Context activity){
-        try {
-            FileOutputStream fos = activity.openFileOutput("USER.txt", 0);
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-            Gson gson = new Gson();
-            gson.toJson(user, out);
-            out.flush();
-            fos.close();
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException(e);
-        }
-    }
+
 }

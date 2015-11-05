@@ -54,4 +54,13 @@ public class User {
     public Inventory getInventory() {
         return inventory;
     }
+
+    public void setUser(User user){
+        this.name = user.getName();
+        this.emailAddress = user.getEmailAddress();
+        this.phoneNumber= user.getPhoneNumber();
+        this.gender = user.getGender();
+        this.bio = user.getBio();
+        this.city = user.getCity();
+    }
 }

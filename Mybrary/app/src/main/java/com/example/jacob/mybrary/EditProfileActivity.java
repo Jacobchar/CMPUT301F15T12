@@ -24,81 +24,55 @@ public class EditProfileActivity extends AppCompatActivity {
 
     ProfileController myProfileController = new ProfileController();
     User myUser;
-    Boolean mode = false;
+    Boolean mode = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        loadUser(myUser, this);
+        //loadUser(myUser);
+        myUser = new User("Name", "Email", "4121", "Gender", "Bio", "City");
         setText(mode);
 
     }
 
     public void setUser(View v){
-        EditText nameView = (EditText) v.findViewById(R.id.nameEditView);
+        final View layout = View.inflate(this, R.layout.activity_edit_profile, null);
+        EditText nameView = (EditText) layout.findViewById(R.id.nameEditView);
         String name = nameView.getText().toString();
-        EditText cityView = (EditText) v.findViewById(R.id.cityEditView);
+        EditText cityView = (EditText) layout.findViewById(R.id.cityEditView);
         String city = cityView.getText().toString();
-        EditText genderView = (EditText) v.findViewById(R.id.genderEditView);
+        EditText genderView = (EditText) layout.findViewById(R.id.genderEditView);
         String gender = genderView.getText().toString();
-        EditText phoneView = (EditText) v.findViewById(R.id.phoneEditView);
+        EditText phoneView = (EditText) layout.findViewById(R.id.phoneEditView);
         String phone = phoneView.getText().toString();
-        EditText emailView = (EditText) v.findViewById(R.id.emailEditView);
+        EditText emailView = (EditText) layout.findViewById(R.id.emailEditView);
         String email = emailView.getText().toString();
-        EditText bioView = (EditText) v.findViewById(R.id.bioEditView);
+        EditText bioView = (EditText) layout.findViewById(R.id.bioEditView);
         String bio = bioView.getText().toString();
         User gotUser = new User(name, email, phone, gender, bio, city);
         myProfileController.updateUser(gotUser, this);
         finish();
     }
 
-    public void loadUser(User user, Context context){
-        try {
-            FileInputStream fis = context.openFileInput("USER.txt");
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
-            //https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html
-            user = (gson.fromJson(in, User.class));
-            fis.close();
-            mode = true;
-        } catch (FileNotFoundException e) {
-            //Do Nothing
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }catch (NullPointerException e){
-            //Do Nothing
-        }
+    public void loadUser(User user){
+        //Load User from whereever
     }
     
     public void setText(Boolean mode){
         if (mode) {
-            EditText nameEditText = (EditText) findViewById(R.id.nameTextView);
-            nameEditText.setText(myUser.getName());
-            EditText cityEditText = (EditText) findViewById(R.id.cityTextView);
-            cityEditText.setText(myUser.getCity());
-            EditText phoneNumberEditText = (EditText) findViewById(R.id.phoneTextView);
-            phoneNumberEditText.setText(myUser.getPhoneNumber());
-            EditText emailEditText = (EditText) findViewById(R.id.emailTextView);
-            emailEditText.setText(myUser.getEmailAddress());
-            EditText genderEditText = (EditText) findViewById(R.id.genderTextView);
-            genderEditText.setText(myUser.getGender());
-            EditText bioEditText = (EditText) findViewById(R.id.bioTextView);
-            bioEditText.setText(myUser.getBio());
-        }
-        else{
-            EditText nameEditText = (EditText) findViewById(R.id.nameTextView);
-            nameEditText.setText("");
-            EditText cityEditText = (EditText) findViewById(R.id.cityTextView);
-            cityEditText.setText("");
-            EditText phoneNumberEditText = (EditText) findViewById(R.id.phoneTextView);
-            phoneNumberEditText.setText("");
-            EditText emailEditText = (EditText) findViewById(R.id.emailTextView);
-            emailEditText.setText("");
-            EditText genderEditText = (EditText) findViewById(R.id.genderTextView);
-            genderEditText.setText("");
-            EditText bioEditText = (EditText) findViewById(R.id.bioTextView);
-            bioEditText.setText("");
+            EditText nameEditText = (EditText) findViewById(R.id.nameEditView);
+            nameEditText.setText(myUser.getName(), TextView.BufferType.EDITABLE);
+            EditText cityEditText = (EditText) findViewById(R.id.cityEditView);
+            cityEditText.setText(myUser.getCity(), TextView.BufferType.EDITABLE);
+            EditText phoneNumberEditText = (EditText) findViewById(R.id.phoneEditView);
+            phoneNumberEditText.setText(myUser.getPhoneNumber(), TextView.BufferType.EDITABLE);
+            EditText emailEditText = (EditText) findViewById(R.id.emailEditView);
+            emailEditText.setText(myUser.getEmailAddress(), TextView.BufferType.EDITABLE);
+            EditText genderEditText = (EditText) findViewById(R.id.genderEditView);
+            genderEditText.setText(myUser.getGender(), TextView.BufferType.EDITABLE);
+            EditText bioEditText = (EditText) findViewById(R.id.bioEditView);
+            bioEditText.setText(myUser.getBio(), TextView.BufferType.EDITABLE);
         }
     }
 
