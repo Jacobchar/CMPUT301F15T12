@@ -44,7 +44,7 @@ public class UserTest extends ActivityInstrumentationTestCase2{
     public void testGetUsername(){
         User testUser = new User(name, username, emailAddress, phoneNum, gender, bio, city);
         String gotUsername = testUser.getUsername();
-        assertEquals(gotUsername, username)
+        assertEquals(gotUsername, username);
     }
 
     public void testGetPhoneNumber(){
@@ -68,7 +68,7 @@ public class UserTest extends ActivityInstrumentationTestCase2{
     public void testGetEmailAddress(){
         User testUser = new User(name, username, emailAddress, phoneNum, gender, bio, city);
         String gotEmail = testUser.getEmailAddress();
-        assertEquals(gotEmail, emailAddress)
+        assertEquals(gotEmail, emailAddress);
     }
     
     public void testGetCity(){
