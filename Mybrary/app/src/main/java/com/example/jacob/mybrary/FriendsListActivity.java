@@ -7,14 +7,24 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 public class FriendsListActivity extends AppCompatActivity {
+
+    private ListView listView;
+    private ListAdapter listAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
+
+        listView = (ListView) findViewById(R.id.listView);
         fillFriendsList();
     }
 
@@ -40,9 +50,21 @@ public class FriendsListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void fillFriendsList(){
 
-        // grab all those friends
+    public void fillFriendsList(){
+        //friends should be set using proper method from friendsList object
+        String[] friends = new String[] {"Dominieque", "Jackylnn", "Victor", "Betty", "Daphne"};
+
+        listAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, friends);
+        listView.setAdapter(listAdapter);
+       // listAdapter.notifyDataSetChanged();
+
+        //https://developer.xamarin.com/guides/android/user_interface/working_with_listviews_and_adapters/part_2_-_populating_a_listview_with_data/
+
+
+    }
+
+    public void deleteFriend(){
 
     }
 

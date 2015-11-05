@@ -9,7 +9,7 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
     public FriendsListTest() { super(FriendsList.class); }
 
     public void testAddFriend(){
-        User user = new User("Joe", "123-5678", "Male", "this is my bio");
+        User user = new User("Joe", "joe@gmail.com", "123-5678", "Male", "this is my bio", "Edmonton");
         FriendsList friendsList = new FriendsList();
         friendsList.addFriend(user);
         //this test is coupled with testHasFriend
@@ -17,7 +17,7 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testRemoveFriend(){
-        User user = new User("Joe", "123-5678", "Male", "this is my bio");
+        User user = new User("Joe", "joe@gmail.com", "123-5678", "Male", "this is my bio", "Edmonton");
         FriendsList friendsList = new FriendsList();
         friendsList.addFriend(user);
         friendsList.removeFriend(user);
@@ -26,10 +26,10 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testHasFriend(){
-        User user1 = new User("Joe", "123-5678", "Male", "this is my bio");
-        User user2 = new User("Vicky", "234-5678", "Female - maybe", "this is my bio");
-        User user3 = new User("Dom", "333-4678", "Male", "this is my bio");
-        User user4 = new User("Jake", "666-6668", "Male", "this is my bio");
+        User user1 = new User("Joe", "joe@gmail.com", "123-5678", "Male", "this is my bio", "Edmonton");
+        User user2 = new User("Vicky", "vicky@gmail.com", "234-5678", "Female - maybe", "this is my bio", "Beaumont");
+        User user3 = new User("Dom", "dom@gmail.com", "333-4678", "Male", "this is my bio", "St. Albert");
+        User user4 = new User("Jake", "jake@gmail.com", "666-6668", "Male", "this is my bio", "Edmonton");
         FriendsList friendsList = new FriendsList();
         friendsList.addFriend(user1);
         friendsList.addFriend(user2);
@@ -42,9 +42,9 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testNumFriends(){
-        User user1 = new User("Joe", "123-5678", "Male", "this is my bio");
-        User user2 = new User("Vicky", "234-5678", "Female - maybe", "this is my bio");
-        User user3 = new User("Dom", "333-4678", "Male", "this is my bio");
+        User user1 = new User("Joe", "joe@gmail.com", "123-5678", "Male", "this is my bio", "Edmonton");
+        User user2 = new User("Vicky", "vicky@gmail.com", "234-5678", "Female - maybe", "this is my bio", "Beaumont");
+        User user3 = new User("Dom", "dom@gmail.com", "333-4678", "Male", "this is my bio", "St. Albert");
         FriendsList friendsList = new FriendsList();
         friendsList.addFriend(user1);
         friendsList.addFriend(user2);

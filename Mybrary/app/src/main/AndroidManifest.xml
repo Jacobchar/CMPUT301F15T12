@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jacob.mybrary" >
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -43,6 +44,16 @@
         <activity
             android:name=".ProposeTradeActivity"
             android:label="@string/title_activity_propose_trade"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".ViewUserActivity"
+            android:label="@string/title_activity_view_user"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
