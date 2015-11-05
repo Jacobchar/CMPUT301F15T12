@@ -1,5 +1,7 @@
 package com.example.jacob.mybrary;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -9,10 +11,10 @@ import java.util.Iterator;
 
 public class Inventory {
 
-    private Collection<Book> inventoryList;
+    private ArrayList<Book> inventoryList = new ArrayList<Book>();
     private ArrayList observers;
 
-    Collection<Book> getBooks(){
+    ArrayList<Book> getBooks(){
         return inventoryList;
     }
 

@@ -24,7 +24,7 @@ public class InventoryActivity extends AppCompatActivity {
 
     ArrayAdapter<Book> adapter;
     ListView listView;
-    Collection<Book> inventory;
+    ArrayList<Book> inventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +46,13 @@ public class InventoryActivity extends AppCompatActivity {
     }
 
     void fillInventory(){
-        Inventory i = new Inventory();
 
+        listView = (ListView) findViewById(R.id.inventoryListView); // controller?
+
+        Inventory i = new Inventory();
         inventory = i.getBooks();
 
-        Book[] inventoryArray = new Book[inventory.size()];
-        inventoryArray = (Book[]) inventory.toArray();
-
-        adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventoryArray);
+        adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventory);
 
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
