@@ -2,6 +2,7 @@ package com.example.jacob.mybrary;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.UUID;
 
 /* Created By Victoria */
@@ -12,7 +13,7 @@ public class Book {
     private Integer quantity;
     private String category;
     private boolean sharedWithOthers;
-    private Collection<String> comments;
+    private ArrayList<String> comments = new ArrayList<String>();
     private UUID itemID;
 
     public Photo photo;
@@ -41,20 +42,24 @@ public class Book {
     public String toString(){
         String string = "";
 
-        string = "Name: " + ", Quantity: " + ", Category: ";
+        string = "Name: " + name + ", Quantity: " + quantity + ", Category: " + category;
 
         // sharedWithOthers
         if (sharedWithOthers) {
-            string = string + " , is shared with others, ";
+            string = string + " , is shared with others ";
         } else {
-            string = string + ", isn't shared with others, ";
+            string = string + ", isn't shared with others ";
         }
 
         // loop through comments
         if (comments.size() == 0) {
             string = string + ", No comments.";
         } else {
-
+            string = string + ", Comments: ";
+            Iterator<String> i = comments.iterator();
+            while (i.hasNext()){
+                string = string + i.next();
+            }
         }
 
         return string;
