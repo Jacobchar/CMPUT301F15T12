@@ -5,7 +5,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.UUID;
 
-//Tests for the User Class
+// Class tests the Basic Functionality of the User Class
 public class UserTest extends ActivityInstrumentationTestCase2{
     private String name = "TestUser";
     private String username = "TestUsername";
