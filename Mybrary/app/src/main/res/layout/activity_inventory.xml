@@ -13,6 +13,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Inventory"
         android:id="@+id/inventoryTitleView"
+        android:textSize="25dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -33,7 +34,8 @@
         android:text="Search"
         android:id="@+id/searchButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignEnd="@+id/inventoryListView"
+        android:layout_toEndOf="@+id/inventoryTitleView" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -41,15 +43,9 @@
         android:layout_height="wrap_content"
         android:text="Add Item"
         android:id="@+id/addButton"
+        android:onClick="addNewItem"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/inventoryTitleView" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete Items"
-        android:id="@+id/deleteButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -5,7 +5,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.UUID;
 
-/* Created By Victoria */
+/**
+ * Created by Victoria.
+ *
+ * Model class that represents the book class. Can create new books, add comments, and get and set
+ * book attributes. The toString() method dictates what will be displayed in the inventory activity.
+ *
+ */
 
 public class Book {
 
@@ -16,7 +22,7 @@ public class Book {
     private ArrayList<String> comments = new ArrayList<String>();
     private UUID itemID;
 
-    public Photo photo;
+    public UUID photoID;
     public ArrayList observers;
 
     public Book(){

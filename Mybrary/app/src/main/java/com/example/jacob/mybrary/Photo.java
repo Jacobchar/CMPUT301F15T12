@@ -2,8 +2,12 @@ package com.example.jacob.mybrary;
 
 import android.graphics.Bitmap;
 
-/*  Created By Victoria
-This is to be done later, in project pt 5 */
+/**
+ * Created by Victoria.
+ *
+ * Basic photo class. To be completed in project P5.
+ *
+ */
 
 public class Photo {
 

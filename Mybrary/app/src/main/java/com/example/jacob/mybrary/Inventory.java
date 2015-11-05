@@ -7,7 +7,16 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 
-/* Created By Victoria */
+/**
+ * Created by Victoria.
+ *
+ * Model class that represents a user's inventory. Allows for basic inventory functionality such as
+ * getting the inventory, deleting a book, searching for a book by name, deleting a book, checking
+ * if it has a book, and checking the size of the Inventory.
+ *
+ * Still under construction.
+ *
+ */
 
 public class Inventory {
 
@@ -48,6 +57,8 @@ public class Inventory {
         Book book = getBookByName(name);
 
         if (book == null) return false;
+
+        inventoryList = getBooks();
 
         inventoryList.remove(book);
 

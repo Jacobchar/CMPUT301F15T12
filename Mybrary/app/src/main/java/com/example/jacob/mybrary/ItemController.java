@@ -2,7 +2,13 @@ package com.example.jacob.mybrary;
 
 import android.widget.Button;
 
-/* Created By Victoria */
+/**
+ * Created by Victoria.
+ *
+ * Controller class for an item. Allows you to modify attributes and specs of a book you own.
+ * Still under construction.
+ *
+ */
 
 public class ItemController {
 
@@ -12,7 +18,7 @@ public class ItemController {
     private Button changeCategory;
 
     void addPhoto(Photo photo, Book book){
-        book.photo = photo;
+        //book.photo = photo;
     }
 
     void addComment(String comment, Book book){

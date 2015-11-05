@@ -3,22 +3,23 @@ package com.example.jacob.mybrary;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.InputType;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Collection;
+
+/**
+ * Created by Victoria.
+ *
+ * Inventory Activity, displays to the inventory to the user. Allows for deleting a book on a long
+ * click, adding a book, and searching your inventory.
+ *
+ * Search functionality deferred to P5.
+ *
+ */
 
 public class InventoryActivity extends AppCompatActivity {
 
@@ -66,7 +67,6 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
-
     void fillInventory(){
 
         listView = (ListView) findViewById(R.id.inventoryListView); // controller?
@@ -76,6 +76,7 @@ public class InventoryActivity extends AppCompatActivity {
         Inventory i = new Inventory();
         i.addBook(book);
         inventory = i.getBooks();
+        // there's an issue with the inventory not storing this book
 
         adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventory);
 
@@ -90,6 +91,10 @@ public class InventoryActivity extends AppCompatActivity {
         Boolean bool = i.deleteBookByName(book.getName());
 
         adapter.notifyDataSetChanged();
+
+    }
+
+    public void addNewItem(){
 
     }
 
