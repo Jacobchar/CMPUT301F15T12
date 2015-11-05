@@ -26,4 +26,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile files('lib/okhttp-2.5.0.jar')
     compile files('lib/okio-1.6.0.jar')
+    compile 'com.google.code.gson:gson:2.4'
 }
