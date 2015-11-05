@@ -16,4 +16,16 @@ public class ProposeTradeActivity extends AppCompatActivity {
 
     }
 
+    public void sendRequestButton(View v){
+
+    }
+
+    public void addYourOfferButton(View v){
+
+    }
+
+    public void addTheirOfferButton(View v){
+
+    }
+
 }
