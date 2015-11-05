@@ -9,11 +9,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,18 +33,39 @@ public class InventoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
         fillInventory();
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+
+                final Book book = (Book) listView.getItemAtPosition(pos);
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
+                builder.setMessage("Do you want to delete this item?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        deleteBook(book);
+                        dialog.cancel();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+                return true;
+            }
+        });
+
+
     }
 
-    void deleteBook(){
-
-        String name = "";
-        Inventory i = new Inventory();
-
-        Boolean bool = i.deleteBookByName(name);
-
-        adapter.notifyDataSetChanged();
-
-    }
 
     void fillInventory(){
 
@@ -58,6 +81,16 @@ public class InventoryActivity extends AppCompatActivity {
 
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+    }
+
+    void deleteBook(Book book){
+
+        Inventory i = new Inventory();
+
+        Boolean bool = i.deleteBookByName(book.getName());
+
+        adapter.notifyDataSetChanged();
+
     }
 
 
