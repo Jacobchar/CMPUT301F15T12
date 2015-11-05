@@ -24,7 +24,6 @@ public class Inventory {
         return inventoryList.size();
     }
 
-
     Book getBookByName(String name){
 
         Book book;
@@ -38,6 +37,18 @@ public class Inventory {
         }
 
         return null;
+    }
+
+    boolean deleteBookByName(String name){
+
+        Book book = getBookByName(name);
+
+        if (book == null) return false;
+
+        inventoryList.remove(book);
+
+        return true;
+
     }
 
     Integer numCopies(Book inputBook){
