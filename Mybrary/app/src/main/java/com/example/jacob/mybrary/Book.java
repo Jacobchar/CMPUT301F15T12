@@ -22,28 +22,41 @@ public class Book {
     private ArrayList<String> comments = new ArrayList<String>();
     private UUID itemID;
 
-    public UUID photoID;
+    public ArrayList<UUID> photoIDs;
     public ArrayList observers;
 
+    /**
+     * Basic empty Book constructor.
+     */
     public Book(){
         this.name = "N/A";
         this.quantity = 0;
         this.category = "N/A";
         this.sharedWithOthers = false;
 
-        this.itemID = generateNewUUID();
+        this.itemID = UUID.randomUUID();
     }
 
-
+    /**
+     * Basic Book constructor, takes inputs.
+     * @param name Name of the book
+     * @param quantity Quantity of this book in your inventory
+     * @param category Category this book falls under
+     * @param sharedWithOthers Boolean that demonstrates if this item is private or shared
+     */
     public Book(String name, Integer quantity, String category, boolean sharedWithOthers){
         this.name = name;
         this.quantity = quantity;
         this.category = category;
         this.sharedWithOthers = sharedWithOthers;
 
-        this.itemID = generateNewUUID();
+        this.itemID = UUID.randomUUID();
     }
 
+    /**
+     * Creates string to be displayed to the user to describe a book.
+     * @return Returns string to be displayed in Inventory Activity
+     */
     @Override
     public String toString(){
         String string = "";
@@ -71,23 +84,23 @@ public class Book {
         return string;
     }
 
-    public UUID generateNewUUID(){
-        UUID id = UUID.randomUUID();
-        return id;
-    }
-
+    /**
+     * Adds a comment to the comment arrayList of a book.
+     * @param comment Comment user wants to add to the book
+     */
     public void addNewComment(String comment){
         this.comments.add(comment);
-    }
-
-    public Collection<String> getComments() {
-        return comments;
     }
 
     private void updateObservers(){
         // to be implemented
     }
 
+    /**
+     * Compares two books to eachother via itemID.
+     * @param book Book you'd like to compare your current book to
+     * @return 0, 1, -1: similar to basic compareTo function
+     */
     public int compareTo(Object book) {
 
         return itemID.compareTo(((Book) book).itemID);
@@ -95,6 +108,8 @@ public class Book {
     }
 
     /* Endless Getters and Setters */
+
+    public Collection<String> getComments() { return comments; }
 
     public String getName() {
         return name;
@@ -120,13 +135,7 @@ public class Book {
         this.sharedWithOthers = sharedWithOthers;
     }
 
-    public UUID getItemID() {
-        return itemID;
-    }
-
-    public void setItemID(UUID itemID) {
-        this.itemID = itemID;
-    }
+    public UUID getItemID() { return itemID; }
 
 
     public String getCategory() {
