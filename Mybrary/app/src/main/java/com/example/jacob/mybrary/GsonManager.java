@@ -16,6 +16,10 @@ public class GsonManager {
 
     protected GsonManager(){}
 
+    /**
+     * Creating as a Singleton
+     * @return
+     */
     public static GsonManager getInstance() {
         if(instance == null) {
             instance = new GsonManager();
@@ -23,17 +27,25 @@ public class GsonManager {
         return instance;
     }
 
-    public String toJson(Object object){
+    private Gson gson = new Gson();
 
-        Gson gson = new Gson();
+    /**
+     * converts an object to a Json string
+     * @param object the object to be converted
+     * @return
+     */
+    public String toJson(Object object){
         return gson.toJson(object);
     }
 
+    /**
+     * converts a json Element back into an object
+     * @param json element to be converted
+     * @param typeOfT Object type 
+     * @return
+     */
     public Type fromJson(JsonElement json, Type typeOfT){
-
-        Gson gson = new Gson();
         return gson.fromJson(json, typeOfT);
-
     }
 
 }
