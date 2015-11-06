@@ -27,6 +27,10 @@ public class ViewUserActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Sets the Text within the Edit Text boxes to the values from a User
+     * @param mode
+     */
     public void setText(View v){
         TextView nameTextView = (TextView) v.findViewById(R.id.nameTextView);
         nameTextView.setText(myUser.getName());
