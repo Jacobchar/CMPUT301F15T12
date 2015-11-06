@@ -14,7 +14,11 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 /**
- * Created by Ben on 05/11/2015.
+ * Created by Ben
+ *
+ * Controller Class for the Edit Profile Activity
+ *
+ * Not Implemented Yet
  */
 public class ProfileController {
 

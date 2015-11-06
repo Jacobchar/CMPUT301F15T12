@@ -23,20 +23,38 @@ public class Inventory {
     private ArrayList<Book> inventoryList = new ArrayList<Book>();
     private ArrayList observers;
 
+    /**
+     * Grab a user's full inventory.
+     * @return Returns an ArrayList of Books.
+     */
     ArrayList<Book> getBooks(){
         return inventoryList;
     }
 
+    /**
+     * Add a book to a user's inventory.
+     * @param book The book object you want to add to your inventory
+     */
     public void addBook(Book book){
 
         inventoryList.add(book);
 
     }
 
+    /**
+     * Get the size of your inventory.
+     * Note: number of unique books, not total copies of all books
+     * @return returns inventory size
+     */
     Integer sizeInventory(){
         return inventoryList.size();
     }
 
+    /**
+     * Returns book object, identified by it's name.
+     * @param name takes the name of a book in your inventory
+     * @return returns a Book object
+     */
     Book getBookByName(String name){
 
         Book book;
@@ -52,6 +70,11 @@ public class Inventory {
         return null;
     }
 
+    /**
+     * Deletes a book object, identified by it's name.
+     * @param name takes the name of a book in your inventory
+     * @return returns true/false depending on if your book was found & deleted
+     */
     boolean deleteBookByName(String name){
 
         Book book = getBookByName(name);
@@ -66,6 +89,11 @@ public class Inventory {
 
     }
 
+    /**
+     * Returns the number of copies of a specified book.
+     * @param inputBook Given book you want the quantity of
+     * @return returns an integer of copies
+     */
     Integer numCopies(Book inputBook){
         Book book;
         Iterator e = inventoryList.iterator();
@@ -76,10 +104,14 @@ public class Inventory {
                 return book.getQuantity();
             }
         }
-
         return 0;
     }
 
+    /**
+     * Checks if a book is in your inventory.
+     * @param inputBook Given book you want to check
+     * @return true/false if book is in your inventory
+     */
     Boolean hasBook(Book inputBook){
         Book book;
         Iterator e = inventoryList.iterator();

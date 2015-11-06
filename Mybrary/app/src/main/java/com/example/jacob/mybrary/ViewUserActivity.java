@@ -5,7 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-
+/**
+ * Activity to View a single User's Profile
+ *
+ * Loading User not implemented yet
+ */
 public class ViewUserActivity extends AppCompatActivity {
 
     User myUser;
@@ -25,6 +29,10 @@ public class ViewUserActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Sets the Text within the Edit Text boxes to the values from a User
+     * @param v
+     */
     public void setText(View v){
         TextView nameTextView = (TextView) v.findViewById(R.id.nameTextView);
         nameTextView.setText(myUser.getName());
