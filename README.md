@@ -8,3 +8,5 @@ Used the android developer guide for help with general issues and style guides. 
 Used lonelyTwitter for help with ListView and Adaptor display methods: https://github.com/joshua2ua/lonelyTwitter Author: Joshua Campbell, retrieved on October 1st 2015  
 
 Network check: http://developer.android.com/training/basics/network-ops/connecting.html
+
+Gson Help: https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html
