@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 /**
  * Activity to View a single User's Profile
+ *
+ * Loading User not implemented yet
  */
 public class ViewUserActivity extends AppCompatActivity {
 

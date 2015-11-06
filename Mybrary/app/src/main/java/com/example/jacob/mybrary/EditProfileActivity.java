@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 /**
  * Activity to Edit a User object
+ *
+ * Loading and Saving User not yet implemented
  */
 public class EditProfileActivity extends AppCompatActivity {
 
