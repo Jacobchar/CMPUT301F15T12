@@ -1,7 +1,5 @@
 package com.example.jacob.mybrary;
 
-import android.content.Context;
-
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
@@ -21,6 +19,10 @@ public class FileManager {
 
     protected FileManager(){}
 
+    /**
+     * Required for Singleton
+     * @return
+     */
     public static FileManager getInstance(){
         if(instance == null){
             instance = new FileManager();
@@ -28,10 +30,15 @@ public class FileManager {
         return instance;
     }
 
-    public void saveJson(String path, Context content) {
+    /**
+     * Saving our json element to a specified file
+     * @param path name of file being saved too
+     * @param content json element being saved
+     */
+    public void saveJson(String path, String content) {
 
         try {
-            FileOutputStream fos = content.openFileOutput(path, Context.MODE_PRIVATE);
+            FileOutputStream fos = new FileOutputStream(path);
             BufferedWriter output = new BufferedWriter(new OutputStreamWriter(fos));
             Gson gson = new Gson();
             gson.toJson(this.getInstance(), output);
@@ -44,8 +51,10 @@ public class FileManager {
         }
     }
 
-    //public String readFile(String path){
+    public String readFile(String path){
 
-    //}
+        
+
+    }
 
 }

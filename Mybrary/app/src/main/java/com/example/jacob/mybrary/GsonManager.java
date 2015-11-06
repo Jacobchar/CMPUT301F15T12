@@ -41,7 +41,7 @@ public class GsonManager {
     /**
      * converts a json Element back into an object
      * @param json element to be converted
-     * @param typeOfT Object type 
+     * @param typeOfT Object type
      * @return
      */
     public Type fromJson(JsonElement json, Type typeOfT){
