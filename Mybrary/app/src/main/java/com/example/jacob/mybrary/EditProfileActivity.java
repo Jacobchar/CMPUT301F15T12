@@ -1,25 +1,14 @@
 package com.example.jacob.mybrary;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
+/**
+ * Activity to Edit a User object
+ */
 public class EditProfileActivity extends AppCompatActivity {
 
     ProfileController myProfileController = new ProfileController();
@@ -36,6 +25,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Activity to take in the Text from the Edit Text boxes and Updates the User with
+     * the information
+     * @param v
+     */
     public void setUser(View v){
         final View layout = View.inflate(this, R.layout.activity_edit_profile, null);
         EditText nameView = (EditText) layout.findViewById(R.id.nameEditView);
@@ -58,7 +52,11 @@ public class EditProfileActivity extends AppCompatActivity {
     public void loadUser(User user){
         //Load User from whereever
     }
-    
+
+    /**
+     * Sets the Text within the Edit Text boxes to the values from a User
+     * @param mode
+     */
     public void setText(Boolean mode){
         if (mode) {
             EditText nameEditText = (EditText) findViewById(R.id.nameEditView);

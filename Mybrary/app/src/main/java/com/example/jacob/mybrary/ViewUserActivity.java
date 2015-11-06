@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-
+/**
+ * Activity to View a single User's Profile
+ */
 public class ViewUserActivity extends AppCompatActivity {
 
     User myUser;
