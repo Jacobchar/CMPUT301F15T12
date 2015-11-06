@@ -60,7 +60,7 @@ public class FileManager {
      * @return
      */
     public String readFile(String path) {
-        private String file=" ";
+        String file=" ";
         try {
             FileInputStream fis = new FileInputStream(path);
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
