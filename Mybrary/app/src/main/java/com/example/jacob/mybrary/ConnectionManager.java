@@ -25,6 +25,10 @@ public class ConnectionManager {
 
     private static ConnectionManager ourInstance = new ConnectionManager();
 
+    /**
+     * Gets the instance of the connection manager.
+     * @return Returns the instance of the connection manager.
+     */
     public static ConnectionManager getInstance() {
         return ourInstance;
     }
@@ -33,6 +37,13 @@ public class ConnectionManager {
         connstr = "http://cmput301.softwareprocess.es:8080/cmput301f15t12/";
     }
 
+    /**
+     * Sends a post request to the server with the given data.
+     * @param path Location on the server for the object to be stored.
+     * @param json Json representation of the object to be stored.
+     * @return Returns a string containing the result of the operation.
+     * @throws IOException Thrown if an error occured during the transmission
+     */
     public String put(String path, String json) throws IOException{
         // TODO: Validate input strings
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -46,6 +57,12 @@ public class ConnectionManager {
         return response.body().string();
     }
 
+    /**
+     * Retrieves the object from the server at the given location.
+     * @param path Location on the server of the object to be retrieved.
+     * @return Returns a string containing the result of the operation.
+     * @throws IOException Thrown if an error occured during the transmission.
+     */
     public String get(String path) throws IOException {
         // TODO: Validate input strings
         OkHttpClient client = new OkHttpClient();
@@ -57,6 +74,13 @@ public class ConnectionManager {
         return response.body().string();
     }
 
+    /**
+     * Searches the given location based on the given query.
+     * @param path Location on the server to be searched.
+     * @param query Json query to be sent to the server.
+     * @return Returns a string containing the result of the operation.
+     * @throws IOException Thrown if an error occured during the transmission.
+     */
     public String query(String path, String query) throws IOException{
         // TODO: Validate input strings
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -72,6 +96,13 @@ public class ConnectionManager {
         return response.body().string();
     }
 
+    /**
+     * Removes a given object from the server. CAUTION: USE THIS CAREFULLY, IT IS POSSIBLE TO DELETE
+     * AN ENTIRE FOLDER.
+     * @param path Location of the object to be deleted.
+     * @return Returns a string containing the result of the operation.
+     * @throws IOException Thrown if an error occured during the transmission.
+     */
     public String remove(String path) throws IOException{
         // TODO: Validate input strings
         OkHttpClient client = new OkHttpClient();
@@ -85,8 +116,13 @@ public class ConnectionManager {
         return response.body().string();
     }
 
-    // Source: http://developer.android.com/training/basics/network-ops/connecting.html
-    // Check for connectivity before using any other methods
+    /**
+     * This method should be called before any other network functionality should be used.
+     *
+     * Source: http://developer.android.com/training/basics/network-ops/connecting.html
+     * @param context Context of the app
+     * @return Returns a boolean indicating whether a network connection exists.
+     */
     public boolean checkNetwork(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
