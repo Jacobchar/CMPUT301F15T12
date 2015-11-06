@@ -6,12 +6,13 @@ import android.widget.Button;
  * Created by Victoria.
  *
  * Controller class for an item. Allows you to modify attributes and specs of a book you own.
- * Still under construction.
+ * Still under construction. Not used yet. Deferred to P5.
  *
  */
 
 public class ItemController {
 
+    /*
     private Button addPhoto;
     private Button addComment;
     private Button share;
@@ -19,7 +20,7 @@ public class ItemController {
 
     void addPhoto(Photo photo, Book book){
         //book.photo = photo;
-    }
+    }*/
 
     void addComment(String comment, Book book){
         book.getComments().add(comment);

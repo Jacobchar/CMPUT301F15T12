@@ -67,6 +67,9 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Fills your inventory ListView on opening the inventory activity.
+     */
     void fillInventory(){
 
         listView = (ListView) findViewById(R.id.inventoryListView); // controller?
@@ -84,6 +87,10 @@ public class InventoryActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * Allows you to delete a book using the Inventory class.
+     * @param book Book that you'd like to delete from your inventory
+     */
     void deleteBook(Book book){
 
         Inventory i = new Inventory();
@@ -94,14 +101,6 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
-    public void addNewItem(){
-
-    }
-
-    public void update(){
-
-
-    }
 
 
 
