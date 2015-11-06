@@ -10,7 +10,7 @@ import android.widget.TextView;
  * Activity to Edit a User object
  *
  * Loading and Saving User not yet implemented
- * MVC Style not Completely Implemented
+ * MVC Style not Completely Implemented yet
  */
 public class EditProfileActivity extends AppCompatActivity {
 
