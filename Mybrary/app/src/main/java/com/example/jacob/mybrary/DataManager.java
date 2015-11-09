@@ -1,7 +1,5 @@
 package com.example.jacob.mybrary;
 
-import android.provider.ContactsContract;
-
 import java.util.ArrayList;
 
 /**
@@ -33,7 +31,7 @@ public class DataManager {
         return null;
     }
 
-    public ArrayList<Book> searchBooks(String path, String query) {
+    public ArrayList<Book> searchBooks(String query) {
         return null;
     }
 
@@ -46,11 +44,11 @@ public class DataManager {
         return false;
     }
 
-    public Book retrieveUser(String id) {
+    public User retrieveUser(String id) {
         return null;
     }
 
-    public ArrayList<User> searchUsers(String path, String query) {
+    public ArrayList<User> searchUsers(String query) {
         return null;
     }
 
@@ -63,11 +61,11 @@ public class DataManager {
         return false;
     }
 
-    public Book retrieveTrade(String id) {
+    public Trade retrieveTrade(String id) {
         return null;
     }
 
-    public ArrayList<Trade> searchTrades(String path, String query) {
+    public ArrayList<Trade> searchTrades(String query) {
         return null;
     }
 
@@ -80,11 +78,11 @@ public class DataManager {
         return false;
     }
 
-    public Book retrievePhoto(String id) {
+    public Photo retrievePhoto(String id) {
         return null;
     }
 
-    public ArrayList<Photo> searchPhotos(String path, String query) {
+    public ArrayList<Photo> searchPhotos(String query) {
         return null;
     }
 

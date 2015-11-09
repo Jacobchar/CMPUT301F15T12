@@ -2,6 +2,8 @@ package com.example.jacob.mybrary;
 
 import android.graphics.Bitmap;
 
+import java.util.UUID;
+
 /**
  * Created by Victoria.
  *
@@ -31,12 +33,7 @@ public class Photo {
      * @return true/false if photo is a valid size
      */
     Boolean checkValidSize(Integer size){
-       if (size < 65536){
-           return true;
-       } else {
-           return false;
-       }
-
+        return size < 65536;
     }
 
     /**
@@ -46,6 +43,10 @@ public class Photo {
      */
     String convertImageToJson(Bitmap image){
         return "";
+    }
+
+    UUID getUUID() {
+        return null;
     }
 
 
