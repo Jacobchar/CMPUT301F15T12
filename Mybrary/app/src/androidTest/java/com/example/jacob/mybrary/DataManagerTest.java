@@ -2,6 +2,9 @@ package com.example.jacob.mybrary;
 
 import android.test.AndroidTestCase;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -12,114 +15,139 @@ import java.util.ArrayList;
 public class DataManagerTest extends AndroidTestCase {
     //=========================BOOKS===============================
     public void testPutBook() {
-        DataManager dataManager = DataManager.getInstance();
-        Book book = new Book("testBook", 1, "testCategory", true);
+        try {
+            DataManager dataManager = DataManager.getInstance();
+            Book book = new Book("testBook", 1, "testCategory", true);
 
-        assertTrue(dataManager.storeBook(book));
+            assertTrue(dataManager.storeBook(book));
 
-        dataManager.removeBook(book.getItemID().toString());
+            dataManager.removeBook(book.getItemID().toString());
+        } catch (Exception e) {
+            fail();
+        }
     }
 
     public void testGetBook() {
-        DataManager dataManager = DataManager.getInstance();
-        Book book = new Book("testBook", 1, "testCategory", true);
+        try {
+            DataManager dataManager = DataManager.getInstance();
+            Book book = new Book("testBook", 1, "testCategory", true);
 
-        if (!dataManager.storeBook(book)) {
+            if (!dataManager.storeBook(book)) {
+                fail();
+            }
+
+            Book returnedBook = dataManager.retrieveBook(book.getItemID().toString());
+
+            //TODO: Ensure that Book has an equals() method.
+            //assertTrue(book.equals(returnedBook));
+            assertTrue(book.getItemID().equals(returnedBook.getItemID()));
+            assertTrue(book.getName().equals(returnedBook.getName()));
+            assertTrue(book.getCategory().equals(returnedBook.getCategory()));
+
+            dataManager.removeBook(book.getItemID().toString());
+        } catch (Exception e) {
             fail();
         }
-
-        Book returnedBook = dataManager.retrieveBook(book.getItemID().toString());
-
-        //TODO: Ensure that Book has an equals() method.
-        assertTrue(book.equals(returnedBook));
-
-        dataManager.removeBook(book.getItemID().toString());
     }
 
     public void testSearchBooks() {
-        DataManager dataManager = DataManager.getInstance();
-        Book book1 = new Book("testBook1", 1, "testCategory1", true);
-        Book book2 = new Book("testBook2", 2, "testCategory2", false);
-        Book book3 = new Book("testBook3", 3, "testCategory3", true);
+        try {
+            DataManager dataManager = DataManager.getInstance();
+            Book book1 = new Book("testBook1", 1, "testCategory1", true);
+            Book book2 = new Book("testBook2", 2, "testCategory2", true);
+            Book book3 = new Book("testBook3", 3, "testCategory3", true);
 
-        dataManager.storeBook(book1);
-        dataManager.storeBook(book2);
-        dataManager.storeBook(book3);
+            dataManager.storeBook(book1);
+            dataManager.storeBook(book2);
+            dataManager.storeBook(book3);
 
-        ArrayList<Book> returnedBooks = dataManager.searchBooks("{\"query\":{\"query_string\":{\"default_field\":\"val\",\"query\":2}}}");
+            //Wait for entries to be indexed
+            Thread.sleep(1000);
 
-        assertTrue(returnedBooks.size() == 1);
-        assertTrue(returnedBooks.contains(book2));
+            ArrayList<Book> returnedBooks = dataManager.searchBooks("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testBook2\"}}}");
 
-        dataManager.removeBook(book1.getItemID().toString());
-        dataManager.removeBook(book2.getItemID().toString());
-        dataManager.removeBook(book3.getItemID().toString());
+            assertTrue(returnedBooks.size() == 1);
+            //Book needs an equals() method
+            //assertTrue(returnedBooks.contains(book2));
+            assertTrue(returnedBooks.get(0).getItemID().equals(book2.getItemID()));
+            assertTrue(returnedBooks.get(0).getName().equals(book2.getName()));
+
+            dataManager.removeBook(book1.getItemID().toString());
+            dataManager.removeBook(book2.getItemID().toString());
+            dataManager.removeBook(book3.getItemID().toString());
+        } catch (Exception e) {
+            fail();
+        }
     }
 
     public void testRemoveBook() {
-        DataManager dataManager = DataManager.getInstance();
-        Book book = new Book("testBook", 1, "testCategory", true);
+        try {
+            DataManager dataManager = DataManager.getInstance();
+            Book book = new Book("testBook", 1, "testCategory", true);
 
-        dataManager.storeBook(book);
+            dataManager.storeBook(book);
 
-        assertTrue(dataManager.removeBook(book.getItemID().toString()));
+            assertTrue(dataManager.removeBook(book.getItemID().toString()));
+        } catch (Exception e) {
+            fail();
+        }
     }
 
 
     //=========================USERS===============================
-    public void testPutUser() {
-        DataManager dataManager = DataManager.getInstance();
-        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
-
-        assertTrue(dataManager.storeUser(user));
-
-        dataManager.removeBook(user.getUUID().toString());
-    }
-
-    public void testGetUser() {
-        DataManager dataManager = DataManager.getInstance();
-        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
-
-        if (!dataManager.storeUser(user)) {
-            fail();
-        }
-
-        User returnedUser = dataManager.retrieveUser(user.getUUID().toString());
-
-        //TODO: Ensure that User has an equals() method.
-        assertTrue(user.equals(returnedUser));
-
-        dataManager.removeBook(user.getUUID().toString());
-    }
-
-    public void testSearchUsers() {
-        DataManager dataManager = DataManager.getInstance();
-        User user1 = new User("testName1", "testEmail1", "testPhNo1", "testGender1", "testBio1", "testCity1");
-        User user2 = new User("testName2", "testEmail2", "testPhNo2", "testGender2", "testBio2", "testCity2");
-        User user3 = new User("testName3", "testEmail3", "testPhNo3", "testGender3", "testBio3", "testCity3");
-
-        dataManager.storeUser(user1);
-        dataManager.storeUser(user2);
-        dataManager.storeUser(user3);
-
-        ArrayList<User> returnedUsers = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testName2\"}}}");
-
-        assertTrue(returnedUsers.size() == 1);
-        assertTrue(returnedUsers.contains(user2));
-
-        dataManager.removeBook(user1.getUUID().toString());
-        dataManager.removeBook(user2.getUUID().toString());
-        dataManager.removeBook(user3.getUUID().toString());
-    }
-
-    public void testRemoveUser() {
-        DataManager dataManager = DataManager.getInstance();
-        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
-
-        dataManager.storeUser(user);
-
-        assertTrue(dataManager.removeUser(user.getUUID().toString()));
-    }
+//    public void testPutUser() {
+//        DataManager dataManager = DataManager.getInstance();
+//        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
+//
+//        assertTrue(dataManager.storeUser(user));
+//
+//        dataManager.removeBook(user.getUUID().toString());
+//    }
+//
+//    public void testGetUser() {
+//        DataManager dataManager = DataManager.getInstance();
+//        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
+//
+//        if (!dataManager.storeUser(user)) {
+//            fail();
+//        }
+//
+//        User returnedUser = dataManager.retrieveUser(user.getUUID().toString());
+//
+//        //TODO: Ensure that User has an equals() method.
+//        assertTrue(user.equals(returnedUser));
+//
+//        dataManager.removeBook(user.getUUID().toString());
+//    }
+//
+//    public void testSearchUsers() {
+//        DataManager dataManager = DataManager.getInstance();
+//        User user1 = new User("testName1", "testEmail1", "testPhNo1", "testGender1", "testBio1", "testCity1");
+//        User user2 = new User("testName2", "testEmail2", "testPhNo2", "testGender2", "testBio2", "testCity2");
+//        User user3 = new User("testName3", "testEmail3", "testPhNo3", "testGender3", "testBio3", "testCity3");
+//
+//        dataManager.storeUser(user1);
+//        dataManager.storeUser(user2);
+//        dataManager.storeUser(user3);
+//
+//        ArrayList<User> returnedUsers = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testName2\"}}}");
+//
+//        assertTrue(returnedUsers.size() == 1);
+//        assertTrue(returnedUsers.contains(user2));
+//
+//        dataManager.removeBook(user1.getUUID().toString());
+//        dataManager.removeBook(user2.getUUID().toString());
+//        dataManager.removeBook(user3.getUUID().toString());
+//    }
+//
+//    public void testRemoveUser() {
+//        DataManager dataManager = DataManager.getInstance();
+//        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
+//
+//        dataManager.storeUser(user);
+//
+//        assertTrue(dataManager.removeUser(user.getUUID().toString()));
+//    }
 
 
     //=========================TRADES===============================

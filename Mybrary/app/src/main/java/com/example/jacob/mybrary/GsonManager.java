@@ -8,6 +8,9 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 
 /**
+ * Simple class for managing Gson actions. It is currently a simple container class but more complex
+ * functionality may be needed in the future.
+ *
  * Created by Jacob on 2015-11-04.
  */
 public class GsonManager {
@@ -18,7 +21,7 @@ public class GsonManager {
 
     /**
      * Creating as a Singleton
-     * @return
+     * @return Returns the singleton instance
      */
     public static GsonManager getInstance() {
         if(instance == null) {
@@ -32,20 +35,31 @@ public class GsonManager {
     /**
      * converts an object to a Json string
      * @param object the object to be converted
-     * @return
+     * @return Returns a JSON string representation of the object.
      */
     public String toJson(Object object){
         return gson.toJson(object);
     }
 
     /**
-     * converts a json Element back into an object
-     * @param json element to be converted
-     * @param typeOfT Object type
-     * @return
+     * Converts a JSON element into an object.
+     * @param json String representation of the object to be converted.
+     * @param classOfT Class of the object to be returned.
+     * @param <T> Type to return the object as.
+     * @return Returns an object of the specified type as described in the JSON string.
      */
-    public Type fromJson(JsonElement json, Type typeOfT){
-        return gson.fromJson(json, typeOfT);
+    public <T> T fromJson(String json, Class<T> classOfT) {
+        return gson.fromJson(json, classOfT);
     }
 
+    /**
+     * Converts a JSON element into a generic object.
+     * @param json String representation of the object to be converted.
+     * @param typeOfT Type of the object to be returned.
+     * @param <T> Type to return the object as.
+     * @return Returns an object of the specified type as described in the JSON string.
+     */
+    public <T> T fromJson(String json, Type typeOfT) {
+        return gson.fromJson(json, typeOfT);
+    }
 }
