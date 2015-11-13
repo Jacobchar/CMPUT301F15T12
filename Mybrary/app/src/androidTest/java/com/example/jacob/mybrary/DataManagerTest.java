@@ -38,11 +38,7 @@ public class DataManagerTest extends AndroidTestCase {
 
             Book returnedBook = dataManager.retrieveBook(book.getItemID().toString());
 
-            //TODO: Ensure that Book has an equals() method.
-            //assertTrue(book.equals(returnedBook));
-            assertTrue(book.getItemID().equals(returnedBook.getItemID()));
-            assertTrue(book.getName().equals(returnedBook.getName()));
-            assertTrue(book.getCategory().equals(returnedBook.getCategory()));
+            assertTrue(book.equals(returnedBook));
 
             dataManager.removeBook(book.getItemID().toString());
         } catch (Exception e) {
@@ -67,10 +63,7 @@ public class DataManagerTest extends AndroidTestCase {
             ArrayList<Book> returnedBooks = dataManager.searchBooks("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testBook2\"}}}");
 
             assertTrue(returnedBooks.size() == 1);
-            //Book needs an equals() method
-            //assertTrue(returnedBooks.contains(book2));
-            assertTrue(returnedBooks.get(0).getItemID().equals(book2.getItemID()));
-            assertTrue(returnedBooks.get(0).getName().equals(book2.getName()));
+            assertTrue(returnedBooks.contains(book2));
 
             dataManager.removeBook(book1.getItemID().toString());
             dataManager.removeBook(book2.getItemID().toString());
