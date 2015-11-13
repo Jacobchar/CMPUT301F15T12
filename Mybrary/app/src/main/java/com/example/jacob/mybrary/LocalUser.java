@@ -15,4 +15,12 @@ public class LocalUser extends User {
     private LocalUser() {
         super("", "", "", "", "", "");
     }
+
+    /**
+     * To be used during initialization. This method should never be called other than at startup.
+     * @param instance LocalUser instance for the singleton to be set to.
+     */
+    public static void setInstance(LocalUser instance) {
+        ourInstance = instance;
+    }
 }

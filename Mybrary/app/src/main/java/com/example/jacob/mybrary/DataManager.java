@@ -23,6 +23,26 @@ public class DataManager {
 
     }
 
+    /**
+     * Loads the saved LocalUser object into the LocalUser singleton.
+     * @throws IOException Thrown when there was an error reading the file (including FileNotFoundException).
+     */
+    public void loadLocalUser() throws IOException {
+        String userjson = FileManager.getInstance().readFile("/data/data/com.example.jacob.mybrary/localUser.json");
+        LocalUser user = GsonManager.getInstance().fromJson(userjson, LocalUser.class);
+        LocalUser.setInstance(user);
+    }
+
+    /**
+     * Saves the LocalUser object to a file
+     * @throws IOException Thrown when there was an error writing to the file.
+     */
+    public void saveLocalUser() throws IOException {
+        LocalUser user = LocalUser.getInstance();
+        String userjson = GsonManager.getInstance().toJson(user);
+        FileManager.getInstance().saveJson("/data/data/com.example.jacob.mybrary/localUser.json", userjson);
+    }
+
     //======================= BOOKS ==============================
 
     /**

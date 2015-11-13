@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -40,11 +42,11 @@ public class FileManager {
      * @param content json element being saved
      */
     public void saveJson(String path, String content) throws IOException {
-        FileOutputStream fos = new FileOutputStream(path);
-        BufferedOutputStream out = new BufferedOutputStream(fos);
-        out.write(content.getBytes());
+        FileWriter writer = new FileWriter(path);
+        BufferedWriter out = new BufferedWriter(writer);
+        out.write(content);
         out.close();
-        fos.close();
+        writer.close();
     }
 
     /**
@@ -55,12 +57,13 @@ public class FileManager {
     public String readFile(String path) throws IOException {
         StringBuilder rv = new StringBuilder();
         String line;
-
-        FileInputStream fis = new FileInputStream(path);
-        BufferedReader in = new BufferedReader(new InputStreamReader(fis));
+        FileReader reader = new FileReader(path);
+        BufferedReader in = new BufferedReader(reader);
         while ((line = in.readLine()) != null) {
             rv.append(line);
         }
+        in.close();
+        reader.close();
         return rv.toString();
     }
 
