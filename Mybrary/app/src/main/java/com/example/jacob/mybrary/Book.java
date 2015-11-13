@@ -59,9 +59,7 @@ public class Book {
      */
     @Override
     public String toString(){
-        String string = "";
-
-        string = "Name: " + name + ", Quantity: " + quantity + ", Category: " + category;
+        String string = "Name: " + name + ", Quantity: " + quantity + ", Category: " + category;
 
         // sharedWithOthers
         if (sharedWithOthers) {
@@ -147,4 +145,35 @@ public class Book {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Book book = (Book) o;
+
+        if (sharedWithOthers != book.sharedWithOthers) return false;
+        if (name != null ? !name.equals(book.name) : book.name != null) return false;
+        if (quantity != null ? !quantity.equals(book.quantity) : book.quantity != null)
+            return false;
+        if (category != null ? !category.equals(book.category) : book.category != null)
+            return false;
+        if (comments != null ? !comments.equals(book.comments) : book.comments != null)
+            return false;
+        if (itemID != null ? !itemID.equals(book.itemID) : book.itemID != null) return false;
+        return !(photoIDs != null ? !photoIDs.equals(book.photoIDs) : book.photoIDs != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        result = 31 * result + (sharedWithOthers ? 1 : 0);
+        result = 31 * result + (comments != null ? comments.hashCode() : 0);
+        result = 31 * result + (itemID != null ? itemID.hashCode() : 0);
+        result = 31 * result + (photoIDs != null ? photoIDs.hashCode() : 0);
+        return result;
+    }
 }
