@@ -20,6 +20,7 @@ public class User {
     private String city;
     private UUID myUUID;
     private Inventory inventory;
+    private FriendsList friendsList;
 
     /**
      * Generates a User with an empty Inventory and generated UUID
@@ -39,6 +40,7 @@ public class User {
         this.city = city;
         this.inventory = new Inventory();
         this.myUUID = UUID.randomUUID();
+        this.friendsList = new FriendsList();
     }
 
     /**
@@ -104,5 +106,11 @@ public class User {
     public Inventory getInventory() {
         return inventory;
     }
+
+    /**
+     * Returns the Friendslist of the User
+     * @return
+     */
+    public FriendsList getFriendsList() { return friendsList;}
 
 }
