@@ -10,13 +10,13 @@ import java.util.UUID;
  */
 
 public class Trade {
-    UUID user1;
-    UUID user2;
-    Inventory user1Inventory;
-    Inventory user2Inventory;
-    Boolean user1Accepted = false;
-    Boolean user2Accepted = false;
-    UUID tradeID;
+    private UUID user1;
+    private UUID user2;
+    private Inventory user1Inventory;
+    private Inventory user2Inventory;
+    private Boolean user1Accepted = false;
+    private Boolean user2Accepted = false;
+    private UUID tradeID;
 
     /**
      * Trade between two users
@@ -107,6 +107,30 @@ public class Trade {
     @Override
     public String toString(){
         return "Trade completed";
+    }
+
+    /**
+     * Get the unique identifier for user 1
+     * @return UUID for user 1
+     */
+    public UUID getUser1UUID(){
+        return this.user1;
+    }
+
+    /**
+     * Get the unique identifier for user 2
+     * @return UUID for user 2
+     */
+    public UUID getUser2UUID(){
+        return this.user2;
+    }
+
+    /**
+     * Get the unique identifier for a trade
+     * @return UUID for the trade
+     */
+    public UUID getTradeID(){
+        return this.tradeID;
     }
 
 }

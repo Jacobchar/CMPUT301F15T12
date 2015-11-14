@@ -15,7 +15,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
     public void testTradeList(){
         TradeListActivity activity = (TradeListActivity) getActivity();
 
-        
+
     }
 
 }
