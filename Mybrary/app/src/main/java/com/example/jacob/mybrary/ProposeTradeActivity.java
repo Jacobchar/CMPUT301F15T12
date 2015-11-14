@@ -7,6 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+/**
+ * Interface linked to from a friends inventory, allowing a trade offer to be sent
+ * This is also linked to from the modify trade button in an individual trade
+ */
 public class ProposeTradeActivity extends AppCompatActivity {
 
     @Override

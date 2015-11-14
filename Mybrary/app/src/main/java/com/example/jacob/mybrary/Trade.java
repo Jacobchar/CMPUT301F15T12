@@ -99,4 +99,14 @@ public class Trade {
     public Boolean getUser2Accepted(){
         return this.user2Accepted;
     }
+
+    /**
+     * Override toString so the views can print the correct information
+     * @return String containing trade info
+     */
+    @Override
+    public String toString(){
+        return "Trade completed";
+    }
+
 }
