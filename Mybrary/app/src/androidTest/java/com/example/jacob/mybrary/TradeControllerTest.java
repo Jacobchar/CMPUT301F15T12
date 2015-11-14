@@ -30,12 +30,20 @@ public class TradeControllerTest  extends ActivityInstrumentationTestCase2 {
         User user2 = new User("Bob","","","","","");
 
         TradeController cont = new TradeController();
+        cont.createNewTrade(user1, user2);
+
+        UUID trade1ID = cont.getTradeList().get(0).getTradeID();
+
+        assertTrue(cont.getTradeList().get(0) == cont.editExistingTrade(trade1ID));
+
         cont.createNewTrade(user1,user2);
+        UUID trade2ID = cont.getTradeList().get(1).getTradeID();
 
-        UUID tradeID = cont.getTradeList().get(0).getTradeID();
+        assertTrue(cont.getTradeList().get(1) == cont.editExistingTrade(trade2ID));
+        assertFalse(cont.getTradeList().get(0) == cont.editExistingTrade(trade2ID));
 
-        assertTrue(cont.getTradeList().get(0) == cont.editExistingTrade(tradeID));
     }
+
 
     public void testSetAcceptedStatus(){
         User user1 = new User("Harry","","","","","");
@@ -57,7 +65,7 @@ public class TradeControllerTest  extends ActivityInstrumentationTestCase2 {
 
         // Change user 1 back to false, set user 2 true
         cont.setAcceptedStatus(user1, false, tradeID);
-        cont.setAcceptedStatus(user2,true,tradeID);
+        cont.setAcceptedStatus(user2, true,tradeID);
         assertTrue(currentTrade.getUser2Accepted());
         assertFalse(currentTrade.getUser1Accepted());
 
