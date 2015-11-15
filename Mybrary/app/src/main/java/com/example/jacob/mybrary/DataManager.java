@@ -123,20 +123,38 @@ public class DataManager {
     }
 
     //======================= TRADES ==============================
-    public Boolean storeTrade(Trade trade) {
-        return false;
+    public Boolean storeTrade(Trade trade) throws IOException {
+        String json = GsonManager.getInstance().toJson(trade);
+        String path = "Trades/" + trade.getTradeID().toString();
+        String result = ConnectionManager.getInstance().put(path, json);
+        //TODO: Add better verification.
+        return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Trades\",\"_id\":\"" + trade.getTradeID().toString());
     }
 
-    public Boolean removeTrade(String id) {
-        return false;
+    public Boolean removeTrade(String id) throws IOException {
+        String result = ConnectionManager.getInstance().remove("Trades/" + id);
+        return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Trades\",\"_id\":\"" + id);
     }
 
-    public Trade retrieveTrade(String id) {
-        return null;
+    public Trade retrieveTrade(String id) throws IOException, JSONException {
+        String result = ConnectionManager.getInstance().get("Trades/" + id);
+        JSONObject obj = new JSONObject(result);
+        String tradejson = obj.getJSONObject("_source").toString();
+        return GsonManager.getInstance().fromJson(tradejson, Trade.class);
     }
 
-    public ArrayList<Trade> searchTrades(String query) {
-        return null;
+    public ArrayList<Trade> searchTrades(String query) throws IOException, JSONException {
+        ArrayList<Trade> rv = new ArrayList<>();
+
+        String result = ConnectionManager.getInstance().query("Trades/", query);
+        JSONObject obj = new JSONObject(result);
+        JSONArray jsonArray = obj.getJSONObject("hits").getJSONArray("hits");
+        //This makes me feel so dirty. Why doesn't JSONArray support foreach?
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String tradejson = jsonArray.getJSONObject(i).getJSONObject("_source").toString();
+            rv.add(GsonManager.getInstance().fromJson(tradejson, Trade.class));
+        }
+        return rv;
     }
 
     //======================= PHOTOS ==============================
