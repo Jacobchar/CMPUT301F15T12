@@ -27,7 +27,7 @@ public class InventoryActivity extends AppCompatActivity {
 
     private ArrayAdapter<Book> adapter;
     private ListView listView;
-    private ArrayList<Book> inventory;
+    private Inventory inventory = new Inventory();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,8 @@ public class InventoryActivity extends AppCompatActivity {
                 builder.setCancelable(true);
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        deleteBook(book);
+                        inventory.deleteBookByName(book.getName());
+                        adapter.notifyDataSetChanged();
                         dialog.cancel();
                     }
                 });
@@ -75,30 +76,24 @@ public class InventoryActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.inventoryListView); // controller?
 
         Book book = new Book("testName", 0, "It's A Book", true);
+        Book book2 = new Book("BookBook", 1, "No Book", false);
 
-        Inventory i = new Inventory();
-        i.addBook(book);
-        inventory = i.getBooks();
+        inventory.addBook(book);
+        inventory.addBook(book2);
+
         // there's an issue with the inventory not storing this book
 
-        adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventory);
+        adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventory.getBooks());
 
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     * Allows you to delete a book using the Inventory class.
-     * @param book Book that you'd like to delete from your inventory
-     */
-    void deleteBook(Book book){
+    public void addNewItem(View view){
+        Book book = new Book("TestAddBook", 1, "No Book", false);
 
-        Inventory i = new Inventory();
-
-        Boolean bool = i.deleteBookByName(book.getName());
-
+        inventory.addBook(book);
         adapter.notifyDataSetChanged();
-
     }
 
 
