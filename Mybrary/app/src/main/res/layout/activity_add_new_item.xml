@@ -114,6 +114,7 @@
                 android:layout_height="50dp"
                 android:text="Save Changes"
                 android:id="@+id/button"
+                android:onClick="saveNewBookInfo"
                 android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>

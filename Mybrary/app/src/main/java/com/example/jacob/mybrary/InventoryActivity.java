@@ -2,6 +2,7 @@ package com.example.jacob.mybrary;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -55,6 +56,7 @@ public class InventoryActivity extends AppCompatActivity {
                 builder.setNeutralButton("Edit Item", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
+                        // need a function here, pass it the Item UUID too
                     }
                 });
                 builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -93,10 +95,10 @@ public class InventoryActivity extends AppCompatActivity {
     }
 
     public void addNewItem(View view){
-        Book book = new Book("TestAddBook", 1, "No Book", false);
 
-        inventory.addBook(book);
-        adapter.notifyDataSetChanged();
+        Intent intent = new Intent(this, AddNewItem.class);
+        startActivity(intent);
+
     }
 
 
