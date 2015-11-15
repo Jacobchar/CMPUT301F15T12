@@ -110,6 +110,9 @@ public class DataManagerTest extends AndroidTestCase {
                 fail();
             }
 
+            //Wait for entries to be indexed
+            Thread.sleep(1000);
+
             User returnedUser = dataManager.retrieveUser(user.getUUID().toString());
 
             //TODO: Ensure that User has an equals() method.
@@ -131,6 +134,9 @@ public class DataManagerTest extends AndroidTestCase {
             dataManager.storeUser(user1);
             dataManager.storeUser(user2);
             dataManager.storeUser(user3);
+
+            //Wait for entries to be indexed
+            Thread.sleep(1000);
 
             ArrayList<User> returnedUsers = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testName2\"}}}");
 

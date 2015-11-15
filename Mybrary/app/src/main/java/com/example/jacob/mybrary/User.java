@@ -128,10 +128,7 @@ public class User {
         if (gender != null ? !gender.equals(user.gender) : user.gender != null) return false;
         if (bio != null ? !bio.equals(user.bio) : user.bio != null) return false;
         if (city != null ? !city.equals(user.city) : user.city != null) return false;
-        if (myUUID != null ? !myUUID.equals(user.myUUID) : user.myUUID != null) return false;
-        if (inventory != null ? !inventory.equals(user.inventory) : user.inventory != null)
-            return false;
-        return !(friendsList != null ? !friendsList.equals(user.friendsList) : user.friendsList != null);
+        return !(myUUID != null ? !myUUID.equals(user.myUUID) : user.myUUID != null);
 
     }
 
@@ -144,8 +141,6 @@ public class User {
         result = 31 * result + (bio != null ? bio.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (myUUID != null ? myUUID.hashCode() : 0);
-        result = 31 * result + (inventory != null ? inventory.hashCode() : 0);
-        result = 31 * result + (friendsList != null ? friendsList.hashCode() : 0);
         return result;
     }
 }
