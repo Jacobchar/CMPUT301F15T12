@@ -44,7 +44,6 @@ public class DataManager {
     }
 
     //======================= BOOKS ==============================
-
     /**
      * Stores a book on the server.
      * @param book The book to be stored
@@ -75,7 +74,7 @@ public class DataManager {
      * @param id Identifier of the book to be retrieved.
      * @return Returns the Book object stored on the server.
      * @throws IOException Thrown if an error occurred during communication.
-     * @throws JSONException Thrown if the JSON was malformed.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
      */
     public Book retrieveBook(String id) throws IOException, JSONException {
         String result = ConnectionManager.getInstance().get("Books/" + id);
@@ -89,7 +88,7 @@ public class DataManager {
      * @param query JSON based query to be searched for.
      * @return Returns an arraylist of Book objects that match the given query.
      * @throws IOException Thrown if an error occurred during communication.
-     * @throws JSONException Thrown if the JSON was malformed.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
      */
     public ArrayList<Book> searchBooks(String query) throws IOException, JSONException {
         ArrayList<Book> rv = new ArrayList<>();
@@ -106,23 +105,73 @@ public class DataManager {
     }
 
     //======================= USERS ==============================
-    public Boolean storeUser(User user) {
-        return false;
+    /**
+     * Stores a user on the server.
+     * @param user The user to be stored.
+     * @return Returns a boolean value indicating whether the request was successful or not
+     * @throws IOException Thrown if an error occurred during communication.
+     */
+    public Boolean storeUser(User user) throws IOException {
+        String json = GsonManager.getInstance().toJson(user);
+        String path = "Users/" + user.getUUID().toString();
+        String result = ConnectionManager.getInstance().put(path, json);
+        //TODO: Add better verification.
+        return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + user.getUUID().toString());
     }
 
-    public Boolean removeUser(String id) {
-        return false;
+    /**
+     * Removes a user from the server.
+     * @param id Identifier of the user to be removed.
+     * @return Returns a boolean value indicating whether the request was successful or not.
+     * @throws IOException Thrown if an error occurred during communication.
+     */
+    public Boolean removeUser(String id) throws IOException {
+        String result = ConnectionManager.getInstance().remove("Users/" + id);
+        return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + id);
     }
 
-    public User retrieveUser(String id) {
-        return null;
+    /**
+     * Retrieves a stored user from the server.
+     * @param id Identifier of the user to be retrieved.
+     * @return Returns the User object stored on the server.
+     * @throws IOException Thrown if an error occurred during communication.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
+     */
+    public User retrieveUser(String id) throws IOException, JSONException {
+        String result = ConnectionManager.getInstance().get("Users/" + id);
+        JSONObject obj = new JSONObject(result);
+        String userjson = obj.getJSONObject("_source").toString();
+        return GsonManager.getInstance().fromJson(userjson, User.class);
     }
 
-    public ArrayList<User> searchUsers(String query) {
-        return null;
+    /**
+     * Searches users for a given quality. Elasticsearch allows for various search methods.
+     * @param query JSON based query to be searched for.
+     * @return Returns an arraylist of User objects that match the given query.
+     * @throws IOException Thrown if an error occurred during communication.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
+     */
+    public ArrayList<User> searchUsers(String query) throws IOException, JSONException {
+        ArrayList<User> rv = new ArrayList<>();
+
+        String result = ConnectionManager.getInstance().query("Users/", query);
+        JSONObject obj = new JSONObject(result);
+        JSONArray jsonArray = obj.getJSONObject("hits").getJSONArray("hits");
+        //This makes me feel so dirty. Why doesn't JSONArray support foreach?
+        for (int i = 0; i < jsonArray.length(); i++) {
+            String userjson = jsonArray.getJSONObject(i).getJSONObject("_source").toString();
+            rv.add(GsonManager.getInstance().fromJson(userjson, User.class));
+        }
+        return rv;
     }
 
     //======================= TRADES ==============================
+    /**
+     * Stores a trade on the server.
+     * @param trade The trade to be stored.
+     * @return Returns a boolean value indicating whether the request was successful or not
+     * @throws IOException Thrown if an error occurred during communication.
+     */
     public Boolean storeTrade(Trade trade) throws IOException {
         String json = GsonManager.getInstance().toJson(trade);
         String path = "Trades/" + trade.getTradeID().toString();
@@ -131,11 +180,24 @@ public class DataManager {
         return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Trades\",\"_id\":\"" + trade.getTradeID().toString());
     }
 
+    /**
+     * Removes a trade from the server.
+     * @param id Identifier of the trade to be removed.
+     * @return Returns a boolean value indicating whether the request was successful or not.
+     * @throws IOException Thrown if an error occurred during communication.
+     */
     public Boolean removeTrade(String id) throws IOException {
         String result = ConnectionManager.getInstance().remove("Trades/" + id);
         return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Trades\",\"_id\":\"" + id);
     }
 
+    /**
+     * Retrieves a stored trade from the server.
+     * @param id Identifier of the trade to be retrieved.
+     * @return Returns the Trade object stored on the server.
+     * @throws IOException Thrown if an error occurred during communication.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
+     */
     public Trade retrieveTrade(String id) throws IOException, JSONException {
         String result = ConnectionManager.getInstance().get("Trades/" + id);
         JSONObject obj = new JSONObject(result);
@@ -143,6 +205,13 @@ public class DataManager {
         return GsonManager.getInstance().fromJson(tradejson, Trade.class);
     }
 
+    /**
+     * Searches trades for a given quality. Elasticsearch allows for various search methods.
+     * @param query JSON based query to be searched for.
+     * @return Returns an arraylist of Trade objects that match the given query.
+     * @throws IOException Thrown if an error occurred during communication.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
+     */
     public ArrayList<Trade> searchTrades(String query) throws IOException, JSONException {
         ArrayList<Trade> rv = new ArrayList<>();
 
@@ -158,19 +227,45 @@ public class DataManager {
     }
 
     //======================= PHOTOS ==============================
-    public Boolean storePhoto(Photo photo) {
+    /**
+     * Stores a photo on the server.
+     * @param photo The photo to be stored.
+     * @return Returns a boolean value indicating whether the request was successful or not
+     * @throws IOException Thrown if an error occurred during communication.
+     */
+    public Boolean storePhoto(Photo photo) throws IOException {
         return false;
     }
 
-    public Boolean removePhoto(String id) {
+    /**
+     * Removes a photo from the server.
+     * @param id Identifier of the photo to be removed.
+     * @return Returns a boolean value indicating whether the request was successful or not.
+     * @throws IOException Thrown if an error occurred during communication.
+     */
+    public Boolean removePhoto(String id) throws IOException {
         return false;
     }
 
-    public Photo retrievePhoto(String id) {
+    /**
+     * Retrieves a stored photo from the server.
+     * @param id Identifier of the photo to be retrieved.
+     * @return Returns the Photo object stored on the server.
+     * @throws IOException Thrown if an error occurred during communication.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
+     */
+    public Photo retrievePhoto(String id) throws IOException, JSONException {
         return null;
     }
 
-    public ArrayList<Photo> searchPhotos(String query) {
+    /**
+     * Searches photos for a given quality. Elasticsearch allows for various search methods.
+     * @param query JSON based query to be searched for.
+     * @return Returns an arraylist of Photo objects that match the given query.
+     * @throws IOException Thrown if an error occurred during communication.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
+     */
+    public ArrayList<Photo> searchPhotos(String query) throws IOException, JSONException {
         return null;
     }
 
