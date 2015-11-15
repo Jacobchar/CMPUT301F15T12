@@ -34,16 +34,18 @@ public class TradeListActivity extends AppCompatActivity {
 
                 final Trade trade = (Trade) tradeListView.getItemAtPosition(pos);
 
-
+                // needs to open a window asking if you want to modify, or delete the trade
                 return true;
             }
         });
 
     }
 
+    /**
+     * Get the list of all trades relevant to this user
+     */
     private void getTrades(){
-        tradeListView = (ListView) findViewById(R.id.tradeListView); // controller?
-
+        tradeListView = (ListView) findViewById(R.id.tradeListView);
         Trade trade = new Trade(new User("Harry","","","","",""), new User("Mouse","","","","",""));
         occuredTrades = new ArrayList<>();
         occuredTrades.add(trade);
