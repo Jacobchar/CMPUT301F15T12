@@ -88,59 +88,75 @@ public class DataManagerTest extends AndroidTestCase {
 
 
     //=========================USERS===============================
-//    public void testPutUser() {
-//        DataManager dataManager = DataManager.getInstance();
-//        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
-//
-//        assertTrue(dataManager.storeUser(user));
-//
-//        dataManager.removeBook(user.getUUID().toString());
-//    }
-//
-//    public void testGetUser() {
-//        DataManager dataManager = DataManager.getInstance();
-//        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
-//
-//        if (!dataManager.storeUser(user)) {
-//            fail();
-//        }
-//
-//        User returnedUser = dataManager.retrieveUser(user.getUUID().toString());
-//
-//        //TODO: Ensure that User has an equals() method.
-//        assertTrue(user.equals(returnedUser));
-//
-//        dataManager.removeBook(user.getUUID().toString());
-//    }
-//
-//    public void testSearchUsers() {
-//        DataManager dataManager = DataManager.getInstance();
-//        User user1 = new User("testName1", "testEmail1", "testPhNo1", "testGender1", "testBio1", "testCity1");
-//        User user2 = new User("testName2", "testEmail2", "testPhNo2", "testGender2", "testBio2", "testCity2");
-//        User user3 = new User("testName3", "testEmail3", "testPhNo3", "testGender3", "testBio3", "testCity3");
-//
-//        dataManager.storeUser(user1);
-//        dataManager.storeUser(user2);
-//        dataManager.storeUser(user3);
-//
-//        ArrayList<User> returnedUsers = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testName2\"}}}");
-//
-//        assertTrue(returnedUsers.size() == 1);
-//        assertTrue(returnedUsers.contains(user2));
-//
-//        dataManager.removeBook(user1.getUUID().toString());
-//        dataManager.removeBook(user2.getUUID().toString());
-//        dataManager.removeBook(user3.getUUID().toString());
-//    }
-//
-//    public void testRemoveUser() {
-//        DataManager dataManager = DataManager.getInstance();
-//        User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
-//
-//        dataManager.storeUser(user);
-//
-//        assertTrue(dataManager.removeUser(user.getUUID().toString()));
-//    }
+    public void testPutUser() {
+        try {
+            DataManager dataManager = DataManager.getInstance();
+            User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
+
+            assertTrue(dataManager.storeUser(user));
+
+            dataManager.removeBook(user.getUUID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testGetUser() {
+        try {
+            DataManager dataManager = DataManager.getInstance();
+            User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
+
+            if (!dataManager.storeUser(user)) {
+                fail();
+            }
+
+            User returnedUser = dataManager.retrieveUser(user.getUUID().toString());
+
+            //TODO: Ensure that User has an equals() method.
+            assertTrue(user.equals(returnedUser));
+
+            dataManager.removeBook(user.getUUID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testSearchUsers() {
+        try {
+            DataManager dataManager = DataManager.getInstance();
+            User user1 = new User("testName1", "testEmail1", "testPhNo1", "testGender1", "testBio1", "testCity1");
+            User user2 = new User("testName2", "testEmail2", "testPhNo2", "testGender2", "testBio2", "testCity2");
+            User user3 = new User("testName3", "testEmail3", "testPhNo3", "testGender3", "testBio3", "testCity3");
+
+            dataManager.storeUser(user1);
+            dataManager.storeUser(user2);
+            dataManager.storeUser(user3);
+
+            ArrayList<User> returnedUsers = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testName2\"}}}");
+
+            assertTrue(returnedUsers.size() == 1);
+            assertTrue(returnedUsers.contains(user2));
+
+            dataManager.removeBook(user1.getUUID().toString());
+            dataManager.removeBook(user2.getUUID().toString());
+            dataManager.removeBook(user3.getUUID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testRemoveUser() {
+        try {
+            DataManager dataManager = DataManager.getInstance();
+            User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
+
+            dataManager.storeUser(user);
+
+            assertTrue(dataManager.removeUser(user.getUUID().toString()));
+        } catch (Exception e) {
+            fail();
+        }
+    }
 
 
     //=========================TRADES===============================

@@ -113,4 +113,39 @@ public class User {
      */
     public FriendsList getFriendsList() { return friendsList;}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (emailAddress != null ? !emailAddress.equals(user.emailAddress) : user.emailAddress != null)
+            return false;
+        if (phoneNumber != null ? !phoneNumber.equals(user.phoneNumber) : user.phoneNumber != null)
+            return false;
+        if (gender != null ? !gender.equals(user.gender) : user.gender != null) return false;
+        if (bio != null ? !bio.equals(user.bio) : user.bio != null) return false;
+        if (city != null ? !city.equals(user.city) : user.city != null) return false;
+        if (myUUID != null ? !myUUID.equals(user.myUUID) : user.myUUID != null) return false;
+        if (inventory != null ? !inventory.equals(user.inventory) : user.inventory != null)
+            return false;
+        return !(friendsList != null ? !friendsList.equals(user.friendsList) : user.friendsList != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (emailAddress != null ? emailAddress.hashCode() : 0);
+        result = 31 * result + (phoneNumber != null ? phoneNumber.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (bio != null ? bio.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (myUUID != null ? myUUID.hashCode() : 0);
+        result = 31 * result + (inventory != null ? inventory.hashCode() : 0);
+        result = 31 * result + (friendsList != null ? friendsList.hashCode() : 0);
+        return result;
+    }
 }
