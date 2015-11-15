@@ -1,5 +1,9 @@
 package com.example.jacob.mybrary;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.UUID;
@@ -9,6 +13,7 @@ import java.util.UUID;
  */
 public class FriendsList {
     private Collection<UUID> friendList;
+    DataManager dataManager = DataManager.getInstance();
 
     FriendsList(){
         friendList = new ArrayList<>();
@@ -68,6 +73,22 @@ public class FriendsList {
             return true;
         else
             return false;
+    }
+
+    public ArrayList<User> getUsers(){
+        ArrayList<User> userList = new ArrayList<>();
+        for (UUID uuid : friendList){
+            try {
+                userList.add(dataManager.retrieveUser(uuid.toString()));
+            } catch (IOException e) {
+                e.printStackTrace();
+                //return null;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                //return null;
+            }
+        }
+        return userList;
     }
 
     public int numFriends(){
