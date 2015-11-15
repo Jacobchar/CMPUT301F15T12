@@ -43,16 +43,21 @@ public class InventoryActivity extends AppCompatActivity {
 
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
-                builder.setMessage("Do you want to delete this item?");
+                builder.setMessage("What would you like to do?");
                 builder.setCancelable(true);
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                builder.setNeutralButton("Delete Item", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         inventory.deleteBookByName(book.getName());
                         adapter.notifyDataSetChanged();
                         dialog.cancel();
                     }
                 });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                builder.setNeutralButton("Edit Item", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -73,7 +78,7 @@ public class InventoryActivity extends AppCompatActivity {
      */
     void fillInventory(){
 
-        listView = (ListView) findViewById(R.id.inventoryListView); // controller?
+        listView = (ListView) findViewById(R.id.inventoryListView);
 
         Book book = new Book("testName", 0, "It's A Book", true);
         Book book2 = new Book("BookBook", 1, "No Book", false);
@@ -81,9 +86,7 @@ public class InventoryActivity extends AppCompatActivity {
         inventory.addBook(book);
         inventory.addBook(book2);
 
-        // there's an issue with the inventory not storing this book
-
-        adapter = new ArrayAdapter<Book>(this, R.layout.simple_list_item, inventory.getBooks());
+        adapter = new ArrayAdapter<>(this, R.layout.simple_list_item, inventory.getBooks());
 
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();

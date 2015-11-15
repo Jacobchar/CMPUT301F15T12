@@ -1,0 +1,114 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.jacob.mybrary.AddNewItem">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/setProfileButton">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/editLayout">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Book Name"
+                android:id="@+id/nameTitleView"
+                android:layout_below="@+id/usernameTextView"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nameEditView"
+                android:layout_below="@+id/usernameEditView"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/nameTitleView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Quantity"
+                android:id="@+id/QuantityTitleView"
+                android:layout_below="@+id/nameTextView"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/QuantityEditView"
+                android:layout_below="@+id/nameEditView"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/QuantityTitleView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Category"
+                android:id="@+id/categoryTitleView"
+                android:layout_below="@+id/QuantityTextView"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/categoryEditView"
+                android:layout_below="@+id/QuantityTextView"
+                android:layout_toEndOf="@+id/phoneTitleView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Shared With Others"
+                android:id="@+id/shareTitleView"
+                android:layout_below="@+id/categoryTextView"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/shareEditView"
+                android:layout_below="@+id/categoryTextView"
+                android:layout_alignParentEnd="true"
+                android:layout_alignStart="@+id/nameTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Add A Comment"
+                android:id="@+id/commentTitleView"
+                android:layout_below="@+id/shareTextView"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/commentEditView"
+                android:layout_below="@+id/shareTextView"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/genderTitleView" />
+
+            
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
