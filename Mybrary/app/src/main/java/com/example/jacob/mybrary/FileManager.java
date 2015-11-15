@@ -21,8 +21,6 @@ import java.io.OutputStreamWriter;
 public class FileManager {
 
     private static FileManager instance = null;
-
-
     protected FileManager(){}
 
     /**

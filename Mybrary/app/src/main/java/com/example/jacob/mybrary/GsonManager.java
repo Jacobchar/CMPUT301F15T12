@@ -42,15 +42,13 @@ public class GsonManager {
     }
 
     /**
-     * Converts a JSON element into an object.
+     * Converts a JSON string into an object.
      * @param json String representation of the object to be converted.
      * @param classOfT Class of the object to be returned.
      * @param <T> Type to return the object as.
      * @return Returns an object of the specified type as described in the JSON string.
      */
-    public <T> T fromJson(String json, Class<T> classOfT) {
-        return gson.fromJson(json, classOfT);
-    }
+    public <T> T fromJson(String json, Class<T> classOfT) { return gson.fromJson(json, classOfT); }
 
     /**
      * Converts a JSON element into a generic object.
