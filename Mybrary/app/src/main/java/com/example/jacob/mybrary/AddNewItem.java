@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class AddNewItem extends AppCompatActivity {
     /**
      * Allows user to add a new book to their inventory.
      */
-    public void saveNewBookInfo(){
+    public void saveNewBookInfo(View view){
 
         Book book = new Book();
 
@@ -43,6 +44,7 @@ public class AddNewItem extends AppCompatActivity {
         }
 
         inventory.addBook(book);
+        finish();
 
     }
 

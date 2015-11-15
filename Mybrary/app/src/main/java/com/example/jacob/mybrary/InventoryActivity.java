@@ -97,7 +97,12 @@ public class InventoryActivity extends AppCompatActivity {
     public void addNewItem(View view){
 
         Intent intent = new Intent(this, AddNewItem.class);
+
+        // this won't work until storing inventory works.
+
         startActivity(intent);
+
+
 
     }
 
