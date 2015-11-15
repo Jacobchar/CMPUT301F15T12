@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class AddNewItem extends AppCompatActivity {
 
-    private Inventory inventory = new Inventory();
+    private Inventory inventory = (Inventory) getIntent().getSerializableExtra("inventory");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

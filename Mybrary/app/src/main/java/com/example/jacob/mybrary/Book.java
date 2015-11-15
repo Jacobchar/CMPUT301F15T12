@@ -23,8 +23,7 @@ public class Book {
     private UUID itemID;
     private UUID ownerID;
 
-    public ArrayList<UUID> photoIDs;
-    public ArrayList observers;
+    private ArrayList<UUID> photoIDs;
 
     /**
      * Basic empty Book constructor.

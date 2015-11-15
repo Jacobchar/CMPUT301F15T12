@@ -2,6 +2,8 @@ package com.example.jacob.mybrary;
 
 import android.support.annotation.NonNull;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -18,17 +20,20 @@ import java.util.Iterator;
  *
  */
 
-public class Inventory {
+public class Inventory implements Serializable {
 
     private ArrayList<Book> inventoryList = new ArrayList<Book>();
     private ArrayList observers;
+    private DataManager dataManager;
 
     /**
      * Grab a user's full inventory.
      * @return Returns an ArrayList of Books.
      */
     ArrayList<Book> getBooks(){
+
         return inventoryList;
+        // need to grab from the server?
     }
 
     /**
@@ -38,6 +43,12 @@ public class Inventory {
     public void addBook(Book book){
 
         inventoryList.add(book);
+        /*
+        try {
+            dataManager.storeBook(book);
+        } catch (IOException e){
+
+        }*/
 
     }
 
@@ -85,6 +96,13 @@ public class Inventory {
 
         inventoryList.remove(book);
 
+        /*
+        try {
+            dataManager.removeBook(book.getItemID().toString());
+        } catch (IOException e){
+
+        }*/
+
         return true;
 
     }
@@ -125,8 +143,5 @@ public class Inventory {
 
         return false;
     }
-
-    void updateObservers(){}
-
 
 }

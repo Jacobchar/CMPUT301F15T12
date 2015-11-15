@@ -100,6 +100,9 @@ public class InventoryActivity extends AppCompatActivity {
 
         // this won't work until storing inventory works.
 
+        //to pass :
+        intent.putExtra("inventory", inventory);
+
         startActivity(intent);
 
 
