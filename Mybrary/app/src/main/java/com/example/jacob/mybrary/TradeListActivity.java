@@ -1,5 +1,8 @@
 package com.example.jacob.mybrary;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -34,7 +37,32 @@ public class TradeListActivity extends AppCompatActivity {
 
                 final Trade trade = (Trade) tradeListView.getItemAtPosition(pos);
 
-                // needs to open a window asking if you want to modify, or delete the trade
+                AlertDialog.Builder builder = new AlertDialog.Builder(TradeListActivity.this);
+                builder.setMessage("Edit or Delete the Trade?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(TradeListActivity.this, ProposeTradeActivity.class);
+                        startActivity(intent);
+                        dialog.cancel();
+                    }
+                });
+                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        occuredTrades.remove(trade);
+                        adapter.notifyDataSetChanged();
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
                 return true;
             }
         });

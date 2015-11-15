@@ -18,9 +18,8 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
     public void testTradeList(){
         TradeListActivity activity = (TradeListActivity) getActivity();
         text = (ListView) activity.findViewById(R.id.tradeListView);
-        // Check if the adapter contains trades which will be shown on the interface
-        assertFalse(text.getAdapter().getItem(0).toString().isEmpty());
-
+        Trade trade = (Trade) text.getAdapter().getItem(0);
+        assertNotNull(trade);
 
 
     }
