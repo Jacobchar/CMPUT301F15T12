@@ -17,7 +17,6 @@
             android:orientation="vertical"
             android:id="@+id/editLayout">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -48,6 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/QuantityEditView"
+                android:inputType="number"
+                android:ems="10"
                 android:layout_below="@+id/nameEditView"
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/QuantityTitleView" />
@@ -64,30 +65,22 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
                 android:id="@+id/categoryEditView"
                 android:layout_below="@+id/QuantityTextView"
                 android:layout_toEndOf="@+id/phoneTitleView" />
 
-            <TextView
+            <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_height="70dp"
                 android:text="Shared With Others"
-                android:id="@+id/shareTitleView"
-                android:layout_below="@+id/categoryTextView"
-                android:layout_alignParentStart="true" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
+                android:textSize="22dp"
                 android:id="@+id/shareEditView"
+                android:button="@null"
+                android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
                 android:layout_below="@+id/categoryTextView"
                 android:layout_alignParentEnd="true"
-                android:layout_alignStart="@+id/nameTextView" />
+                android:layout_alignStart="@+id/phoneTextView"
+                android:checked="false" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +99,23 @@
                 android:layout_alignParentEnd="true"
                 android:layout_toEndOf="@+id/genderTitleView" />
 
-            
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="    "
+                android:id="@+id/tmp"
+                android:layout_below="@+id/genderTextView"
+                android:layout_alignParentStart="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="Save Changes"
+                android:id="@+id/button"
+                android:layout_gravity="center_horizontal"/>
+
         </LinearLayout>
 
     </ScrollView>

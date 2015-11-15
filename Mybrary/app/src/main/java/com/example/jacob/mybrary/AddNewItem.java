@@ -13,4 +13,6 @@ public class AddNewItem extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_item);
     }
 
+
+
 }
