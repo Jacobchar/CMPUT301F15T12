@@ -21,6 +21,7 @@ public class Book {
     private boolean sharedWithOthers;
     private ArrayList<String> comments = new ArrayList<String>();
     private UUID itemID;
+    private UUID ownerID;
 
     public ArrayList<UUID> photoIDs;
     public ArrayList observers;
@@ -35,6 +36,7 @@ public class Book {
         this.sharedWithOthers = false;
 
         this.itemID = UUID.randomUUID();
+        this.ownerID = LocalUser.getInstance().getUUID();
     }
 
     /**
@@ -51,6 +53,7 @@ public class Book {
         this.sharedWithOthers = sharedWithOthers;
 
         this.itemID = UUID.randomUUID();
+        this.ownerID = LocalUser.getInstance().getUUID();
     }
 
     /**
@@ -135,6 +138,11 @@ public class Book {
 
     public UUID getItemID() { return itemID; }
 
+    public UUID getOwnerID() { return ownerID; }
+
+    public void setOwnerID(UUID newID) {
+        this.ownerID = newID;
+    }
 
     public String getCategory() {
         return category;
