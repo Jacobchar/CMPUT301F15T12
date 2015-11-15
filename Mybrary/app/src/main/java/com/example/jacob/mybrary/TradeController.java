@@ -11,6 +11,7 @@ import java.util.UUID;
 public class TradeController {
     private ArrayList<Trade> tradeList = new ArrayList<>();
     private Trade currentTrade;
+    private DataManager saver = DataManager.getInstance();
 
     /**
      * Create a new trade between the current user, and the friend he is wanting to trade with
