@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 /**
  * Activity to View a single User's Profile
  *
@@ -18,15 +20,13 @@ public class ViewUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user);
-        //loadUser(myUser);
-        //Test until loading user is implemented
+        try {
+            DataManager.getInstance().loadLocalUser();
+        }catch (IOException e){
+
+        }
         myUser = LocalUser.getInstance();
         setText(findViewById(R.id.textLayout));
-    }
-
-    public void loadUser(User user){
-        //Load In a User from a saved File
-
     }
 
     /**

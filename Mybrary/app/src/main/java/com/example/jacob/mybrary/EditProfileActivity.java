@@ -28,9 +28,9 @@ public class EditProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_profile);
         try {
             DataManager.getInstance().loadLocalUser();
-       }catch (IOException e){
+        }catch (IOException e){
 
-       }
+        }
         myUser = LocalUser.getInstance();
 
         setText(mode);

@@ -13,7 +13,7 @@ public class LocalUser extends User {
     }
 
     private LocalUser() {
-        super("a", "2", "3", "d", "", "v");
+        super("", "", "", "", "", "");
     }
 
     /**
