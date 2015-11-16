@@ -1,5 +1,8 @@
 package com.example.jacob.mybrary;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +20,7 @@ public class Trade {
     private Boolean user1Accepted = false;
     private Boolean user2Accepted = false;
     private UUID tradeID;
+    private DataManager data = DataManager.getInstance();
 
     /**
      * Trade between two users
@@ -52,6 +56,7 @@ public class Trade {
      * @param inventory Inventory of the user receiving the books
      */
     private void addReceivedBooks(List<Book> bookList, Inventory inventory){
+        //ToDo: Change owner of books in each book
         for(Book book: bookList){
             inventory.addBook(book);
         }
@@ -63,6 +68,7 @@ public class Trade {
      * @param inventory Inventory of the user having books removed
      */
     private void removeTradedBooks(List<Book> bookList, Inventory inventory){
+        //ToDo: Change owner of books in each book
         for(Book book: bookList){
           inventory.deleteBookByName(book.getName());
         }
@@ -106,7 +112,21 @@ public class Trade {
      */
     @Override
     public String toString(){
-        return "Trade completed";
+        /*
+        try{
+            User user1 = data.retrieveUser(this.getUser1UUID().toString());
+            User user2 = data.retrieveUser(this.getUser2UUID().toString());
+
+            return "User: " + user1.getName() + "traded with " + user2.getName();
+        }
+        catch(IOException e){
+            return "File not found";
+        }
+        catch(JSONException e){
+            return "Error loading";
+        }
+        */
+        return " No trades :(";
     }
 
     /**

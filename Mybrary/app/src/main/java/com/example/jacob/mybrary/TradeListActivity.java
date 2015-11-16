@@ -4,10 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.View;
@@ -20,9 +17,10 @@ import java.util.ArrayList;
  */
 
 public class TradeListActivity extends AppCompatActivity {
-    private ArrayAdapter<Trade> adapter;
     private ListView tradeListView;
     private ArrayList<Trade> occuredTrades = new ArrayList<>();
+    private AlertDialog alert;
+    private ArrayAdapter<Trade> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +59,7 @@ public class TradeListActivity extends AppCompatActivity {
                     }
                 });
 
-                AlertDialog alert = builder.create();
+                alert = builder.create();
                 alert.show();
                 return true;
             }
@@ -70,18 +68,23 @@ public class TradeListActivity extends AppCompatActivity {
     }
 
     /**
-     * Get the list of all trades relevant to this user
+     * Get the list of all trades relevant to this user'
+     * Todo: Currently is just all trades
      */
     private void getTrades(){
-        tradeListView = (ListView) findViewById(R.id.tradeListView);
-        Trade trade = new Trade(new User("Harry","","","","",""), new User("Mouse","","","","",""));
-        occuredTrades = new ArrayList<>();
-        occuredTrades.add(trade);
+                tradeListView = (ListView) findViewById(R.id.tradeListView);
+                Trade trade = new Trade(new User("Harry", "", "", "", "", ""), new User("Mouse", "", "", "", "", ""));
+                occuredTrades = new ArrayList<>();
+                occuredTrades.add(trade);
 
-        adapter = new ArrayAdapter<>(this, R.layout.simple_list_item, occuredTrades);
+                adapter = new ArrayAdapter<>(TradeListActivity.this, R.layout.simple_list_item, occuredTrades);
 
-        tradeListView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+                tradeListView.setAdapter(adapter);
+
+                adapter.notifyDataSetChanged();
     }
 
+    public AlertDialog getAlertDialog(){
+        return this.alert;
+    }
 }
