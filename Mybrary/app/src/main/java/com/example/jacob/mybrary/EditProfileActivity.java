@@ -3,9 +3,11 @@ package com.example.jacob.mybrary;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -24,11 +26,11 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        //try {
-        //    DataManager.getInstance().loadLocalUser();
-       // }catch (IOException e){
-//
-       // }
+        try {
+            DataManager.getInstance().loadLocalUser();
+       }catch (IOException e){
+
+       }
         myUser = LocalUser.getInstance();
 
         setText(mode);
@@ -41,30 +43,26 @@ public class EditProfileActivity extends AppCompatActivity {
      * @param v
      */
     public void setUser(View v){
-        final View layout = View.inflate(this, R.layout.activity_edit_profile, null);
-        EditText nameView = (EditText) layout.findViewById(R.id.nameEditView);
+        TextView nameView = (TextView) this.findViewById(R.id.nameEditView);
         String name = nameView.getText().toString();
-        if (name.equals("")){
-            //throw new RuntimeException("Read nothing");
-        }
-        EditText cityView = (EditText) layout.findViewById(R.id.cityEditView);
+        EditText cityView = (EditText) this.findViewById(R.id.cityEditView);
         String city = cityView.getText().toString();
-        EditText genderView = (EditText) layout.findViewById(R.id.genderEditView);
+        EditText genderView = (EditText) this.findViewById(R.id.genderEditView);
         String gender = genderView.getText().toString();
-        EditText phoneView = (EditText) layout.findViewById(R.id.phoneEditView);
+        EditText phoneView = (EditText) this.findViewById(R.id.phoneEditView);
         String phone = phoneView.getText().toString();
-        EditText emailView = (EditText) layout.findViewById(R.id.emailEditView);
+        EditText emailView = (EditText) this.findViewById(R.id.emailEditView);
         String email = emailView.getText().toString();
-        EditText bioView = (EditText) layout.findViewById(R.id.bioEditView);
+        EditText bioView = (EditText) this.findViewById(R.id.bioEditView);
         String bio = bioView.getText().toString();
         User gotUser = new User(name, email, phone, gender, bio, city);
         //myProfileController.updateUser(gotUser, this);
         LocalUser.getInstance().setSelf(gotUser);
-        //try {
-        //    DataManager.getInstance().saveLocalUser();
-        //}catch (IOException e){
-//
-       // }
+        try {
+            DataManager.getInstance().saveLocalUser();
+        }catch (IOException e){
+
+        }
         finish();
     }
 
