@@ -13,4 +13,11 @@ Network check: http://developer.android.com/training/basics/network-ops/connecti
 
 Gson Help: https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html  
 
-Using jUnit to test long clicks: http://blog.denevell.org/android-instrumentation-click-list.html
+Using jUnit to test Long clicks on listView:   http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing  
+      Answered by Markn12, edited by Nathan Tuggy  
+      
+Setting up an activity monitor:https://developer.android.com/training/activity-testing/activity-functional-testing.html  
+
+Testing if an activity actually opened: https://github.com/joshua2ua/lonelyTwitter Author: Joshua Campbell,  
+retrieved on October 1st 2015  
+    
