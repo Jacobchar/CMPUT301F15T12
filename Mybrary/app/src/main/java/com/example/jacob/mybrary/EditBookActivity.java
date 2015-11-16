@@ -12,38 +12,51 @@ import android.widget.TextView;
 
 import java.util.UUID;
 
-public class AddNewItem extends AppCompatActivity {
+public class EditBookActivity extends AppCompatActivity {
 
     private Inventory inventory;
+    private UUID id;
+    private Book book;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_new_item);
+        setContentView(R.layout.activity_edit_book);
 
         Bundle bundle = this.getIntent().getExtras();
         if( bundle != null) {
             inventory = (Inventory) bundle.getSerializable("inv");
+            id = (UUID) bundle.getSerializable("id");
         } else {
             inventory = new Inventory();
         }
     }
+
 
     /**
      * Allows user to add a new book to their inventory.
      */
     public void saveNewBookInfo(View view){
 
-        Book book = new Book();
+        Book book = inventory.getBookByID(id);
+        inventory.deleteBookByID(id);
 
         TextView t = (TextView) findViewById(R.id.nameEditView);
-        book.setName(t.getText().toString());
+        String tmp = t.getText().toString();
+        if (!t.getText().toString().equals(""))
+            book.setName(t.getText().toString());
 
         t = (TextView) findViewById(R.id.QuantityEditView);
-        book.setQuantity(Integer.parseInt(t.getText().toString()));
+        if (!t.getText().toString().equals(""))
+            book.setQuantity(Integer.parseInt(t.getText().toString()));
 
         t = (TextView) findViewById(R.id.categoryEditView);
-        book.setCategory(t.getText().toString());
+        if (!t.getText().toString().equals(""))
+            book.setCategory(t.getText().toString());
+
+        t = (TextView) findViewById(R.id.commentEditView);
+        if (!t.getText().toString().equals(""))
+            book.addNewComment(t.getText().toString());
 
         CheckBox c = (CheckBox) findViewById(R.id.shareEditView);
         if (c.isEnabled()){
@@ -51,9 +64,6 @@ public class AddNewItem extends AppCompatActivity {
         } else {
             book.setSharedWithOthers(false);
         }
-
-        t = (TextView) findViewById(R.id.commentEditView);
-        book.addNewComment(t.getText().toString());
 
         inventory.addBook(book);
 
@@ -64,9 +74,4 @@ public class AddNewItem extends AppCompatActivity {
         finish();
 
     }
-
-
-
-
-
 }

@@ -1,5 +1,6 @@
 package com.example.jacob.mybrary;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -13,7 +14,7 @@ import java.util.UUID;
  *
  */
 
-public class Book {
+public class Book implements Serializable {
 
     private String name;
     private Integer quantity;

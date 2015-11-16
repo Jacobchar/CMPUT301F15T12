@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.UUID;
 
 /**
  * Created by Victoria.
@@ -33,22 +34,17 @@ public class Inventory implements Serializable {
     ArrayList<Book> getBooks(){
 
         return inventoryList;
-        // need to grab from the server?
     }
 
     /**
      * Add a book to a user's inventory.
      * @param book The book object you want to add to your inventory
      */
-    public void addBook(Book book){
+    public void addBook(final Book book) {
 
         inventoryList.add(book);
-        /*
-        try {
-            dataManager.storeBook(book);
-        } catch (IOException e){
+        //dataManager.storeBook(book);
 
-        }*/
 
     }
 
@@ -82,6 +78,26 @@ public class Inventory implements Serializable {
     }
 
     /**
+     * Returns book object, identified by it's UUID.
+     * @param id takes the id of a book in your inventory
+     * @return returns a book object
+     */
+    Book getBookByID(UUID id){
+
+        Book book;
+        Iterator e = inventoryList.iterator();
+
+        while (e.hasNext()){
+            book = (Book) e.next();
+            if (book.getItemID().compareTo(id) == 0){
+                return book;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Deletes a book object, identified by it's name.
      * @param name takes the name of a book in your inventory
      * @return returns true/false depending on if your book was found & deleted
@@ -89,6 +105,33 @@ public class Inventory implements Serializable {
     boolean deleteBookByName(String name){
 
         Book book = getBookByName(name);
+
+        if (book == null) return false;
+
+        inventoryList = getBooks();
+
+        inventoryList.remove(book);
+
+        /*
+        try {
+            dataManager.removeBook(book.getItemID().toString());
+        } catch (IOException e){
+
+        }*/
+
+        return true;
+
+    }
+
+
+    /**
+     * Deletes a book object, identified by it's id.
+     * @param id takes the id of a book in your inventory
+     * @return returns true/false depending on if your book was found & deleted
+     */
+    boolean deleteBookByID(UUID id){
+
+        Book book = getBookByID(id);
 
         if (book == null) return false;
 
