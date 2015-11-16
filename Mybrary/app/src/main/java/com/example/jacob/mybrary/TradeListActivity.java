@@ -87,4 +87,8 @@ public class TradeListActivity extends AppCompatActivity {
     public AlertDialog getAlertDialog(){
         return this.alert;
     }
+
+    public ArrayList<Trade> getOccuredTrades(){
+        return this.occuredTrades;
+    }
 }
