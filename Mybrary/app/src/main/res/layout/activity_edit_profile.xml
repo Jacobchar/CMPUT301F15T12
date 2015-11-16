@@ -23,43 +23,31 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="NAME"
-                    android:id="@+id/nameTitleView"
-                    android:layout_below="@+id/usernameTextView"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/nameTitleView" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/nameEditView"
-                    android:layout_below="@+id/usernameEditView"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toEndOf="@+id/nameTitleView" />
+                    android:id="@+id/nameEditView" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="CITY"
-                    android:id="@+id/cityTitleView"
-                    android:layout_below="@+id/nameTextView"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/cityTitleView" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/cityEditView"
-                    android:layout_below="@+id/nameEditView"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toEndOf="@+id/cityTitleView" />
+                    android:id="@+id/cityEditView" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="PHONE NUMBER"
-                    android:id="@+id/phoneTitleView"
-                    android:layout_below="@+id/cityTextView"
-                    android:layout_alignParentStart="true" />
+                    android:id="@+id/phoneTitleView" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -118,10 +106,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/bioEditView"
-                    android:layout_below="@+id/genderTextView"
-                    android:layout_alignParentEnd="true"
-                    android:layout_toEndOf="@+id/bioTitleView" />
+                    android:id="@+id/bioEditView" />
 
 
             </LinearLayout>

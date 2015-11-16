@@ -1,10 +1,13 @@
 package com.example.jacob.mybrary;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 /**
  * Activity to Edit a User object
@@ -13,17 +16,21 @@ import android.widget.TextView;
  * MVC Style not Completely Implemented yet
  */
 public class EditProfileActivity extends AppCompatActivity {
-
     ProfileController myProfileController = new ProfileController();
-    User myUser;
+    LocalUser myUser;
     Boolean mode = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-        //loadUser(myUser);
-        myUser = new User("Name", "Email", "4121", "Gender", "Bio", "City");
+        //try {
+        //    DataManager.getInstance().loadLocalUser();
+       // }catch (IOException e){
+//
+       // }
+        myUser = LocalUser.getInstance();
+
         setText(mode);
 
     }
@@ -37,6 +44,9 @@ public class EditProfileActivity extends AppCompatActivity {
         final View layout = View.inflate(this, R.layout.activity_edit_profile, null);
         EditText nameView = (EditText) layout.findViewById(R.id.nameEditView);
         String name = nameView.getText().toString();
+        if (name.equals("")){
+            //throw new RuntimeException("Read nothing");
+        }
         EditText cityView = (EditText) layout.findViewById(R.id.cityEditView);
         String city = cityView.getText().toString();
         EditText genderView = (EditText) layout.findViewById(R.id.genderEditView);
@@ -48,12 +58,14 @@ public class EditProfileActivity extends AppCompatActivity {
         EditText bioView = (EditText) layout.findViewById(R.id.bioEditView);
         String bio = bioView.getText().toString();
         User gotUser = new User(name, email, phone, gender, bio, city);
-        myProfileController.updateUser(gotUser, this);
+        //myProfileController.updateUser(gotUser, this);
+        LocalUser.getInstance().setSelf(gotUser);
+        //try {
+        //    DataManager.getInstance().saveLocalUser();
+        //}catch (IOException e){
+//
+       // }
         finish();
-    }
-
-    public void loadUser(User user){
-        //Load User from whereever
     }
 
     /**

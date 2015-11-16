@@ -19,7 +19,7 @@ public class DataManager {
 
     public static DataManager getInstance() { return ourInstance; }
 
-    private DataManager() {
+    public DataManager() {
 
     }
 

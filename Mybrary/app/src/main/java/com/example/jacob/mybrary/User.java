@@ -143,4 +143,13 @@ public class User {
         result = 31 * result + (myUUID != null ? myUUID.hashCode() : 0);
         return result;
     }
+
+    public void setSelf(User newUser){
+        this.name = newUser.getName();
+        this.emailAddress = newUser.getEmailAddress();
+        this.phoneNumber = newUser.getPhoneNumber();
+        this.gender = newUser.getGender();
+        this.bio = newUser.getBio();
+        this.city = newUser.getCity();
+    }
 }

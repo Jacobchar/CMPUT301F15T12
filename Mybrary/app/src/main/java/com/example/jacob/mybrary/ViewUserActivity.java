@@ -12,7 +12,7 @@ import android.widget.TextView;
  */
 public class ViewUserActivity extends AppCompatActivity {
 
-    User myUser;
+    LocalUser myUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class ViewUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_user);
         //loadUser(myUser);
         //Test until loading user is implemented
-        myUser = new User("Name", "Email", "4121", "Gender", "Bio", "City");
+        myUser = LocalUser.getInstance();
         setText(findViewById(R.id.textLayout));
     }
 
