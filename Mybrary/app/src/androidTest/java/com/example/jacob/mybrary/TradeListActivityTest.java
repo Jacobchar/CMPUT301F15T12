@@ -1,6 +1,8 @@
 package com.example.jacob.mybrary;
 
+import android.content.DialogInterface;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.TouchUtils;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
@@ -24,27 +26,17 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
         assertNotNull(trade);
     }
 
-    public void testLongClick(){
-        final TradeListActivity activity = (TradeListActivity) getActivity();
+    public void testLongClick() throws Throwable{
+        TradeListActivity activity = (TradeListActivity) getActivity();
         assertNotNull(activity);
 
-        final ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+        ListView text = (ListView) activity.findViewById(R.id.tradeListView);
 
-        try {
-            // http://blog.denevell.org/android-instrumentation-click-list.html
-            runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    text.performItemClick(text, text.getFirstVisiblePosition(), text.getItemIdAtPosition(text.getFirstVisiblePosition()));
-                    assertTrue(activity.getAlertDialog().isShowing());
-                }
-            });
-        }
-        catch(Throwable t){
+        // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
+        // Answered by Markn12, edited by Nathan Tuggy
+        TouchUtils.longClickView(this,text.getChildAt(0));
+        assertTrue(activity.getAlertDialog().isShowing());
 
-        }
-
-        getInstrumentation().waitForIdleSync();
 
     }
 
