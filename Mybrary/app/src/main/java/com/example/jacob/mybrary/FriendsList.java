@@ -1,5 +1,7 @@
 package com.example.jacob.mybrary;
 
+import android.provider.ContactsContract;
+
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -75,6 +77,10 @@ public class FriendsList {
             return false;
     }
 
+    /**
+     * This returns a list of user objects that corresponds with given UUIDs in friendlist
+     * @return ArrayList of users
+     */
     public ArrayList<User> getUsers(){
         ArrayList<User> userList = new ArrayList<>();
         for (UUID uuid : friendList){
@@ -91,6 +97,36 @@ public class FriendsList {
         return userList;
     }
 
+    /**
+     * returns an arrayList of names corresponding with UUIDs in friendslist
+     * @return
+     */
+    public ArrayList<String> getNames(){
+        ArrayList<String> userNames = new ArrayList<>();
+        ArrayList<User> userList = getUsers();
+        for (User user : userList){
+            userNames.add(user.getName());
+        }
+        return userNames;
+    }
+
+    public ArrayList<User> getByName(String name){
+        DataManager dataManager = DataManager.getInstance();
+        ArrayList<User> userList = null;
+        try {
+            //this should be modified to do a partial match
+            userList = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\""+ name +"\"}}}");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+    /**
+     * returns the number of friends in the friendList
+     * @return
+     */
     public int numFriends(){
         return friendList.size();
     }

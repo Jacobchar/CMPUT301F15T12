@@ -99,6 +99,52 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
+    public void testGetNames(){
+        User user1 = new User("Joe", "joe@gmail.com", "123-5678", "Male", "this is my bio", "Edmonton");
+        User user2 = new User("Vicky", "vicky@gmail.com", "234-5678", "Female - maybe", "this is my bio", "Beaumont");
+        User user3 = new User("Dom", "dom@gmail.com", "333-4678", "Male", "this is my bio", "St. Albert");
+        FriendsList friendsList = new FriendsList();
+
+        friendsList.addFriend(user1);
+        friendsList.addFriend(user2);
+        friendsList.addFriend(user3);
+
+        DataManager dataManager = DataManager.getInstance();
+
+        try {
+            dataManager.storeUser(user1);
+            dataManager.storeUser(user2);
+            dataManager.storeUser(user3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> userNames = friendsList.getNames();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue(userNames.get(0).equals(user1.getName()));
+        assertTrue(userNames.get(1).equals(user2.getName()));
+        assertTrue(userNames.get(2).equals(user3.getName()));
+
+        try {
+            dataManager.removeUser(user1.getUUID().toString());
+            dataManager.removeUser(user2.getUUID().toString());
+            dataManager.removeUser(user3.getUUID().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
