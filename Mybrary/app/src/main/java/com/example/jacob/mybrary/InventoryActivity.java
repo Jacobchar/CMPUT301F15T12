@@ -1,9 +1,11 @@
 package com.example.jacob.mybrary;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ListView;
@@ -46,14 +48,14 @@ public class InventoryActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
                 builder.setMessage("What would you like to do?");
                 builder.setCancelable(true);
-                builder.setNeutralButton("Delete Item", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Delete Item", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         inventory.deleteBookByName(book.getName());
                         adapter.notifyDataSetChanged();
                         dialog.cancel();
                     }
                 });
-                builder.setNeutralButton("Edit Item", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Edit Item", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                         // need a function here, pass it the Item UUID too
@@ -82,11 +84,11 @@ public class InventoryActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.inventoryListView);
 
-        Book book = new Book("testName", 0, "It's A Book", true);
-        Book book2 = new Book("BookBook", 1, "No Book", false);
+        //Book book = new Book("testName", 0, "It's A Book", true);
+        //Book book2 = new Book("BookBook", 1, "No Book", false);
 
-        inventory.addBook(book);
-        inventory.addBook(book2);
+        //inventory.addBook(book);
+        //inventory.addBook(book2);
 
         adapter = new ArrayAdapter<>(this, R.layout.simple_list_item, inventory.getBooks());
 
@@ -96,18 +98,30 @@ public class InventoryActivity extends AppCompatActivity {
 
     public void addNewItem(View view){
 
+        //Intent intent = new Intent(this, AddNewItem.class);
         Intent intent = new Intent(this, AddNewItem.class);
+        Bundle bundle = new Bundle();
 
-        // this won't work until storing inventory works.
+        bundle.putSerializable("inv", inventory);
 
-        //to pass :
-        intent.putExtra("inventory", inventory);
+        intent.putExtras(bundle);
 
-        startActivity(intent);
-
-
+        startActivityForResult(intent, 1);
 
     }
+
+    @Override
+    // cite http://stackoverflow.com/questions/17242713/how-to-pass-parcelable-object-from-child-to-parent-activity
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_OK){
+            inventory = (Inventory) data.getSerializableExtra("inv");
+        }
+        adapter.notifyDataSetChanged();
+        fillInventory();
+    }
+
 
 
 

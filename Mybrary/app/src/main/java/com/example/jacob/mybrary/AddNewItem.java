@@ -1,5 +1,7 @@
 package com.example.jacob.mybrary;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,12 +14,19 @@ import java.util.UUID;
 
 public class AddNewItem extends AppCompatActivity {
 
-    private Inventory inventory = (Inventory) getIntent().getSerializableExtra("inventory");
+    private Inventory inventory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_item);
+
+        Bundle bundle = this.getIntent().getExtras();
+        if( bundle != null) {
+            inventory = (Inventory) bundle.getSerializable("inv");
+        } else {
+            inventory = new Inventory();
+        }
     }
 
     /**
@@ -44,6 +53,11 @@ public class AddNewItem extends AppCompatActivity {
         }
 
         inventory.addBook(book);
+
+        Intent data = new Intent();
+        data.putExtra("inv", inventory);
+
+        setResult(Activity.RESULT_OK, data);
         finish();
 
     }
