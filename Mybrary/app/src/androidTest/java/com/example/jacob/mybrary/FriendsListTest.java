@@ -62,15 +62,15 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
         FriendsList friendsList = new FriendsList();
 
         friendsList.addFriend(user1);
-    //    friendsList.addFriend(user2);
-    //    friendsList.addFriend(user3);
+        friendsList.addFriend(user2);
+        friendsList.addFriend(user3);
 
         DataManager dataManager = DataManager.getInstance();
 
         try {
             dataManager.storeUser(user1);
-            //dataManager.storeUser(user2);
-            //dataManager.storeUser(user3);
+            dataManager.storeUser(user2);
+            dataManager.storeUser(user3);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,13 +89,13 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
         }
 
         assertTrue(userList.get(0).equals(user1));
-        //assertTrue(userList.get(1).equals(user2));
-        //assertTrue(userList.get(2).equals(user3));
+        assertTrue(userList.get(1).equals(user2));
+        assertTrue(userList.get(2).equals(user3));
 
         try {
             dataManager.removeUser(user1.getUUID().toString());
- //           dataManager.removeUser(user2.getUUID().toString());
- //           dataManager.removeUser(user3.getUUID().toString());
+            dataManager.removeUser(user2.getUUID().toString());
+            dataManager.removeUser(user3.getUUID().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
