@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by Victoria.
@@ -44,7 +45,6 @@ public class InventoryActivity extends AppCompatActivity {
 
                 final Book book = (Book) listView.getItemAtPosition(pos);
 
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
                 builder.setMessage("What would you like to do?");
                 builder.setCancelable(true);
@@ -57,8 +57,8 @@ public class InventoryActivity extends AppCompatActivity {
                 });
                 builder.setNegativeButton("Edit Item", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        editItem(book.getItemID());
                         dialog.cancel();
-                        // need a function here, pass it the Item UUID too
                     }
                 });
                 builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -98,11 +98,24 @@ public class InventoryActivity extends AppCompatActivity {
 
     public void addNewItem(View view){
 
-        //Intent intent = new Intent(this, AddNewItem.class);
         Intent intent = new Intent(this, AddNewItem.class);
         Bundle bundle = new Bundle();
 
         bundle.putSerializable("inv", inventory);
+
+        intent.putExtras(bundle);
+
+        startActivityForResult(intent, 1);
+
+    }
+
+    public void editItem(UUID id){
+
+        Intent intent = new Intent(this, EditBookActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable("inv", inventory);
+        bundle.putSerializable("id", id);
 
         intent.putExtras(bundle);
 
@@ -120,6 +133,27 @@ public class InventoryActivity extends AppCompatActivity {
         }
         adapter.notifyDataSetChanged();
         fillInventory();
+    }
+
+    public void searchForBook(){
+        /* Dom/Jake's tests:
+            try {
+                DataManager dataManager = DataManager.getInstance();
+
+                Book book3 = new Book("testBook3", 3, "testCategory3", true);
+
+                //Wait for entries to be indexed
+                Thread.sleep(1000);
+
+                ArrayList<Book> returnedBooks = dataManager.searchBooks("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testBook2\"}}}");
+
+                assertTrue(returnedBooks.size() == 1);
+                assertTrue(returnedBooks.contains(book2));
+
+            } catch (Exception e) {
+
+            }
+        */
     }
 
 

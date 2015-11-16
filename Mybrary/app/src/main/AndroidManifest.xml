@@ -64,6 +64,10 @@
             android:name=".AddNewItem"
             android:label="@string/title_activity_add_new_item" >
         </activity>
+        <activity
+            android:name=".EditBookActivity"
+            android:label="@string/title_activity_edit_book" >
+        </activity>
     </application>
 
 </manifest>
