@@ -9,6 +9,8 @@ Used lonelyTwitter for help with ListView and Adaptor display methods: https://g
 
 Used lonelyTwitter for help with tests using activities: https://github.com/joshua2ua/lonelyTwitter Author: Joshua Campbell, retrieved on October 1st 2015
 
-Network check: http://developer.android.com/training/basics/network-ops/connecting.html
+Network check: http://developer.android.com/training/basics/network-ops/connecting.html  
 
-Gson Help: https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html
+Gson Help: https://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/com/google/gson/Gson.html  
+
+Using jUnit to test long clicks: http://blog.denevell.org/android-instrumentation-click-list.html
