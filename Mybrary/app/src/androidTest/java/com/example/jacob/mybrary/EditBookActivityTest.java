@@ -6,17 +6,20 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 /**
- * Tests the Add New Item Activity on the app.
+ * Tests the Edit Item Activity on the app.
+ *
+ * Note: These tests don't get work. Need to pass inventory in a bundle still.
+ *
  * Created by Victoria on 2015-11-16.
  */
-public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
+public class EditBookActivityTest  extends ActivityInstrumentationTestCase2 {
 
-    public AddNewItemTest(){
-            super(AddNewItem.class);
-        }
+    public EditBookActivityTest(){
+        super(EditBookActivity.class);
+    }
 
     public void testSetNewName(){
-        AddNewItem activity = (AddNewItem) getActivity();
+        EditBookActivity activity = (EditBookActivity) getActivity();
 
         final TextView text = activity.getNameText();
         activity.runOnUiThread(new Runnable() {
@@ -44,7 +47,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
 
 
     public void testsetNewQuantity(){
-        AddNewItem activity = (AddNewItem) getActivity();
+        EditBookActivity activity = (EditBookActivity) getActivity();
 
         final TextView textName = activity.getNameText();
         final TextView text = activity.getQuantityText();
@@ -72,7 +75,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
     }
 
     public void testsetNewCategory(){
-        AddNewItem activity = (AddNewItem) getActivity();
+        EditBookActivity activity = (EditBookActivity) getActivity();
 
         final TextView textName = activity.getNameText();
         final TextView text = activity.getCategoryText();
@@ -100,7 +103,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
     }
 
     public void testNewSharedWithOthers(){
-        AddNewItem activity = (AddNewItem) getActivity();
+        EditBookActivity activity = (EditBookActivity) getActivity();
 
         final TextView textName = activity.getNameText();
         final CheckBox checkBox = activity.getCheckBox();
@@ -129,7 +132,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
 
 
     public void testAddComment(){
-        AddNewItem activity = (AddNewItem) getActivity();
+        EditBookActivity activity = (EditBookActivity) getActivity();
 
         final TextView textName = activity.getNameText();
         final TextView text = activity.getCommentText();
