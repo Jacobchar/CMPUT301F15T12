@@ -56,7 +56,6 @@ public class EditProfileActivity extends AppCompatActivity {
         EditText bioView = (EditText) this.findViewById(R.id.bioEditView);
         String bio = bioView.getText().toString();
         User gotUser = new User(name, email, phone, gender, bio, city);
-        //myProfileController.updateUser(gotUser, this);
         LocalUser.getInstance().setSelf(gotUser);
         try {
             DataManager.getInstance().saveLocalUser();
