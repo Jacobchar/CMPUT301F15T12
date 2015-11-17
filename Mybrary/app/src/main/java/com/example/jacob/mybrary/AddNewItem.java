@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -37,13 +38,16 @@ public class AddNewItem extends AppCompatActivity {
         Book book = new Book();
 
         TextView t = (TextView) findViewById(R.id.nameEditView);
-        book.setName(t.getText().toString());
+        if (!t.getText().toString().equals(""))
+            book.setName(t.getText().toString());
 
         t = (TextView) findViewById(R.id.QuantityEditView);
-        book.setQuantity(Integer.parseInt(t.getText().toString()));
+        if (!t.getText().toString().equals(""))
+            book.setQuantity(Integer.parseInt(t.getText().toString()));
 
         t = (TextView) findViewById(R.id.categoryEditView);
-        book.setCategory(t.getText().toString());
+        if (!t.getText().toString().equals(""))
+            book.setCategory(t.getText().toString());
 
         CheckBox c = (CheckBox) findViewById(R.id.shareEditView);
         if (c.isEnabled()){
@@ -53,7 +57,8 @@ public class AddNewItem extends AppCompatActivity {
         }
 
         t = (TextView) findViewById(R.id.commentEditView);
-        book.addNewComment(t.getText().toString());
+        if (!t.getText().toString().equals(""))
+            book.addNewComment(t.getText().toString());
 
         inventory.addBook(book);
 
@@ -65,8 +70,17 @@ public class AddNewItem extends AppCompatActivity {
 
     }
 
+    public TextView getNameText(){
+        return (TextView) findViewById(R.id.nameEditView);
+    }
 
+    public Button getSaveButton(){
+        return (Button) findViewById(R.id.SaveNewBookButton);
+    }
 
+    public Inventory getInventory(){
+        return inventory;
+    }
 
 
 }

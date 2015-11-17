@@ -32,6 +32,7 @@ public class InventoryActivity extends AppCompatActivity {
     private ArrayAdapter<Book> adapter;
     private ListView listView;
     private Inventory inventory = new Inventory();
+    private AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +68,7 @@ public class InventoryActivity extends AppCompatActivity {
                     }
                 });
 
-                AlertDialog alert = builder.create();
+                alert = builder.create();
                 alert.show();
 
                 return true;
@@ -154,6 +155,10 @@ public class InventoryActivity extends AppCompatActivity {
 
             }
         */
+    }
+
+    public AlertDialog getAlertDialog(){
+        return this.alert;
     }
 
 

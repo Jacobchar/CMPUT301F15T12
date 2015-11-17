@@ -69,7 +69,7 @@ public class Inventory implements Serializable {
 
         while (e.hasNext()){
             book = (Book) e.next();
-            if (book.getName() == name){
+            if (book.getName().equals(name)){
                 return book;
             }
         }
