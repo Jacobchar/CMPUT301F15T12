@@ -29,4 +29,6 @@ public class ViewUserActivityTest extends ActivityInstrumentationTestCase2 {
         assertEquals(bioTextView.getText().toString(), LocalUser.getInstance().getBio());
     }
 
+
+
 }
