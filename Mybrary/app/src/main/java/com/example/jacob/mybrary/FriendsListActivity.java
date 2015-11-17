@@ -2,6 +2,7 @@ package com.example.jacob.mybrary;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,10 +15,17 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class FriendsListActivity extends AppCompatActivity {
 
     private ListView listView;
     private ListAdapter listAdapter;
+    LocalUser localUser = LocalUser.getInstance();
+    DataManager dataManager = DataManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +60,24 @@ public class FriendsListActivity extends AppCompatActivity {
 
 
     public void fillFriendsList(){
-        //friends should be set using proper method from friendsList object
-        String[] friends = new String[] {"Dominieque", "Jackylnn", "Victor", "Betty", "Daphne"};
+        ArrayList<String> friends = localUser.getFriendsList().getNames();
+
+        //= new String[] {"Dominieque", "Jackylnn", "Victor", "Betty", "Daphne"};
 
         listAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, friends);
         listView.setAdapter(listAdapter);
-       // listAdapter.notifyDataSetChanged();
+        // listAdapter.notifyDataSetChanged();
 
         //https://developer.xamarin.com/guides/android/user_interface/working_with_listviews_and_adapters/part_2_-_populating_a_listview_with_data/
-
-
     }
 
     public void deleteFriend(){
 
     }
 
-    public void addNewFriend(){
+    public void addNewFriend(View view){
 
         // http://stackoverflow.com/questions/10903754/input-text-dialog-android
-
-        /*
 
         String promptString = "Enter the username of the friend you'd like to add: ";
 
@@ -83,30 +88,48 @@ public class FriendsListActivity extends AppCompatActivity {
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         infoDialog.setView(input);
 
-        infoDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String username = input.getText().toString();
+        infoDialog.setButton(DialogInterface.BUTTON_POSITIVE,
+                "Search", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String username = input.getText().toString();
+                        ArrayList<User> userList = new ArrayList<User>();
 
-                // validate that user exists
-                // add friend if user does exist
+                        //This needs to be made to not cause a networkOnMainThread exception....
+                        /*
+                        try {
+                            userList = dataManager.searchUsers(username);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            return;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            return;
+                        }
+*/
+                        if (userList.size() != 0) {
+                            localUser.getFriendsList().addFriend(userList.get(0));
+                            infoDialog.setMessage(username + " added as friend!");
+                            try {
+                                dataManager.saveLocalUser();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            infoDialog.setMessage("User not found.");
+                        }
+                    }
+                });
 
-                //final AlertDialog infoDialog2 = new AlertDialog.Builder(this).create();
-                infoDialog.setMessage("Added!");
-
-            }
-        });
-
-        infoDialog.setButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        infoDialog.setButton(DialogInterface.BUTTON_NEGATIVE,
+                "Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
 
         infoDialog.show();
-
-        */
 
     }
 }
