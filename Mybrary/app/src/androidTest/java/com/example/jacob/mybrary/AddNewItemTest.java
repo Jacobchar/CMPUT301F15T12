@@ -25,8 +25,6 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         AddNewItem activity = (AddNewItem) getActivity();
 
         final TextView text = activity.getNameText();
-
-
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 text.setText("testName");
@@ -45,54 +43,127 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         final Inventory inv = activity.getInventory();
         Book book = inv.getBookByName("testName");
 
-        assertNotNull(book);
+        assertTrue(book.getName().equals("testName"));
 
     }
 
 
 
-    public void testsetNewQuantity(){}
+    public void testsetNewQuantity(){
+        AddNewItem activity = (AddNewItem) getActivity();
 
-    public void testsetNewCategory(){}
+        final TextView textName = activity.getNameText();
+        final TextView text = activity.getQuantityText();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                textName.setText("testName");
+                text.setText("3");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
 
-    public void testNewSharedWithOthers(){}
+        final Button saveButton = activity.getSaveButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
 
-    public void testAddComment(){}
+        final Inventory inv = activity.getInventory();
+        Book book = inv.getBookByName("testName");
 
+        assertTrue(book.getQuantity() == 3);
 
-    /*
-    Book book = new Book();
-
-    TextView t = (TextView) findViewById(R.id.nameEditView);
-    book.setName(t.getText().toString());
-
-    t = (TextView) findViewById(R.id.QuantityEditView);
-    book.setQuantity(Integer.parseInt(t.getText().toString()));
-
-    t = (TextView) findViewById(R.id.categoryEditView);
-    book.setCategory(t.getText().toString());
-
-    CheckBox c = (CheckBox) findViewById(R.id.shareEditView);
-    if (c.isEnabled()){
-        book.setSharedWithOthers(true);
-    } else {
-        book.setSharedWithOthers(false);
     }
 
-    t = (TextView) findViewById(R.id.commentEditView);
-    book.addNewComment(t.getText().toString());
+    public void testsetNewCategory(){
+        AddNewItem activity = (AddNewItem) getActivity();
 
-    inventory.addBook(book);
+        final TextView textName = activity.getNameText();
+        final TextView text = activity.getCategoryText();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                textName.setText("testName");
+                text.setText("Horror");
+            }
+        });
+        getInstrumentation().waitForIdleSync();
 
-    Intent data = new Intent();
-    data.putExtra("inv", inventory);
+        final Button saveButton = activity.getSaveButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
 
-    setResult(Activity.RESULT_OK, data);
-    finish();
-    */
+        final Inventory inv = activity.getInventory();
+        Book book = inv.getBookByName("testName");
+
+        assertTrue(book.getCategory().equals("Horror"));
+
+    }
+
+    public void testNewSharedWithOthers(){
+        AddNewItem activity = (AddNewItem) getActivity();
+
+        final TextView textName = activity.getNameText();
+        final CheckBox checkBox = activity.getCheckBox();
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                textName.setText("testName");
+                checkBox.setEnabled(true);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        final Button saveButton = activity.getSaveButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        final Inventory inv = activity.getInventory();
+        Book book = inv.getBookByName("testName");
+
+        assertTrue(book.isSharedWithOthers());
+    }
 
 
+    public void testAddComment(){
+        AddNewItem activity = (AddNewItem) getActivity();
 
+        final TextView textName = activity.getNameText();
+        final TextView text = activity.getCommentText();
+
+        final String string = "Great book.";
+
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                textName.setText("testName");
+                text.setText(string);
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        final Button saveButton = activity.getSaveButton();
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                saveButton.performClick();
+            }
+        });
+        getInstrumentation().waitForIdleSync();
+
+        final Inventory inv = activity.getInventory();
+        Book book = inv.getBookByName("testName");
+
+        assertTrue(book.getComments().contains(string));
+
+    }
 
 
 }

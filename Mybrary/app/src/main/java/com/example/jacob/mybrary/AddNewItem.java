@@ -74,6 +74,21 @@ public class AddNewItem extends AppCompatActivity {
         return (TextView) findViewById(R.id.nameEditView);
     }
 
+    public TextView getQuantityText(){
+        return (TextView) findViewById(R.id.QuantityEditView);
+    }
+
+    public TextView getCategoryText(){
+        return (TextView) findViewById(R.id.categoryEditView);
+    }
+
+    public CheckBox getCheckBox(){
+        return (CheckBox) findViewById(R.id.shareEditView);
+    }
+
+    public TextView getCommentText(){
+        return (TextView) findViewById(R.id.commentEditView);
+    }
     public Button getSaveButton(){
         return (Button) findViewById(R.id.SaveNewBookButton);
     }
