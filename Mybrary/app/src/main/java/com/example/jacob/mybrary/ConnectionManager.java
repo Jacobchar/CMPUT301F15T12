@@ -22,6 +22,7 @@ import java.io.IOException;
  */
 public class ConnectionManager {
     private final String connstr;
+    private Boolean isConnected = false;
 
     private static ConnectionManager ourInstance = new ConnectionManager();
 
@@ -123,10 +124,15 @@ public class ConnectionManager {
      * @param context Context of the app
      * @return Returns a boolean indicating whether a network connection exists.
      */
-    public boolean checkNetwork(Context context) {
+    public boolean updateConnectivity(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        return networkInfo != null && networkInfo.isConnected();
+        isConnected = networkInfo != null && networkInfo.isConnected();
+        return isConnected;
+    }
+
+    public boolean isConnected() {
+        return isConnected;
     }
 }
