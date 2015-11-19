@@ -112,7 +112,7 @@ public class Trade {
      */
     @Override
     public String toString(){
-        /*
+    /*
         try{
             User user1 = data.retrieveUser(this.getUser1UUID().toString());
             User user2 = data.retrieveUser(this.getUser2UUID().toString());
@@ -126,7 +126,7 @@ public class Trade {
             return "Error loading";
         }
         */
-        return " No trades :(";
+        return "No trades :(";
     }
 
     /**

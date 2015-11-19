@@ -36,11 +36,11 @@ public class TradeListActivity extends AppCompatActivity {
                 final Trade trade = (Trade) tradeListView.getItemAtPosition(pos);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(TradeListActivity.this);
-                builder.setMessage("Edit or Delete the Trade?");
+                builder.setMessage("View or Delete the Trade?");
                 builder.setCancelable(true);
-                builder.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("View", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(TradeListActivity.this, ProposeTradeActivity.class);
+                        Intent intent = new Intent(TradeListActivity.this, ViewIndividualTradeActivity.class);
                         startActivity(intent);
                         dialog.cancel();
                     }

@@ -39,7 +39,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
         assertTrue(activity.getAlertDialog().isShowing());
     }
 
-    public void testEditButton(){
+    public void testViewButton(){
         TradeListActivity activity = (TradeListActivity) getActivity();
         assertNotNull(activity);
 
@@ -54,7 +54,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
         //following from https://developer.android.com/training/activity-testing/activity-functional-testing.html
         // Set up an ActivityMonitor
         Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(ProposeTradeActivity.class.getName(),
+                getInstrumentation().addMonitor(ViewIndividualTradeActivity.class.getName(),
                         null, false);
         activity.runOnUiThread(new Runnable() {
             @Override
@@ -66,13 +66,13 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
 
         // Lonely Twitter from the labs
         // Validate that ReceiverActivity is started
-        ProposeTradeActivity receiverActivity = (ProposeTradeActivity)
+        ViewIndividualTradeActivity receiverActivity = (ViewIndividualTradeActivity)
                 receiverActivityMonitor.waitForActivityWithTimeout(1000);
         assertNotNull("ReceiverActivity is null", receiverActivity);
         assertEquals("Monitor for ReceiverActivity has not been called",
                 1, receiverActivityMonitor.getHits());
         assertEquals("Activity is of wrong type",
-                ProposeTradeActivity.class, receiverActivity.getClass());
+                ViewIndividualTradeActivity.class, receiverActivity.getClass());
 
         // Remove the ActivityMonitor
         getInstrumentation().removeMonitor(receiverActivityMonitor);
