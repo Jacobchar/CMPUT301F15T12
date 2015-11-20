@@ -33,7 +33,7 @@ public class FriendListController {
             }
 
             public void run() {
-                connectionManager.checkNetwork(context);
+                connectionManager.updateConnectivity(context);
                 try {
                     //remove friend based on username from localUser
                     localUser.getFriendsList().removeFriend(dataManager.searchUsers(friend).get(0));
@@ -59,7 +59,7 @@ public class FriendListController {
             }
 
             public void run() {
-                connectionManager.checkNetwork(context);
+                connectionManager.updateConnectivity(context);
                 try {
                     userList = dataManager.searchUsers(friend);
                     if (userList.size()!=0){
