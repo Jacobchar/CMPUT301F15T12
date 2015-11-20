@@ -62,7 +62,7 @@ public class FriendsListActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-
+                listAdapter.notifyDataSetChanged();
                 infoDialog = builder.create();
                 infoDialog.show();
                 return true;
@@ -101,7 +101,7 @@ public class FriendsListActivity extends AppCompatActivity {
 
         listAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, friends);
         listView.setAdapter(listAdapter);
-        //listAdapter.notify();
+        listAdapter.notifyDataSetChanged();
      }
 
     public void deleteFriend(){
@@ -136,8 +136,7 @@ public class FriendsListActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        //TODO: update UI appropriately. Using the adapter? Synchronization issue + crashes...
-                        //listAdapter.notify();
+                        listAdapter.notifyDataSetChanged();
                     }
                 });
 
