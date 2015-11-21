@@ -10,17 +10,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import java.util.UUID;
+
 /**
  *  Interface linked to from tradeListActivity which shows a single trades details, allowing for edits
  *  Also allows accepting, or declining a trade
  */
 public class ViewIndividualTradeActivity extends AppCompatActivity {
     AlertDialog alert;
+    UUID currentTrade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_individual_trade);
+
+        // http://stackoverflow.com/questions/2965109/passing-data-between-activities-in-android
+        // Answered by Pentium10
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            currentTrade = (UUID) extras.getSerializable("currentTrade");
+        }
 
     }
 
@@ -41,6 +51,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 Intent intent = new Intent(ViewIndividualTradeActivity.this, ProposeTradeActivity.class);
+                intent.putExtra("currentTrade",currentTrade);
                 startActivity(intent);
                 dialog.cancel();
             }

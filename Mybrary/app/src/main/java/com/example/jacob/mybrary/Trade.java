@@ -17,6 +17,8 @@ public class Trade {
     private UUID user2;
     private Inventory user1Inventory;
     private Inventory user2Inventory;
+    private List<Book> user1Offer;
+    private List<Book> user2Offer;
     private Boolean user1Accepted = false;
     private Boolean user2Accepted = false;
     private UUID tradeID;
@@ -153,4 +155,19 @@ public class Trade {
         return this.tradeID;
     }
 
+    public List<Book> getUser1Offer() {
+        return user1Offer;
+    }
+
+    public void setUser1Offer(List<Book> user1Offer) {
+        this.user1Offer = user1Offer;
+    }
+
+    public List<Book> getUser2Offer() {
+        return user2Offer;
+    }
+
+    public void setUser2Offer(List<Book> user2Offer) {
+        this.user2Offer = user2Offer;
+    }
 }

@@ -20,14 +20,15 @@ public class TradeListActivity extends AppCompatActivity {
     private ListView tradeListView;
     private ArrayList<Trade> occuredTrades = new ArrayList<>();
     private AlertDialog alert;
-    private ArrayAdapter<Trade> adapter;
+
+    TradeController controller = new TradeController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_list);
 
-        getTrades();
+        tradeListView = controller.getTradeList(this);
 
         tradeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -41,14 +42,16 @@ public class TradeListActivity extends AppCompatActivity {
                 builder.setPositiveButton("View", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent intent = new Intent(TradeListActivity.this, ViewIndividualTradeActivity.class);
+                        // http://stackoverflow.com/questions/2965109/passing-data-between-activities-in-android
+                        // Answered by Pentium10
+                        intent.putExtra("currentTrade",trade.getTradeID());
                         startActivity(intent);
                         dialog.cancel();
                     }
                 });
                 builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        occuredTrades.remove(trade);
-                        adapter.notifyDataSetChanged();
+                        controller.deleteTrade(TradeListActivity.this, trade);
                         dialog.cancel();
                     }
                 });
@@ -67,22 +70,7 @@ public class TradeListActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Get the list of all trades relevant to this user'
-     * Todo: Currently is just all trades
-     */
-    private void getTrades(){
-                tradeListView = (ListView) findViewById(R.id.tradeListView);
-                Trade trade = new Trade(new User("Harry", "", "", "", "", ""), new User("Mouse", "", "", "", "", ""));
-                occuredTrades = new ArrayList<>();
-                occuredTrades.add(trade);
 
-                adapter = new ArrayAdapter<>(TradeListActivity.this, R.layout.simple_list_item, occuredTrades);
-
-                tradeListView.setAdapter(adapter);
-
-                adapter.notifyDataSetChanged();
-    }
 
     public AlertDialog getAlertDialog(){
         return this.alert;
