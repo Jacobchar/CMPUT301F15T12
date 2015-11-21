@@ -1,28 +1,23 @@
 package com.example.jacob.mybrary;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Completes trades by removing an item from one user1, and adding the same item to user2
- * provided both users have accepted the trade
+ * Stores data for trades
+ * Stores users involved, their trade offers, accepted status, completion status, and a trade ID
  *  Created by davidross on 2015-11-02.
  */
 
 public class Trade {
-    private UUID user1;
-    private UUID user2;
-    private Inventory user1Inventory;
-    private Inventory user2Inventory;
+    private User user1;
+    private User user2;
     private List<Book> user1Offer;
     private List<Book> user2Offer;
     private Boolean user1Accepted = false;
     private Boolean user2Accepted = false;
+    private Boolean isComplete = false;
     private UUID tradeID;
-    private DataManager data = DataManager.getInstance();
 
     /**
      * Trade between two users
@@ -30,52 +25,10 @@ public class Trade {
      * @param user2 A second user who is taking part in the trade
      */
     public Trade(User user1, User user2){
-        user1Inventory = user1.getInventory();
-        user2Inventory = user2.getInventory();
         tradeID = tradeID.randomUUID();
-        this.user1 = user1.getUUID();
-        this.user2 = user2.getUUID();
+        this.user1 = user1;
+        this.user2 = user2;
     }
-
-    /**
-     * Perform the trade between users, using a list of books that they both want to trade
-     * @param user1TradeOffer List of books that user 1 wishes to trade
-     * @param user2TradeOffer List of books that user 2 wishes to trade
-     */
-    public void tradeBooks(List<Book> user1TradeOffer, List<Book> user2TradeOffer) {
-        if(getUser1Accepted()  && getUser2Accepted()) {
-            addReceivedBooks(user2TradeOffer, user1Inventory);
-            addReceivedBooks(user1TradeOffer, user2Inventory);
-
-            removeTradedBooks(user1TradeOffer, user1Inventory);
-            removeTradedBooks(user2TradeOffer, user2Inventory);
-        }
-    }
-
-    /**
-     * Add new books to the users inventory
-     * @param bookList List of books that the user will be receiving
-     * @param inventory Inventory of the user receiving the books
-     */
-    private void addReceivedBooks(List<Book> bookList, Inventory inventory){
-        //ToDo: Change owner of books in each book
-        for(Book book: bookList){
-            inventory.addBook(book);
-        }
-    }
-
-    /**
-     * Remove old books from the users inventory
-     * @param bookList List of books that will be removed from the user
-     * @param inventory Inventory of the user having books removed
-     */
-    private void removeTradedBooks(List<Book> bookList, Inventory inventory){
-        //ToDo: Change owner of books in each book
-        for(Book book: bookList){
-          inventory.deleteBookByName(book.getName());
-        }
-    }
-
     /**
      * Set whether user 1 has accepted the current trade offer
      * @param accepted True or False as to whether the trade has been accepted
@@ -114,21 +67,13 @@ public class Trade {
      */
     @Override
     public String toString(){
-    /*
-        try{
-            User user1 = data.retrieveUser(this.getUser1UUID().toString());
-            User user2 = data.retrieveUser(this.getUser2UUID().toString());
+        if(isComplete()){
+            return user1.getName() +  " offers " + getUser1Offer() + " to " + user2.getName() + " for " + getUser2Offer() + "\n"+"Trade Complete";
+        }
+        else{
+            return user1.getName() +  " offers " + getUser1Offer() + " to " + user2.getName() + " for " + getUser2Offer() + "\n"+" Trade Incomplete";
+        }
 
-            return "User: " + user1.getName() + "traded with " + user2.getName();
-        }
-        catch(IOException e){
-            return "File not found";
-        }
-        catch(JSONException e){
-            return "Error loading";
-        }
-        */
-        return "No trades :(";
     }
 
     /**
@@ -136,7 +81,7 @@ public class Trade {
      * @return UUID for user 1
      */
     public UUID getUser1UUID(){
-        return this.user1;
+        return this.user1.getUUID();
     }
 
     /**
@@ -144,7 +89,7 @@ public class Trade {
      * @return UUID for user 2
      */
     public UUID getUser2UUID(){
-        return this.user2;
+        return this.user2.getUUID();
     }
 
     /**
@@ -155,19 +100,50 @@ public class Trade {
         return this.tradeID;
     }
 
+    /**
+     * Get the offer that user 1 has currently
+     * @return User1's offer
+     */
     public List<Book> getUser1Offer() {
         return user1Offer;
     }
 
+    /**
+     *  The offer user 1 will send
+     * @param user1Offer a list of books user 1 will offer
+     */
     public void setUser1Offer(List<Book> user1Offer) {
         this.user1Offer = user1Offer;
     }
-
+    /**
+     * Get the offer that user 2 has currently
+     * @return User2's offer
+     */
     public List<Book> getUser2Offer() {
         return user2Offer;
     }
 
+    /**
+     *  The offer that user 2 will send
+     * @param user2Offer a list of books user 2 will offer
+     */
     public void setUser2Offer(List<Book> user2Offer) {
         this.user2Offer = user2Offer;
+    }
+
+    /**
+     * Get the 'is complete' flag
+     * @return whether the trade is complete
+     */
+    public Boolean isComplete() {
+        return isComplete;
+    }
+
+    /**
+     * Set the 'is complete' flag
+     * @param isComplete set whether the trade is complete or not. (true/false)
+     */
+    public void setIsComplete(Boolean isComplete) {
+        this.isComplete = isComplete;
     }
 }
