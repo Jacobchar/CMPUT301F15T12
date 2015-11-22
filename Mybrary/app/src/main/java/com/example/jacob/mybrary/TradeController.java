@@ -119,54 +119,74 @@ public class TradeController {
      * Gets the current offers for the trade being looked at
      * @param parent the calling activity
      * @param currentTradeID the UUID for the trade being examined
+     * @param yourItemsListView The view for the local user's trade offer
+     * @param theirItemsListView  the view for the other user's trade offer
      */
     // Todo: Make sure "your" trade offer shows up in the correct location
-    public void getCurrentTradeOffer(final Activity parent, final UUID currentTradeID){
-        final ListView yourTradeOffer = (ListView) parent.findViewById(R.id.yourItemsListView);
-        final ListView theirTradeOffer = (ListView) parent.findViewById(R.id.theirItemsListView);
-
+    public void getCurrentTradeOffer(final Activity parent, final UUID currentTradeID, final ListView yourItemsListView, final ListView theirItemsListView){
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                Book book = new Book("Name", 1, "", true);
-                ArrayList<Book> user1Offer = new ArrayList<>();
-                user1Offer.add(book);
+                try {
+                    Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\""+currentTradeID.toString()+"\"}}}").get(0);
 
-                ArrayAdapter<Book> yourAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, user1Offer);
-                updateUI(yourTradeOffer, yourAdapter, parent);
+                    if(trade.getUser1UUID().equals(localUser.getUUID())){
+                        ArrayAdapter<Book> yourAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, trade.getUser1Offer());
+                        updateUI(yourItemsListView, yourAdapter, parent);
 
-                Book book1 = new Book("Name2", 1, "", true);
-                ArrayList<Book> user2Offer = new ArrayList<>();
-                user2Offer.add(book1);
+                        ArrayAdapter<Book> theirAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item,trade.getUser2Offer());
+                        updateUI(theirItemsListView, theirAdapter, parent);
+                    }
 
-                ArrayAdapter<Book> theirAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, user2Offer);
-                updateUI(theirTradeOffer, theirAdapter, parent);
+                    else{
+                        ArrayAdapter<Book> yourAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, trade.getUser2Offer());
+                        updateUI(yourItemsListView, yourAdapter, parent);
+
+                        ArrayAdapter<Book> theirAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item,trade.getUser1Offer());
+                        updateUI(theirItemsListView, theirAdapter, parent);
+                    }
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                    return;
+                }
+                catch(JSONException e){
+                    e.printStackTrace();
+                    return;
+                }
             }
+
         });
         t.start();
     }
 
     /**
-     * Removes a trade from the database
+     * Removes a trade from the database and update the UI
      * @param trade the trade to be removed from the database
      */
-    // Todo: Update to remove the deleted trade from the database
-    public void deleteTrade(Activity parent,final Trade trade){
+    public void deleteTrade(final Activity parent,final Trade trade){
         Thread t = new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try {
                     saver.removeTrade(trade.getTradeID().toString());
+                    // Wait for the server to remove the trade
+                    Thread.sleep(1500);
+                    getTradeList(parent);
                 }
                 catch(IOException e){
+                    e.printStackTrace();
+                    return;
+                }
+                catch(InterruptedException e){
                     e.printStackTrace();
                     return;
                 }
             }
         });
         t.start();
-        this.getTradeList(parent);
+
     }
 
     /**

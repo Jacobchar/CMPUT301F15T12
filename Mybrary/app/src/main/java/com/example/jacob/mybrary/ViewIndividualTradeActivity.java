@@ -9,7 +9,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class ViewIndividualTradeActivity extends AppCompatActivity {
     AlertDialog alert;
     UUID currentTrade;
+    TradeController controller = new TradeController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +35,14 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
             currentTrade = (UUID) extras.getSerializable("currentTrade");
         }
 
+        controller.getCurrentTradeOffer(this,currentTrade,(ListView) findViewById(R.id.yourItemsListView),(ListView) findViewById(R.id.theirItemsListView));
+
     }
 
     public void modifyTradeButton(View v){
         // note: FromActivity.class, ToActivity.class
         Intent intent = new Intent(this, ProposeTradeActivity.class);
+        intent.putExtra("currentTrade",currentTrade);
         startActivity(intent);
     }
 

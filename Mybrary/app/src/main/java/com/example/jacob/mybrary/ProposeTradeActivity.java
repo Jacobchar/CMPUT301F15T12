@@ -36,7 +36,7 @@ public class ProposeTradeActivity extends AppCompatActivity {
             currentTrade = (UUID) extras.getSerializable("currentTrade");
         }
 
-        tradeController.getCurrentTradeOffer(this,currentTrade);
+        tradeController.getCurrentTradeOffer(this,currentTrade,(ListView) findViewById(R.id.yourItemsListView),(ListView) findViewById(R.id.theirItemsListView));
 
     }
 
