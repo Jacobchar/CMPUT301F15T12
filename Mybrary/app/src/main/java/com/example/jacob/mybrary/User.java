@@ -152,4 +152,8 @@ public class User {
         this.bio = newUser.getBio();
         this.city = newUser.getCity();
     }
+
+    public void setUUID(UUID myUUID) {
+        this.myUUID = myUUID;
+    }
 }
