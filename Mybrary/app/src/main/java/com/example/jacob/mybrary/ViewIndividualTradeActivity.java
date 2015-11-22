@@ -51,6 +51,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     }
 
     public void declineTradeButton(View v){
+        controller.setAcceptedStatus(false,currentTrade);
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewIndividualTradeActivity.this);
         builder.setMessage("Would you like to create a counter offer?");
         builder.setCancelable(true);
