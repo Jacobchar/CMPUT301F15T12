@@ -21,7 +21,7 @@ public class TradeController {
     private Trade currentTrade;
     final private DataManager saver = DataManager.getInstance();
     private LocalUser localUser = LocalUser.getInstance();
-   final  private ConnectionManager connection = ConnectionManager.getInstance();
+    final  private ConnectionManager connection = ConnectionManager.getInstance();
 
     /**
      * Create a new trade between the current user, and the friend he is wanting to trade with
@@ -79,21 +79,17 @@ public class TradeController {
      * @param parent the calling activity
      * @return the list of trades found
      */
-    // Todo: Fix the query to fetch the correct user's trades
     public ListView getTradeList(final Activity parent ) {
-
         final ListView tradeListView = (ListView) parent.findViewById(R.id.tradeListView);
         Thread t = new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try {
-                    ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user1\",\"query\":\"testName2\"}}}");
-                    Trade trade = new Trade(new User("Bob", "Email1", "12345", "Spirit","Likes Trades","Chicago"), new User("Harry","Email2", "123456","Male","Dislikes Trades", "Chicago"));
-                    occuredTrades.add(trade);
-                   final  ArrayAdapter<Trade> adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, occuredTrades);
-
+                    ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*.myUUID\",\"query\":\""+localUser.getUUID().toString()+"\"}}}");
+                    final  ArrayAdapter<Trade> adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, occuredTrades);
                     updateUI(tradeListView, adapter, parent);
+
                 }
                 catch(IOException e){
                     e.printStackTrace();
@@ -132,19 +128,19 @@ public class TradeController {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                    Book book = new Book("Name", 1, "", true);
-                    ArrayList<Book> user1Offer = new ArrayList<>();
-                    user1Offer.add(book);
+                Book book = new Book("Name", 1, "", true);
+                ArrayList<Book> user1Offer = new ArrayList<>();
+                user1Offer.add(book);
 
-                    ArrayAdapter<Book> yourAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, user1Offer);
-                    updateUI(yourTradeOffer, yourAdapter, parent);
+                ArrayAdapter<Book> yourAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, user1Offer);
+                updateUI(yourTradeOffer, yourAdapter, parent);
 
-                    Book book1 = new Book("Name2", 1, "", true);
-                    ArrayList<Book> user2Offer = new ArrayList<>();
-                    user2Offer.add(book1);
+                Book book1 = new Book("Name2", 1, "", true);
+                ArrayList<Book> user2Offer = new ArrayList<>();
+                user2Offer.add(book1);
 
-                    ArrayAdapter<Book> theirAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, user2Offer);
-                    updateUI(theirTradeOffer, theirAdapter, parent);
+                ArrayAdapter<Book> theirAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, user2Offer);
+                updateUI(theirTradeOffer, theirAdapter, parent);
             }
         });
         t.start();
@@ -152,18 +148,41 @@ public class TradeController {
 
     /**
      * Removes a trade from the database
-     * @param parent The calling activity
      * @param trade the trade to be removed from the database
      */
     // Todo: Update to remove the deleted trade from the database
-    public void deleteTrade(Activity parent, Trade trade){
-        final ListView tradeListView = (ListView) parent.findViewById(R.id.tradeListView);
-        ArrayList<Trade> occuredTrades = new ArrayList<>();
-        ArrayAdapter adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, occuredTrades);
-        tradeListView.setAdapter(adapter);
+    public void deleteTrade(Activity parent,final Trade trade){
+        Thread t = new Thread(new Runnable() {
 
+            @Override
+            public void run() {
+                try {
+                    saver.removeTrade(trade.getTradeID().toString());
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                    return;
+                }
+            }
+        });
+        t.start();
+        this.getTradeList(parent);
+    }
 
-        adapter.notifyDataSetChanged();
+    /**
+     * Sets the selected trade to complete
+     * Removes the trade from the server, and replaces it with th updated one
+     * @param trade trade to be completed
+     */
+    public void setTradeComplete(Trade trade){
+        trade.setIsComplete(true);
+        try {
+            saver.removeTrade(trade.getTradeID().toString());
+            saver.storeTrade(trade);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
 

@@ -25,7 +25,7 @@
         android:layout_below="@+id/tradeTitleView"
         android:layout_alignParentStart="true" />
 
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
@@ -54,7 +54,7 @@
         android:layout_centerHorizontal="true"
         android:onClick="sendRequestButton" />
 
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"

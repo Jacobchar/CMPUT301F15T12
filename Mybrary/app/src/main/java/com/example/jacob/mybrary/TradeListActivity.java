@@ -44,7 +44,7 @@ public class TradeListActivity extends AppCompatActivity {
                         Intent intent = new Intent(TradeListActivity.this, ViewIndividualTradeActivity.class);
                         // http://stackoverflow.com/questions/2965109/passing-data-between-activities-in-android
                         // Answered by Pentium10
-                        intent.putExtra("currentTrade",trade.getTradeID());
+                        intent.putExtra("currentTrade", trade.getTradeID());
                         startActivity(intent);
                         dialog.cancel();
                     }
