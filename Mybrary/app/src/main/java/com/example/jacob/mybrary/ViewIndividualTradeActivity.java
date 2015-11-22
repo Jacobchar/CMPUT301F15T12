@@ -47,7 +47,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     }
 
     public void acceptTradeButton(View v){
-
+        controller.setAcceptedStatus(true,currentTrade);
     }
 
     public void declineTradeButton(View v){

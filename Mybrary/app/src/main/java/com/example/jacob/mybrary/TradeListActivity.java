@@ -67,7 +67,12 @@ public class TradeListActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        controller.getTradeList(this);
     }
 
 

@@ -35,43 +35,36 @@ public class TradeController {
 
     /**
      * Set whether a user has accepted a given trade
-     * @param user One of the two users who is participating in the current trade
      * @param status true or false for whether the user has accepted
-     * @param tradeID the unique ID for the trade being altered
+     * @param currentTradeID the unique ID for the trade being altered
      */
-    public void setAcceptedStatus(User user, Boolean status, UUID tradeID){
-        currentTrade = editExistingTrade(tradeID);
-        if(user.getUUID().equals(currentTrade.getUser1UUID())){
-            currentTrade.setUser1Accepted(status);
-        }
-        else if(user.getUUID().equals(currentTrade.getUser2UUID())){
-            currentTrade.setUser2Accepted(status);
-        }
-    }
+    public void setAcceptedStatus(final Boolean status,final UUID currentTradeID){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\""+currentTradeID.toString()+"\"}}}").get(0);
+                    saver.removeTrade(currentTradeID.toString());
+                    if(localUser.getUUID().equals(trade.getUser1UUID())){
+                        trade.setUser1Accepted(status);
+                    }
+                    else{
+                        trade.setUser2Accepted(status);
+                    }
+                    saver.storeTrade(trade);
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                    return;
+                }
+                catch(JSONException e){
+                    e.printStackTrace();
+                    return;
+                }
 
-    /**
-     * From the list of existing trades, find the matching trade to edit
-     * @param tradeID UUID for the trade you are looking for
-     * @return
-     */
-    public Trade editExistingTrade(UUID tradeID){
-        for(Trade trade: tradeList){
-            if(trade.getTradeID().equals(tradeID)){
-                return trade;
             }
-        }
-        return null;
-    }
-
-    /**
-     * Send a trade offer where user1 is the original trade initiator, and user 2 is the other party involved
-     * @param user1Offer List of books user 1 wishes to offer
-     * @param user2Offer List of books user 2 wishes to offer
-     * @param tradeID the ID for the trade the offer belongs to
-     */
-    public void offerTrade(List<Book> user1Offer, List<Book> user2Offer, UUID tradeID){
-        // Needs to send a new notification to the other person showing the new offer.
-        currentTrade = editExistingTrade(tradeID);
+        });
+        t.start();
     }
 
     /**
@@ -86,7 +79,7 @@ public class TradeController {
             @Override
             public void run() {
                 try {
-                    ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*.myUUID\",\"query\":\""+localUser.getUUID().toString()+"\"}}}");
+                    ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*.myUUID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}");
                     final  ArrayAdapter<Trade> adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, occuredTrades);
                     updateUI(tradeListView, adapter, parent);
 
@@ -122,7 +115,6 @@ public class TradeController {
      * @param yourItemsListView The view for the local user's trade offer
      * @param theirItemsListView  the view for the other user's trade offer
      */
-    // Todo: Make sure "your" trade offer shows up in the correct location
     public void getCurrentTradeOffer(final Activity parent, final UUID currentTradeID, final ListView yourItemsListView, final ListView theirItemsListView){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -131,19 +123,13 @@ public class TradeController {
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\""+currentTradeID.toString()+"\"}}}").get(0);
 
                     if(trade.getUser1UUID().equals(localUser.getUUID())){
-                        ArrayAdapter<Book> yourAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, trade.getUser1Offer());
-                        updateUI(yourItemsListView, yourAdapter, parent);
-
-                        ArrayAdapter<Book> theirAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item,trade.getUser2Offer());
-                        updateUI(theirItemsListView, theirAdapter, parent);
+                        fetchUserOffer(parent, trade.getUser1Offer(),yourItemsListView);
+                        fetchUserOffer(parent, trade.getUser2Offer(), theirItemsListView);
                     }
 
                     else{
-                        ArrayAdapter<Book> yourAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, trade.getUser2Offer());
-                        updateUI(yourItemsListView, yourAdapter, parent);
-
-                        ArrayAdapter<Book> theirAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item,trade.getUser1Offer());
-                        updateUI(theirItemsListView, theirAdapter, parent);
+                        fetchUserOffer(parent, trade.getUser2Offer(),yourItemsListView);
+                        fetchUserOffer(parent, trade.getUser1Offer(),theirItemsListView);
                     }
                 }
                 catch(IOException e){
@@ -158,6 +144,19 @@ public class TradeController {
 
         });
         t.start();
+    }
+
+    /**
+     * Helper function which ensures a trade offer exists, and adds it to the UI
+     * @param parent activity which is calling the function
+     * @param offer a list of books being offered by the user
+     * @param listView the view being updated with the book list
+     */
+    private void fetchUserOffer(Activity parent,List<Book> offer, ListView listView){
+        if(offer != null){
+            ArrayAdapter<Book> adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, offer);
+            updateUI(listView, adapter, parent);
+        }
     }
 
     /**
