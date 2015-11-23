@@ -24,10 +24,14 @@ public class ViewUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_user);
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        //Parcel parceledUser = intent.getParcelableExtra("user");
-        myUser = bundle.getParcelable("user");
-        setText(findViewById(R.id.textLayout));
+        try {
+            Bundle bundle = intent.getExtras();
+            //Parcel parceledUser = intent.getParcelableExtra("user");
+            myUser = bundle.getParcelable("user");
+            setText(findViewById(R.id.textLayout));
+        }catch (NullPointerException e){
+            myUser = LocalUser.getInstance();
+        }
     }
 
     /**
