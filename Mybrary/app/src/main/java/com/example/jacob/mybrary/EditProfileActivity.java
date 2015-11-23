@@ -20,7 +20,6 @@ import java.io.IOException;
 public class EditProfileActivity extends AppCompatActivity {
     ProfileController myProfileController = new ProfileController();
     LocalUser myUser;
-    Boolean mode = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
         myUser = LocalUser.getInstance();
 
-        setText(mode);
+        setText();
 
     }
 
@@ -67,23 +66,22 @@ public class EditProfileActivity extends AppCompatActivity {
 
     /**
      * Sets the Text within the Edit Text boxes to the values from a User
-     * @param mode
+     *
      */
-    public void setText(Boolean mode){
-        if (mode) {
-            EditText nameEditText = (EditText) findViewById(R.id.nameEditView);
-            nameEditText.setText(myUser.getName(), TextView.BufferType.EDITABLE);
-            EditText cityEditText = (EditText) findViewById(R.id.cityEditView);
-            cityEditText.setText(myUser.getCity(), TextView.BufferType.EDITABLE);
-            EditText phoneNumberEditText = (EditText) findViewById(R.id.phoneEditView);
-            phoneNumberEditText.setText(myUser.getPhoneNumber(), TextView.BufferType.EDITABLE);
-            EditText emailEditText = (EditText) findViewById(R.id.emailEditView);
-            emailEditText.setText(myUser.getEmailAddress(), TextView.BufferType.EDITABLE);
-            EditText genderEditText = (EditText) findViewById(R.id.genderEditView);
-            genderEditText.setText(myUser.getGender(), TextView.BufferType.EDITABLE);
-            EditText bioEditText = (EditText) findViewById(R.id.bioEditView);
-            bioEditText.setText(myUser.getBio(), TextView.BufferType.EDITABLE);
-        }
+    public void setText(){
+        EditText nameEditText = (EditText) findViewById(R.id.nameEditView);
+        nameEditText.setText(myUser.getName(), TextView.BufferType.EDITABLE);
+        EditText cityEditText = (EditText) findViewById(R.id.cityEditView);
+        cityEditText.setText(myUser.getCity(), TextView.BufferType.EDITABLE);
+        EditText phoneNumberEditText = (EditText) findViewById(R.id.phoneEditView);
+        phoneNumberEditText.setText(myUser.getPhoneNumber(), TextView.BufferType.EDITABLE);
+        EditText emailEditText = (EditText) findViewById(R.id.emailEditView);
+        emailEditText.setText(myUser.getEmailAddress(), TextView.BufferType.EDITABLE);
+        EditText genderEditText = (EditText) findViewById(R.id.genderEditView);
+        genderEditText.setText(myUser.getGender(), TextView.BufferType.EDITABLE);
+        EditText bioEditText = (EditText) findViewById(R.id.bioEditView);
+        bioEditText.setText(myUser.getBio(), TextView.BufferType.EDITABLE);
+
     }
 
 }

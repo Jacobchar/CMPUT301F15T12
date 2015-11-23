@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             DataManager.getInstance().loadLocalUser();
         } catch (IOException e) {
-            e.printStackTrace();
+            Intent intent = new Intent(this, CreateUserActivity.class);
+            startActivity(intent);
         }
 
     }
