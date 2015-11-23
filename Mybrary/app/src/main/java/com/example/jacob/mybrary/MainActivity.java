@@ -81,9 +81,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openProfileActivity(View view) {
+        try {
+            DataManager.getInstance().loadLocalUser();
+        }catch (IOException e){
 
+        }
         // note: FromActivity.class, ToActivity.class
         Intent intent = new Intent(this, ViewUserActivity.class);
+        User user = LocalUser.getInstance();
+        intent.putExtra("user", user);
         startActivity(intent);
 
     }

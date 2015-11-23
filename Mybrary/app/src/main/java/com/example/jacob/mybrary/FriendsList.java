@@ -1,5 +1,7 @@
 package com.example.jacob.mybrary;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 
 import org.json.JSONException;
@@ -13,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by Mason Strong on 11/3/2015.
  */
-public class FriendsList {
+public class FriendsList implements Parcelable{
     private Collection<UUID> friendList;
     DataManager dataManager = DataManager.getInstance();
 
@@ -130,4 +132,31 @@ public class FriendsList {
     public int numFriends(){
         return friendList.size();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(friendList);
+    }
+
+    protected FriendsList(Parcel parcel){
+        friendList = parcel.readArrayList(UUID.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<FriendsList> CREATOR = new Parcelable.Creator<FriendsList>() {
+        @Override
+        public FriendsList createFromParcel(Parcel in) {
+            return new FriendsList(in);
+        }
+
+        @Override
+        public FriendsList[] newArray(int size) {
+            return new FriendsList[size];
+        }
+    };
+
 }

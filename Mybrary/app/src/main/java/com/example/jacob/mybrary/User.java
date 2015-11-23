@@ -1,5 +1,9 @@
 package com.example.jacob.mybrary;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.UUID;
 
 //Class to hold the data for an individual user of the app
@@ -11,7 +15,7 @@ import java.util.UUID;
  * the User's inventory, and a unique User id generated on creation.
  *
  */
-public class User {
+public class User implements Parcelable{
     private String name;
     private String emailAddress;
     private String phoneNumber;
@@ -111,7 +115,10 @@ public class User {
      * Returns the Friendslist of the User
      * @return
      */
-    public FriendsList getFriendsList() { return friendsList;}
+    public FriendsList getFriendsList() {
+        return friendsList;
+        //return new FriendsList();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -156,4 +163,47 @@ public class User {
     public void setUUID(UUID myUUID) {
         this.myUUID = myUUID;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(emailAddress);
+        dest.writeString(phoneNumber);
+        dest.writeString(gender);
+        dest.writeString(bio);
+        dest.writeString(city);
+        dest.writeValue(myUUID);
+        dest.writeValue(inventory);
+        dest.writeValue(friendsList);
+    }
+
+    //Got from http://www.parcelabler.com/
+    protected User(Parcel parcel){
+        name = parcel.readString();
+        emailAddress = parcel.readString();
+        phoneNumber = parcel.readString();
+        gender = parcel.readString();
+        bio = parcel.readString();
+        city = parcel.readString();
+        myUUID = (UUID) parcel.readValue(UUID.class.getClassLoader());
+        inventory = (Inventory) parcel.readValue(Inventory.class.getClassLoader());
+        friendsList = (FriendsList) parcel.readValue(FriendsList.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

@@ -1,6 +1,8 @@
 package com.example.jacob.mybrary;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -14,18 +16,17 @@ import java.io.IOException;
  */
 public class ViewUserActivity extends AppCompatActivity {
 
-    LocalUser myUser;
+    User myUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user);
-        try {
-            DataManager.getInstance().loadLocalUser();
-        }catch (IOException e){
 
-        }
-        myUser = LocalUser.getInstance();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        //Parcel parceledUser = intent.getParcelableExtra("user");
+        myUser = bundle.getParcelable("user");
         setText(findViewById(R.id.textLayout));
     }
 
