@@ -45,6 +45,7 @@ public class TradeController {
                 try {
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\""+currentTradeID.toString()+"\"}}}").get(0);
                     saver.removeTrade(currentTradeID.toString());
+
                     if(localUser.getUUID().equals(trade.getUser1UUID())){
                         trade.setUser1Accepted(status);
                     }
@@ -68,7 +69,7 @@ public class TradeController {
     }
 
     /**
-     * Get the list of trades relevant to the current user
+     * Get the list of trades relevant to the local user
      * @param parent the calling activity
      * @return the list of trades found
      */
@@ -82,7 +83,6 @@ public class TradeController {
                     ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*.myUUID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}");
                     final  ArrayAdapter<Trade> adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, occuredTrades);
                     updateUI(tradeListView, adapter, parent);
-
                 }
                 catch(IOException e){
                     e.printStackTrace();
@@ -161,6 +161,7 @@ public class TradeController {
 
     /**
      * Removes a trade from the database and update the UI
+     * NOTE: This runs slowly because the server needs to update before the UI updates
      * @param trade the trade to be removed from the database
      */
     public void deleteTrade(final Activity parent,final Trade trade){
@@ -190,18 +191,55 @@ public class TradeController {
 
     /**
      * Sets the selected trade to complete
-     * Removes the trade from the server, and replaces it with th updated one
-     * @param trade trade to be completed
+     * Removes the trade from the server, and replaces it with the updated one
+     * @param currentTradeID trade to be completed
      */
-    public void setTradeComplete(Trade trade){
-        trade.setIsComplete(true);
-        try {
-            saver.removeTrade(trade.getTradeID().toString());
-            saver.storeTrade(trade);
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
+    public void setTradeComplete(final UUID currentTradeID){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\""+currentTradeID.toString()+"\"}}}").get(0);
+                    saver.removeTrade(trade.getTradeID().toString());
+                    trade.setIsComplete(true);
+                    saver.storeTrade(trade);
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
+                catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+    }
+
+    public void checkIfAccepted(final UUID currentTradeID, final ViewIndividualTradeActivity parent){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\""+currentTradeID.toString()+"\"}}}").get(0);
+                    if(trade.getUser2Accepted() && trade.getUser1Accepted() && !trade.isComplete()){
+                        parent.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                parent.bothUsersAcceptedPrompt();
+                            }
+                        });
+                    }
+
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
+                catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
     }
 
 

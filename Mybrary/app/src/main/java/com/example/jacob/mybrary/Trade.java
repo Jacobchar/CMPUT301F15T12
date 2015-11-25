@@ -68,12 +68,12 @@ public class Trade {
     @Override
     public String toString(){
         if(isComplete()){
-            return user1.getName() +  " offers " + getUser1Offer() + " to " + user2.getName() + " for " + getUser2Offer() + "\n"+"Complete";
+            return user1.getName() + "'s trade with " + user2.getName() + "\n"+"Complete";
         }
         else{
-            return user1.getName() +  " offers " + getUser1Offer() + " to " + user2.getName() + " for " + getUser2Offer() + "\n" +
-                    user1.getName() + " has accepted? "+ getUser1Accepted().toString() +"\n"+
-                    user2.getName() + " has accepted? "+ getUser2Accepted().toString() +"\n"+
+            return user1.getName() + "'s trade with " + user2.getName() + "\n" +
+                    user1.getName() + " has accepted: "+ getUser1Accepted().toString() +"\n"+
+                    user2.getName() + " has accepted: "+ getUser2Accepted().toString() +"\n"+
                     "In Progress";
         }
 

@@ -9,6 +9,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -35,9 +37,38 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
             currentTrade = (UUID) extras.getSerializable("currentTrade");
         }
 
-        controller.getCurrentTradeOffer(this,currentTrade,(ListView) findViewById(R.id.yourItemsListView),(ListView) findViewById(R.id.theirItemsListView));
-
+        controller.checkIfAccepted(currentTrade,this);
     }
+
+    /**
+     * Want the UI to update even if it isn't finished and recreated
+     */
+    @Override
+    protected void onResume(){
+        super.onResume();
+        controller.getCurrentTradeOffer(this, currentTrade, (ListView) findViewById(R.id.yourItemsListView), (ListView) findViewById(R.id.theirItemsListView));
+    }
+
+    public void bothUsersAcceptedPrompt(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Is this trade complete?");
+            builder.setCancelable(true);
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    controller.setTradeComplete(currentTrade);
+                    dialog.cancel();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+
+            alert = builder.create();
+            alert.show();
+        }
+
 
     public void modifyTradeButton(View v){
         // note: FromActivity.class, ToActivity.class
@@ -48,6 +79,9 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
 
     public void acceptTradeButton(View v){
         controller.setAcceptedStatus(true,currentTrade);
+        Button accepted = (Button) findViewById(R.id.acceptButton);
+        accepted.setClickable(false);
+
     }
 
     public void declineTradeButton(View v){

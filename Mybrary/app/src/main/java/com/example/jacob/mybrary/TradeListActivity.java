@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,9 +26,24 @@ public class TradeListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trade_list);
+    }
 
+    /**
+     * Update the view every time the activity is opened
+     */
+    @Override
+    public void onResume(){
+        super.onResume();
         tradeListView = controller.getTradeList(this);
+        onLongClickListener();
+        onClickListener();
+    }
 
+    public void onClickListener(){
+
+    }
+
+    public void onLongClickListener(){
         tradeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
@@ -68,13 +82,6 @@ public class TradeListActivity extends AppCompatActivity {
             }
         });
     }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        controller.getTradeList(this);
-    }
-
 
 
     public AlertDialog getAlertDialog(){
