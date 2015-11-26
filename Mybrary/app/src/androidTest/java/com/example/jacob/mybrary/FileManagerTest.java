@@ -15,12 +15,12 @@ public class FileManagerTest extends AndroidTestCase {
         FileManager fm = FileManager.getInstance();
 
         try {
-            fm.saveJson("/data/data/com.example.jacob.mybrary/test.json", "{\"val\":2}");
+            fm.saveJson("test.json", "{\"val\":2}");
         } catch (IOException e) {
             fail();
         }
 
-        File file = new File("/data/data/com.example.jacob.mybrary/test.json");
+        File file = new File("test.json");
         assertTrue(file.exists());
         file.delete();
     }
@@ -29,13 +29,13 @@ public class FileManagerTest extends AndroidTestCase {
         FileManager fm = FileManager.getInstance();
 
         try {
-            fm.saveJson("/data/data/com.example.jacob.mybrary/test.json", "{\"val\":2}");
-            String content = fm.readFile("/data/data/com.example.jacob.mybrary/test.json");
+            fm.saveJson("test.json", "{\"val\":2}");
+            String content = fm.readFile("test.json");
             assertTrue(content.equals("{\"val\":2}"));
         } catch (IOException e) {
             fail();
         }
-        File file = new File("/data/data/com.example.jacob.mybrary/test.json");
+        File file = new File("test.json");
         file.delete();
     }
 }

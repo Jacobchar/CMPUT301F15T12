@@ -16,9 +16,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 /**
+ * FileManager handles interactions with the file system and simplifies the process of accessing
+ * files.
+ *
  * Created by Jacob on 2015-11-04.
  */
 public class FileManager {
+    private static String appFolderName = "/data/data/com.example.jacob.mybrary/";
 
     private static FileManager instance = null;
     protected FileManager(){}
@@ -40,7 +44,7 @@ public class FileManager {
      * @param content json element being saved
      */
     public void saveJson(String path, String content) throws IOException {
-        FileWriter writer = new FileWriter(path);
+        FileWriter writer = new FileWriter(appFolderName + path);
         BufferedWriter out = new BufferedWriter(writer);
         out.write(content);
         out.close();
@@ -55,7 +59,7 @@ public class FileManager {
     public String readFile(String path) throws IOException {
         StringBuilder rv = new StringBuilder();
         String line;
-        FileReader reader = new FileReader(path);
+        FileReader reader = new FileReader(appFolderName + path);
         BufferedReader in = new BufferedReader(reader);
         while ((line = in.readLine()) != null) {
             rv.append(line);
@@ -65,4 +69,18 @@ public class FileManager {
         return rv.toString();
     }
 
+    /**
+     * Removes a specified file from the file system.
+     * @param path Relative path of the file to be removed.
+     * @return Returns a boolean indicating if the operation was successful.
+     * @throws IOException
+     */
+    public Boolean removeFile(String path) throws IOException {
+        File file = new File(appFolderName + path);
+        return file.delete();
+    }
+
+    public String getAppFolderName() {
+        return appFolderName;
+    }
 }
