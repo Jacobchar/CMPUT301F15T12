@@ -104,5 +104,6 @@ public class ViewIndividualTradeActivityTest extends ActivityInstrumentationTest
 
         assertFalse(activity.getAlertDialog().isShowing());
     }
+
 }
 

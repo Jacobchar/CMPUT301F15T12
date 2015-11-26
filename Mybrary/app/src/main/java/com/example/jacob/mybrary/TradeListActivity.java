@@ -9,15 +9,12 @@ import android.widget.ListView;
 import android.view.View;
 import android.widget.AdapterView;
 
-import java.util.ArrayList;
-
 /**
  * The interface which shows a list of all in progress, and completed trades
  */
 
 public class TradeListActivity extends AppCompatActivity {
     private ListView tradeListView;
-    private ArrayList<Trade> occuredTrades = new ArrayList<>();
     private AlertDialog alert;
 
     TradeController controller = new TradeController();
@@ -36,11 +33,6 @@ public class TradeListActivity extends AppCompatActivity {
         super.onResume();
         tradeListView = controller.getTradeList(this);
         onLongClickListener();
-        onClickListener();
-    }
-
-    public void onClickListener(){
-
     }
 
     public void onLongClickListener(){
@@ -86,9 +78,5 @@ public class TradeListActivity extends AppCompatActivity {
 
     public AlertDialog getAlertDialog(){
         return this.alert;
-    }
-
-    public ArrayList<Trade> getOccuredTrades(){
-        return this.occuredTrades;
     }
 }

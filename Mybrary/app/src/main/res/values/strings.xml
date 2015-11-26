@@ -16,4 +16,5 @@
     <string name="title_activity_add_new_item">AddNewItem</string>
     <string name="title_activity_edit_book">EditBookActivity</string>
     <string name="title_activity_create_user">CreateUserActivity</string>
+    <string name="title_activity_add_item_to_trade">AddItemToTradeActivity</string>
 </resources>

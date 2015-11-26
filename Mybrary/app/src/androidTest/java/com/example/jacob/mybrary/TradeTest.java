@@ -5,8 +5,8 @@ import android.test.ActivityInstrumentationTestCase2;
 import java.util.ArrayList;
 
 /**
+ * Test the getters and setters for trades
  * Created by davidross on 2015-11-02.
- * Test moving items from user1 to user2
  */
 public class TradeTest extends ActivityInstrumentationTestCase2 {
     public TradeTest (){

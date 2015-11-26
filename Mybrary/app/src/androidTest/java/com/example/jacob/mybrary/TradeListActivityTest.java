@@ -7,10 +7,13 @@ import android.test.TouchUtils;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.io.IOException;
+
 /**
  * Test the trade view
  * Tests are based on the labs "lonelyTwitter" activity tests
  * Created by David on 2015-11-14.
+ * ToDo: Fix tests to use the server
  */
 public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
     public TradeListActivityTest (){
@@ -18,118 +21,195 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
     }
 
     public void testTradeList(){
-       TradeListActivity activity = (TradeListActivity) getActivity();
-       ListView  text = (ListView) activity.findViewById(R.id.tradeListView);
-        Trade trade = (Trade) text.getAdapter().getItem(0);
-        assertNotNull(trade);
+        LocalUser user = LocalUser.getInstance();
+        DataManager saver = DataManager.getInstance();
+        User user2 = new User("TestUser1", "", "", "", "", "");
+        Trade testTrade = new Trade(user, user2);
+        try{
+            saver.storeTrade(testTrade);
+            Thread.sleep(2000);
+            TradeListActivity activity = (TradeListActivity) getActivity();
+            ListView  text = (ListView) activity.findViewById(R.id.tradeListView);
+            Trade trade = (Trade) text.getAdapter().getItem(0);
+            assertNotNull(trade);
+            saver.removeTrade(testTrade.getTradeID().toString());
+        }
+        catch(IOException e){
+            fail("No test on server");
+        }
+        catch(InterruptedException e){
+            fail("thread is tired");
+        }
     }
 
     public void testLongClick(){
-        TradeListActivity activity = (TradeListActivity) getActivity();
-        assertNotNull(activity);
+        LocalUser user = LocalUser.getInstance();
+        DataManager saver = DataManager.getInstance();
+        User user2 = new User("TestUser1", "", "", "", "", "");
+        Trade testTrade = new Trade(user, user2);
+        try{
+            saver.storeTrade(testTrade);
+            Thread.sleep(2000);
+            TradeListActivity activity = (TradeListActivity) getActivity();
+            assertNotNull(activity);
 
-        ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+            ListView text = (ListView) activity.findViewById(R.id.tradeListView);
 
-        // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
-        // Answered by Markn12, edited by Nathan Tuggy
-        TouchUtils.longClickView(this,text.getChildAt(0));
+            // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
+            // Answered by Markn12, edited by Nathan Tuggy
+            TouchUtils.longClickView(this,text.getChildAt(0));
 
-        // http://stackoverflow.com/questions/13349530/android-testing-dialog-check-it-isshowing
-        // Answered by Robin Chander
-        assertTrue(activity.getAlertDialog().isShowing());
+            // http://stackoverflow.com/questions/13349530/android-testing-dialog-check-it-isshowing
+            // Answered by Robin Chander
+            assertTrue(activity.getAlertDialog().isShowing());
+            saver.removeTrade(testTrade.getTradeID().toString());
+        }
+        catch(IOException e){
+            fail("No test on server");
+        }
+        catch(InterruptedException e){
+            fail("thread is tired");
+        }
     }
 
     public void testViewButton(){
-        TradeListActivity activity = (TradeListActivity) getActivity();
-        assertNotNull(activity);
+        LocalUser user = LocalUser.getInstance();
+        DataManager saver = DataManager.getInstance();
+        User user2 = new User("TestUser1", "", "", "", "", "");
+        Trade testTrade = new Trade(user, user2);
+        try{
+            saver.storeTrade(testTrade);
+            Thread.sleep(2000);
+            TradeListActivity activity = (TradeListActivity) getActivity();
+            assertNotNull(activity);
 
-        ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+            ListView text = (ListView) activity.findViewById(R.id.tradeListView);
 
-        // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
-        // Answered by Markn12, edited by Nathan Tuggy
-        TouchUtils.longClickView(this, text.getChildAt(0));
+            // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
+            // Answered by Markn12, edited by Nathan Tuggy
+            TouchUtils.longClickView(this, text.getChildAt(0));
 
-        final Button editButton = activity.getAlertDialog().getButton(DialogInterface.BUTTON_POSITIVE);
+            final Button editButton = activity.getAlertDialog().getButton(DialogInterface.BUTTON_POSITIVE);
 
-        //following from https://developer.android.com/training/activity-testing/activity-functional-testing.html
-        // Set up an ActivityMonitor
-        Instrumentation.ActivityMonitor receiverActivityMonitor =
-                getInstrumentation().addMonitor(ViewIndividualTradeActivity.class.getName(),
-                        null, false);
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                editButton.performClick();
-            }
-        });
-        getInstrumentation().waitForIdleSync();
+            //following from https://developer.android.com/training/activity-testing/activity-functional-testing.html
+            // Set up an ActivityMonitor
+            Instrumentation.ActivityMonitor receiverActivityMonitor =
+                    getInstrumentation().addMonitor(ViewIndividualTradeActivity.class.getName(),
+                            null, false);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    editButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
 
-        // Lonely Twitter from the labs
-        // Validate that ReceiverActivity is started
-        ViewIndividualTradeActivity receiverActivity = (ViewIndividualTradeActivity)
-                receiverActivityMonitor.waitForActivityWithTimeout(1000);
-        assertNotNull("ReceiverActivity is null", receiverActivity);
-        assertEquals("Monitor for ReceiverActivity has not been called",
-                1, receiverActivityMonitor.getHits());
-        assertEquals("Activity is of wrong type",
-                ViewIndividualTradeActivity.class, receiverActivity.getClass());
+            // Lonely Twitter from the labs
+            // Validate that ReceiverActivity is started
+            ViewIndividualTradeActivity receiverActivity = (ViewIndividualTradeActivity)
+                    receiverActivityMonitor.waitForActivityWithTimeout(1000);
+            assertNotNull("ReceiverActivity is null", receiverActivity);
+            assertEquals("Monitor for ReceiverActivity has not been called",
+                    1, receiverActivityMonitor.getHits());
+            assertEquals("Activity is of wrong type",
+                    ViewIndividualTradeActivity.class, receiverActivity.getClass());
 
-        // Remove the ActivityMonitor
-        getInstrumentation().removeMonitor(receiverActivityMonitor);
+            // Remove the ActivityMonitor
+            getInstrumentation().removeMonitor(receiverActivityMonitor);
 
-        // Close the opened activity
-        receiverActivity.finish();
+            // Close the opened activity
+            receiverActivity.finish();
 
-        assertFalse(activity.getAlertDialog().isShowing());
+            assertFalse(activity.getAlertDialog().isShowing());
+            saver.removeTrade(testTrade.getTradeID().toString());
+        }
+        catch(IOException e){
+            fail("No test on server");
+        }
+        catch(InterruptedException e){
+            fail("thread is tired");
+        }
     }
 
     public void testDeleteButton(){
-        TradeListActivity activity = (TradeListActivity) getActivity();
-        assertNotNull(activity);
-        ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+        LocalUser user = LocalUser.getInstance();
+        DataManager saver = DataManager.getInstance();
+        User user2 = new User("TestUser1", "", "", "", "", "");
+        Trade testTrade = new Trade(user, user2);
+        try{
+            saver.storeTrade(testTrade);
+            Thread.sleep(2000);
 
-        int startNumberOfTrades = activity.getOccuredTrades().size();
-        // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
-        // Answered by Markn12, edited by Nathan Tuggy
-        TouchUtils.longClickView(this, text.getChildAt(0));
+            TradeListActivity activity = (TradeListActivity) getActivity();
+            assertNotNull(activity);
+            ListView text = (ListView) activity.findViewById(R.id.tradeListView);
 
-        final Button deleteButton = activity.getAlertDialog().getButton(DialogInterface.BUTTON_NEGATIVE);
+            int startNumberOfTrades = text.getAdapter().getCount();
+            // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
+            // Answered by Markn12, edited by Nathan Tuggy
+            TouchUtils.longClickView(this, text.getChildAt(0));
 
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                deleteButton.performClick();
+            final Button deleteButton = activity.getAlertDialog().getButton(DialogInterface.BUTTON_NEGATIVE);
 
-            }
-        });
-        getInstrumentation().waitForIdleSync();
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    deleteButton.performClick();
 
-        int endNumberTrades = activity.getOccuredTrades().size();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
 
-        assertTrue(endNumberTrades == startNumberOfTrades - 1);
+            saver.removeTrade(testTrade.getTradeID().toString());
+
+            int endNumberTrades = ((ListView) activity.findViewById(R.id.tradeListView)).getAdapter().getCount();
+            assertTrue(endNumberTrades ==( startNumberOfTrades-1));
+        }
+        catch(IOException e){
+            fail("No test on server");
+        }
+        catch(InterruptedException e){
+            fail("thread is tired");
+        }
     }
 
     public void testCancelButton() {
-        final TradeListActivity activity = (TradeListActivity) getActivity();
-        assertNotNull(activity);
+        LocalUser user = LocalUser.getInstance();
+        DataManager saver = DataManager.getInstance();
+        User user2 = new User("TestUser1", "", "", "", "", "");
+        Trade testTrade = new Trade(user, user2);
+        try{
+            saver.storeTrade(testTrade);
+            Thread.sleep(2000);
 
-        ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+            final TradeListActivity activity = (TradeListActivity) getActivity();
+            assertNotNull(activity);
 
-        // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
-        // Answered by Markn12, edited by Nathan Tuggy
-        TouchUtils.longClickView(this, text.getChildAt(0));
+            ListView text = (ListView) activity.findViewById(R.id.tradeListView);
 
-        final Button cancelButton = activity.getAlertDialog().getButton(DialogInterface.BUTTON_NEUTRAL);
+            // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
+            // Answered by Markn12, edited by Nathan Tuggy
+            TouchUtils.longClickView(this, text.getChildAt(0));
 
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-               cancelButton.performClick();
-            }
-        });
-        getInstrumentation().waitForIdleSync();
+            final Button cancelButton = activity.getAlertDialog().getButton(DialogInterface.BUTTON_NEUTRAL);
 
-        assertFalse(activity.getAlertDialog().isShowing());
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    cancelButton.performClick();
+                }
+            });
+            getInstrumentation().waitForIdleSync();
+
+            assertFalse(activity.getAlertDialog().isShowing());
+            saver.removeTrade(testTrade.getTradeID().toString());
+        }
+        catch(IOException e){
+            fail("No test on server");
+        }
+        catch(InterruptedException e){
+            fail("thread is tired");
+        }
 
 
     }
