@@ -92,6 +92,7 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
         assertTrue(userList.get(1).equals(user2));
         assertTrue(userList.get(2).equals(user3));
 
+        /*
         try {
             dataManager.removeUser(user1.getUUID().toString());
             dataManager.removeUser(user2.getUUID().toString());
@@ -99,6 +100,7 @@ public class FriendsListTest extends ActivityInstrumentationTestCase2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        */
     }
 
     public void testGetNames(){

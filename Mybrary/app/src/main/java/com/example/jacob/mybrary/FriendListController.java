@@ -22,16 +22,9 @@ public class FriendListController {
     }
 
 
-    public void removeFriend(String friend, Context context) {
-        class oneOff implements Runnable{
-            String friend;
-            Context context;
-
-            oneOff(String f, Context c){
-                friend = f;
-                context = c;
-            }
-
+    public void removeFriend(final String friend,final Context context) {
+        Thread t = new Thread(new Runnable() {
+            @Override
             public void run() {
                 connectionManager.updateConnectivity(context);
                 try {
@@ -45,28 +38,23 @@ public class FriendListController {
                     return;
                 }
             }
-        }
+        });
+        t.start();
     }
 
-    public void addNewFriend(String friend, Context context) {
-        class oneOff implements Runnable{
-            String friend;
-            Context context;
 
-            oneOff(String f, Context c){
-                friend = f;
-                context = c;
-            }
-
+    public void addNewFriend(final String friend, final Context context) {
+        Thread t = new Thread(new Runnable() {
+            @Override
             public void run() {
                 connectionManager.updateConnectivity(context);
                 try {
                     userList = dataManager.searchUsers(friend);
-                    if (userList.size()!=0){
+                    if (userList.size() != 0) {
                         localUser.getFriendsList().addFriend(userList.get(0));
-                    }
-                    else {
-                        //notify friend not found?
+                        System.out.println(userList.get(0).getName());
+                    } else {
+                        System.out.println("Crap!");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -76,6 +64,8 @@ public class FriendListController {
                     return;
                 }
             }
-        }
+        });
+
+        t.start();
     }
 }
