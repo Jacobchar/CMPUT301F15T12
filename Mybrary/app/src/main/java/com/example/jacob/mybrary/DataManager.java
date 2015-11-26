@@ -76,6 +76,7 @@ public class DataManager {
      */
     public Boolean removeBook(String id) throws IOException {
         if (ConnectionManager.getInstance().isConnected()) {
+            FileManager.getInstance().removeFile("Books/" + id);
             String result = ConnectionManager.getInstance().remove("Books/" + id);
             return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Books\",\"_id\":\"" + id);
         } else {
@@ -137,9 +138,6 @@ public class DataManager {
         String json = GsonManager.getInstance().toJson(user);
         if (ConnectionManager.getInstance().isConnected()) {
             result = ConnectionManager.getInstance().put(path, json);
-        } else {
-            //Store for later
-            fm.saveJson("Offline/Users/" + user.getUUID().toString(), json);
         }
         fm.saveJson("Books/" + user.getUUID().toString(), json);
         //TODO: Add better verification.
@@ -154,6 +152,7 @@ public class DataManager {
      */
     public Boolean removeUser(String id) throws IOException {
         if (ConnectionManager.getInstance().isConnected()) {
+            FileManager.getInstance().removeFile("Users/" + id);
             String result = ConnectionManager.getInstance().remove("Users/" + id);
             return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + id);
         } else {
