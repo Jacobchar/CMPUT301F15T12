@@ -16,13 +16,14 @@ public class Photo {
     private Integer size;
     private String format;
     private String encodedImage;
+    private UUID photoID;
 
     /**
      * Checks if a given photo is in the correct format.
      * @param format String containing photo's format
      * @return true/false if photo is in the valid format
      */
-    Boolean checkValidFormat(String format){
+    public Boolean checkValidFormat(String format){
         return true;
     }
 
@@ -32,7 +33,7 @@ public class Photo {
      * @param size Photo's size in an integer
      * @return true/false if photo is a valid size
      */
-    Boolean checkValidSize(Integer size){
+    public Boolean checkValidSize(Integer size){
         return size < 65536;
     }
 
@@ -41,13 +42,19 @@ public class Photo {
      * @param image Bitmap of given image.
      * @return returns a json string.
      */
-    String convertImageToJson(Bitmap image){
-        return "";
+    public String convertImageToJson(Bitmap image){
+        GsonManager gman = new GsonManager();
+        return gman.toJson(image);
     }
 
-    UUID getUUID() {
-        return null;
-    }
-
+    /*All the Getters and Setters*/
+    public Integer getSize() {return size;}
+    public void setSize(Integer size) {this.size = size;}
+    public String getFormat() {return format;}
+    public void setFormat(String format) {this.format = format;}
+    public String getEncodedImage() {return encodedImage;}
+    public void setEncodedImage(String encodedImage) {this.encodedImage = encodedImage;}
+    public UUID getPhotoID() {return photoID;}
+    public void setPhotoID(UUID photoID) {this.photoID = photoID;}
 
 }
