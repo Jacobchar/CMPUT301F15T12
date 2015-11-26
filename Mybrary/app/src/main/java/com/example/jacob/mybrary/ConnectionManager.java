@@ -125,6 +125,7 @@ public class ConnectionManager {
      * @return Returns a boolean indicating whether a network connection exists.
      */
     public boolean updateConnectivity(Context context) {
+        //TODO: If connected, push offline updates to server
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 

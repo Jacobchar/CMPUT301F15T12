@@ -4,14 +4,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by Dominic on 2015-11-04.
- *
  * This data management abstraction offers a simplified way of retrieving data. The data may either
  * be remote or cached locally.
+ *
+ * Created by Dominic on 2015-11-04.
  */
 public class DataManager {
 
@@ -28,7 +29,7 @@ public class DataManager {
      * @throws IOException Thrown when there was an error reading the file (including FileNotFoundException).
      */
     public void loadLocalUser() throws IOException {
-        String userjson = FileManager.getInstance().readFile("/data/data/com.example.jacob.mybrary/localUser.json");
+        String userjson = FileManager.getInstance().readFile("localUser.json");
         LocalUser user = GsonManager.getInstance().fromJson(userjson, LocalUser.class);
         LocalUser.setUserInstance(user);
     }
@@ -40,47 +41,66 @@ public class DataManager {
     public void saveLocalUser() throws IOException {
         LocalUser user = LocalUser.getInstance();
         String userjson = GsonManager.getInstance().toJson(user);
-        FileManager.getInstance().saveJson("/data/data/com.example.jacob.mybrary/localUser.json", userjson);
+        FileManager.getInstance().saveJson("localUser.json", userjson);
     }
 
     //======================= BOOKS ==============================
     /**
-     * Stores a book on the server.
+     * Stores a book on the server and caches it for later if there's no network connectivity.
      * @param book The book to be stored
-     * @return Returns a boolean value indicating whether the request was successful or not
+     * @return Returns a boolean value indicating whether the book was stored on the server or not.
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean storeBook(Book book) throws IOException {
-        String json = GsonManager.getInstance().toJson(book);
+        FileManager fm = FileManager.getInstance();
+        String result = "";
         String path = "Books/" + book.getItemID().toString();
-        String result = ConnectionManager.getInstance().put(path, json);
+        String json = GsonManager.getInstance().toJson(book);
+        if (ConnectionManager.getInstance().isConnected()) {
+            result = ConnectionManager.getInstance().put(path, json);
+        } else {
+            //Store for later
+            fm.saveJson("Offline/Books/" + book.getItemID().toString(), json);
+        }
+        fm.saveJson("Books/" + book.getItemID().toString(), json);
+
         //TODO: Add better verification.
         return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Books\",\"_id\":\"" + book.getItemID().toString());
     }
 
     /**
-     * Removes a book from the server.
+     * Removes a book from the server and the local cache.
      * @param id Identifier of the book to be removed.
      * @return Returns a boolean value indicating whether the request was successful or not.
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean removeBook(String id) throws IOException {
-        String result = ConnectionManager.getInstance().remove("Books/" + id);
-        return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Books\",\"_id\":\"" + id);
+        if (ConnectionManager.getInstance().isConnected()) {
+            FileManager.getInstance().removeFile("Books/" + id);
+            String result = ConnectionManager.getInstance().remove("Books/" + id);
+            return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Books\",\"_id\":\"" + id);
+        } else {
+            return false;
+        }
     }
 
     /**
-     * Retrieves a stored book from the server.
+     * Retrieves a stored book from the server or locally if there is no connection.
      * @param id Identifier of the book to be retrieved.
      * @return Returns the Book object stored on the server.
      * @throws IOException Thrown if an error occurred during communication.
      * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
      */
     public Book retrieveBook(String id) throws IOException, JSONException {
-        String result = ConnectionManager.getInstance().get("Books/" + id);
-        JSONObject obj = new JSONObject(result);
-        String bookjson = obj.getJSONObject("_source").toString();
-        return GsonManager.getInstance().fromJson(bookjson, Book.class);
+        if (ConnectionManager.getInstance().isConnected()) {
+            String result = ConnectionManager.getInstance().get("Books/" + id);
+            JSONObject obj = new JSONObject(result);
+            String bookjson = obj.getJSONObject("_source").toString();
+            return GsonManager.getInstance().fromJson(bookjson, Book.class);
+        } else {
+            String bookjson = FileManager.getInstance().readFile("Books/" + id);
+            return GsonManager.getInstance().fromJson(bookjson, Book.class);
+        }
     }
 
     /**
@@ -106,42 +126,57 @@ public class DataManager {
 
     //======================= USERS ==============================
     /**
-     * Stores a user on the server.
+     * Stores a user on the server and caches it for later if there's no network connectivity.
      * @param user The user to be stored.
      * @return Returns a boolean value indicating whether the request was successful or not
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean storeUser(User user) throws IOException {
-        String json = GsonManager.getInstance().toJson(user);
+        FileManager fm = FileManager.getInstance();
+        String result = "";
         String path = "Users/" + user.getUUID().toString();
-        String result = ConnectionManager.getInstance().put(path, json);
+        String json = GsonManager.getInstance().toJson(user);
+        if (ConnectionManager.getInstance().isConnected()) {
+            result = ConnectionManager.getInstance().put(path, json);
+        }
+        fm.saveJson("Books/" + user.getUUID().toString(), json);
         //TODO: Add better verification.
         return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + user.getUUID().toString());
     }
 
     /**
-     * Removes a user from the server.
+     * Removes a user from the server and the local cache.
      * @param id Identifier of the user to be removed.
      * @return Returns a boolean value indicating whether the request was successful or not.
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean removeUser(String id) throws IOException {
-        String result = ConnectionManager.getInstance().remove("Users/" + id);
-        return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + id);
+        if (ConnectionManager.getInstance().isConnected()) {
+            FileManager.getInstance().removeFile("Users/" + id);
+            String result = ConnectionManager.getInstance().remove("Users/" + id);
+            return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + id);
+        } else {
+            return false;
+        }
     }
 
     /**
-     * Retrieves a stored user from the server.
+     * Retrieves a stored user from the server or locally if there is no connection.
      * @param id Identifier of the user to be retrieved.
      * @return Returns the User object stored on the server.
      * @throws IOException Thrown if an error occurred during communication.
      * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
      */
     public User retrieveUser(String id) throws IOException, JSONException {
-        String result = ConnectionManager.getInstance().get("Users/" + id);
-        JSONObject obj = new JSONObject(result);
-        String userjson = obj.getJSONObject("_source").toString();
-        return GsonManager.getInstance().fromJson(userjson, User.class);
+        if (ConnectionManager.getInstance().isConnected()) {
+            String result = ConnectionManager.getInstance().get("Users/" + id);
+            JSONObject obj = new JSONObject(result);
+            String userjson = obj.getJSONObject("_source").toString();
+            return GsonManager.getInstance().fromJson(userjson, User.class);
+        } else {
+            String userjson = FileManager.getInstance().readFile("Users/" + id);
+            return GsonManager.getInstance().fromJson(userjson, User.class);
+        }
     }
 
     /**
