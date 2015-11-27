@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -144,7 +145,7 @@ public class FriendsList implements Parcelable{
     }
 
     protected FriendsList(Parcel parcel){
-        friendList = parcel.readArrayList(UUID.class.getClassLoader());
+        friendList = (Collection<UUID>) parcel.readValue(Collection.class.getClassLoader());
     }
 
     public static final Parcelable.Creator<FriendsList> CREATOR = new Parcelable.Creator<FriendsList>() {

@@ -15,7 +15,7 @@ import java.util.UUID;
  * the User's inventory, and a unique User id generated on creation.
  *
  */
-public class User implements Parcelable{
+public class User implements Parcelable, Comparable{
     private String name;
     private String emailAddress;
     private String phoneNumber;
@@ -25,6 +25,8 @@ public class User implements Parcelable{
     private UUID myUUID;
     private Inventory inventory;
     private FriendsList friendsList;
+    private int succTrades = 0;
+    private Boolean downloadImages = false;
 
     /**
      * Generates a User with an empty Inventory and generated UUID
@@ -120,6 +122,22 @@ public class User implements Parcelable{
         //return new FriendsList();
     }
 
+    public int getSuccTrades() {
+        return succTrades;
+    }
+
+    public void setSuccTrades(int succTrades) {
+        this.succTrades = succTrades;
+    }
+
+    public Boolean getDownloadImages() {
+        return downloadImages;
+    }
+
+    public void setDownloadImages(Boolean downloadImages) {
+        this.downloadImages = downloadImages;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -180,6 +198,8 @@ public class User implements Parcelable{
         dest.writeValue(myUUID);
         dest.writeValue(inventory);
         dest.writeValue(friendsList);
+        dest.writeInt(succTrades);
+        dest.writeString(downloadImages.toString());
     }
 
     //Got from http://www.parcelabler.com/
@@ -193,6 +213,8 @@ public class User implements Parcelable{
         myUUID = (UUID) parcel.readValue(UUID.class.getClassLoader());
         inventory = (Inventory) parcel.readValue(Inventory.class.getClassLoader());
         friendsList = (FriendsList) parcel.readValue(FriendsList.class.getClassLoader());
+        succTrades = parcel.readInt();
+        downloadImages = Boolean.valueOf(parcel.readString());
     }
 
     public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
@@ -206,4 +228,13 @@ public class User implements Parcelable{
             return new User[size];
         }
     };
+
+    @Override
+    public int compareTo(Object o) {
+        if (o.getClass().equals(User.class)){
+            User user = (User) o;
+            return succTrades - user.getSuccTrades();
+        }
+        return 0;
+    }
 }

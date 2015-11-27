@@ -61,6 +61,9 @@
             android:name=".CreateUserActivity"
             android:label="@string/title_activity_create_user"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".TopTradersActivity"
+            android:label="TopTradesActivity"></activity>
     </application>
 
 </manifest>

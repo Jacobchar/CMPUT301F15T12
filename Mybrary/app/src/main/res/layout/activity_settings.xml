@@ -15,4 +15,13 @@
         android:layout_alignParentStart="true"
         android:textSize="25dp"
         android:onClick="openEditProfileActivity"/>
+
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Download Images"
+        android:id="@+id/downloadImagesCheckBox"
+        android:layout_above="@+id/editProfileButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="toggleDownloadImages"/>
 </RelativeLayout>
