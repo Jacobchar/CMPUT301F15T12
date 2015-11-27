@@ -5,9 +5,9 @@ import android.graphics.Bitmap;
 import java.util.UUID;
 
 /**
- * Created by Victoria.
  *
- * Basic photo class. Skeleton code. To be completed in project P5.
+ * Basic photo class. Skeleton code(Not so skeleton anymore). Still needs to check valid format.
+ * Maybe add an 'isFlagged' param to check whether phot should be dl'ed or not.
  *
  */
 
@@ -17,6 +17,14 @@ public class Photo {
     private String format;
     private String encodedImage;
     private UUID photoID;
+
+    public Photo(Integer size, String format, String encodedImage, UUID photoID){
+        this.size = size;
+        this.format = format;
+        this.encodedImage = encodedImage;
+        this.photoID = photoID;
+    }
+
 
     /**
      * Checks if a given photo is in the correct format.
