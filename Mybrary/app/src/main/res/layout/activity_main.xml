@@ -4,7 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.jacob.mybrary.MainMenuActivity">
+    tools:context="com.example.jacob.mybrary.MainMenuActivity"
+    android:background="@color/tan_dark">
 
     <Button
         android:layout_width="230dp"
@@ -12,7 +13,7 @@
         android:text="View Profile"
         android:id="@+id/profileViewButton"
         android:layout_marginTop="61dp"
-        android:background="#A0A5AB"
+        android:background="#C0C0C0"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="openProfileActivity"/>
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Inventory"
         android:id="@+id/InventoryViewButton"
-        android:background="#A0A5AB"
+        android:background="#Da70D6"
         android:layout_below="@+id/profileViewButton"
         android:layout_alignStart="@+id/profileViewButton"
         android:onClick="openInventoryActivity"
@@ -33,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="Friends List"
         android:id="@+id/FriendsListViewButton"
-        android:background="#A0A5AB"
+        android:background="#FFDEAD"
         android:onClick="openFriendsListActivity"
         android:layout_below="@+id/InventoryViewButton"
         android:layout_alignStart="@+id/InventoryViewButton"
@@ -44,21 +45,45 @@
         android:layout_height="wrap_content"
         android:text="Trades List"
         android:id="@+id/TradeViewButton"
-        android:background="#A0A5AB"
+        android:background="#4682b4"
         android:layout_below="@+id/FriendsListViewButton"
         android:layout_alignStart="@+id/FriendsListViewButton"
         android:layout_marginTop="27dp"
         android:onClick="openTradeListActivity" />
+
+
+    <Button
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:text="Top Traders"
+        android:id="@+id/TopTradersViewButton"
+        android:background="#8FBC8F"
+        android:layout_below="@+id/TradeViewButton"
+        android:layout_alignStart="@+id/TradeViewButton"
+        android:layout_marginTop="27dp"
+        android:onClick="openTopTradersActivity" />
 
     <Button
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="Settings"
         android:id="@+id/SettingsViewButton"
-        android:background="#A0A5AB"
+        android:background="#B22222"
         android:onClick="openSettingsActivity"
-        android:layout_below="@+id/TradeViewButton"
-        android:layout_alignStart="@+id/TradeViewButton"
+        android:layout_below="@+id/TopTradersViewButton"
+        android:layout_alignStart="@+id/TopTradersViewButton"
         android:layout_marginTop="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="mybrary"
+        android:id="@+id/mybraryTitleView"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:typeface="serif"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
