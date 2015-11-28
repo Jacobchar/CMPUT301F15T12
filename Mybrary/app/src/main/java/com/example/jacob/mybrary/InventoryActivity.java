@@ -37,25 +37,18 @@ public class InventoryActivity extends AppCompatActivity {
     private ListView inventoryListView;
     private ConnectionManager connectionManager = ConnectionManager.getInstance();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
-        LocalUser localUser2 = LocalUser.getInstance();
         inventoryListView = (ListView) findViewById(R.id.inventoryListView);
         activity = this;
-
 
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                LocalUser localUser = LocalUser.getInstance();
-                adapter = new ArrayAdapter<Book>(activity, R.layout.simple_list_item, localUser.getInventory().getBooks());
-                inventoryListView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                inventoryController.fillInventory(activity, inventoryListView);
             }
         });
         thread.start();
@@ -141,5 +134,23 @@ public class InventoryActivity extends AppCompatActivity {
         inventoryController.fillInventory(activity, inventoryListView);
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        connectionManager.updateConnectivity(activity);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataManager dataManager = DataManager.getInstance();
+                try {
+                    dataManager.saveLocalUser();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        thread.start();
+    }
 
 }

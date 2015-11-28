@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.UUID;
 
@@ -111,5 +112,24 @@ public class EditBookActivity extends AppCompatActivity {
     }
 
     public Button getSaveButton(){ return (Button) findViewById(R.id.saveEditBookButton); }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        connectionManager.updateConnectivity(activity);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataManager dataManager = DataManager.getInstance();
+                try {
+                    dataManager.saveLocalUser();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        thread.start();
+    }
 
 }

@@ -99,5 +99,24 @@ public class AddNewItem extends AppCompatActivity {
 
     public Button getSaveButton(){ return (Button) findViewById(R.id.SaveNewBookButton); }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        connectionManager.updateConnectivity(activity);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataManager dataManager = DataManager.getInstance();
+                try {
+                    dataManager.saveLocalUser();
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        thread.start();
+    }
+
 
 }
