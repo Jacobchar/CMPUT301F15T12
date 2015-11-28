@@ -31,25 +31,31 @@ import java.util.UUID;
 public class InventoryActivity extends AppCompatActivity {
 
     private ArrayAdapter<Book> adapter;
-    private Inventory inventory = new Inventory();
     private AlertDialog alert;
     private InventoryController inventoryController = new InventoryController();
     private Activity activity;
     private ListView inventoryListView;
     private ConnectionManager connectionManager = ConnectionManager.getInstance();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
 
+        LocalUser localUser2 = LocalUser.getInstance();
         inventoryListView = (ListView) findViewById(R.id.inventoryListView);
         activity = this;
+
 
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                inventoryController.fillInventory(activity, inventoryListView);
+                LocalUser localUser = LocalUser.getInstance();
+                adapter = new ArrayAdapter<Book>(activity, R.layout.simple_list_item, localUser.getInventory().getBooks());
+                inventoryListView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
         thread.start();

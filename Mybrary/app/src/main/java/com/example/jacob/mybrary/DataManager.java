@@ -34,7 +34,7 @@ public class DataManager {
     public void loadLocalUser() throws IOException {
         String userjson = FileManager.getInstance().readFile("localUser.json");
         LocalUser user = GsonManager.getInstance().fromJson(userjson, LocalUser.class);
-        LocalUser.setUserInstance(user);
+        LocalUser.setInstance(user);
     }
 
     /**
