@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -269,7 +270,20 @@ public class DataManager {
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean storePhoto(Photo photo) throws IOException {
-        return false;
+        FileManager fm = FileManager.getInstance();
+        String result = "";
+        String path = "Photos/" + photo.getPhotoID().toString();
+        String json = GsonManager.getInstance().toJson(photo);
+        if (ConnectionManager.getInstance().isConnected()) {
+            result = ConnectionManager.getInstance().put(path, json);
+        } else {
+            //Store for later
+            fm.saveJson("Offline/Photos/" + photo.getPhotoID().toString(), json);
+        }
+        fm.saveJson("Photos/" + photo.getPhotoID().toString(), json);
+
+        //TODO: Add better verification.
+        return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Photos\",\"_id\":\"" + photo.getPhotoID().toString());
     }
 
     /**
@@ -279,7 +293,13 @@ public class DataManager {
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean removePhoto(String id) throws IOException {
-        return false;
+        FileManager.getInstance().removeFile("Photos/" + id);
+        if (ConnectionManager.getInstance().isConnected()) {
+            String result = ConnectionManager.getInstance().remove("Photos/" + id);
+            return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Photos\",\"_id\":\"" + id);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -290,18 +310,14 @@ public class DataManager {
      * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
      */
     public Photo retrievePhoto(String id) throws IOException, JSONException {
-        return null;
+        if (ConnectionManager.getInstance().isConnected()) {
+            String result = ConnectionManager.getInstance().get("Photos/" + id);
+            JSONObject obj = new JSONObject(result);
+            String photoJson = obj.getJSONObject("_source").toString();
+            return GsonManager.getInstance().fromJson(photoJson, Photo.class);
+        } else {
+            String photoJson = FileManager.getInstance().readFile("Photos/" + id);
+            return GsonManager.getInstance().fromJson(photoJson, Photo.class);
+        }
     }
-
-    /**
-     * Searches photos for a given quality. Elasticsearch allows for various search methods.
-     * @param query JSON based query to be searched for.
-     * @return Returns an arraylist of Photo objects that match the given query.
-     * @throws IOException Thrown if an error occurred during communication.
-     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
-     */
-    public ArrayList<Photo> searchPhotos(String query) throws IOException, JSONException {
-        return null;
-    }
-
 }
