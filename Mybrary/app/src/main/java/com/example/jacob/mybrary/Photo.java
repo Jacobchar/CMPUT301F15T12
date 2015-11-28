@@ -32,7 +32,10 @@ public class Photo {
      * @return true/false if photo is in the valid format
      */
     public Boolean checkValidFormat(String format){
-        return true;
+        if(format == "JPEG"){
+            return true;
+        }
+        return false;
     }
 
 
