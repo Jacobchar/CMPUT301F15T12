@@ -8,7 +8,9 @@ import org.json.JSONException;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.spec.ECField;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by Dominic on 2015-11-06.
@@ -228,57 +230,52 @@ public class DataManagerTest extends AndroidTestCase {
 
 
     //=========================PHOTOS===============================
-//    public void testPutPhoto() {
-//        DataManager dataManager = DataManager.getInstance();
-//        Photo photo = new Photo();
-//
-//        assertTrue(dataManager.storePhoto(photo));
-//
-//        dataManager.removeBook(photo.getUUID().toString());
-//    }
-//
-//    public void testGetPhoto() {
-//        DataManager dataManager = DataManager.getInstance();
-//        Photo photo = new Photo();
-//
-//        if (!dataManager.storePhoto(photo)) {
-//            fail();
-//        }
-//
-//        Photo returnedPhoto = dataManager.retrievePhoto(photo.getUUID().toString());
-//
-//        //TODO: Ensure that Photo has an equals() method.
-//        assertTrue(photo.equals(returnedPhoto));
-//
-//        dataManager.removePhoto(photo.getUUID().toString());
-//    }
-//
-//    public void testSearchPhotos() {
-//        DataManager dataManager = DataManager.getInstance();
-//        Photo photo1 = new Photo();
-//        Photo photo2 = new Photo();
-//        Photo photo3 = new Photo();
-//
-//        dataManager.storePhoto(photo1);
-//        dataManager.storePhoto(photo2);
-//        dataManager.storePhoto(photo3);
-//
-//        ArrayList<Photo> returnedPhotos = dataManager.searchPhotos("{\"query\":{\"query_string\":{\"default_field\":\"val\",\"query\":2}}}");
-//
-//                assertTrue(returnedPhotos.size() == 1);
-//        assertTrue(returnedPhotos.contains(photo2));
-//
-//        dataManager.removePhoto(photo1.getUUID().toString());
-//        dataManager.removePhoto(photo2.getUUID().toString());
-//        dataManager.removePhoto(photo3.getUUID().toString());
-//    }
-//
-//    public void testRemovePhoto() {
-//        DataManager dataManager = DataManager.getInstance();
-//        Photo photo = new Photo();
-//
-//        dataManager.storePhoto(photo);
-//
-//        assertTrue(dataManager.removePhoto(photo.getUUID().toString()));
-//    }
+    public void testPutPhoto() {
+        try {
+            UUID photoID = new UUID(0xAAAAAAAA, 0x99999999);
+            DataManager dataManager = DataManager.getInstance();
+            Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
+
+            if(!dataManager.storePhoto(photo)) {
+                assertTrue(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
+            }
+
+            dataManager.removePhoto(photo.getPhotoID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testGetPhoto() {
+        try {
+            UUID photoID = new UUID(0xAAAAAAAA, 0x99999999);
+            DataManager dataManager = DataManager.getInstance();
+            Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
+
+            dataManager.storePhoto(photo);
+
+            Photo returnedPhoto = dataManager.retrievePhoto(photo.getPhotoID().toString());
+
+            assertTrue(photo.equals(returnedPhoto));
+
+            dataManager.removePhoto(photo.getPhotoID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testRemovePhoto() {
+        try {
+            UUID photoID = new UUID(0xAAAAAAAA, 0x99999999);
+            DataManager dataManager = DataManager.getInstance();
+            Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
+
+            dataManager.storePhoto(photo);
+            if(!dataManager.removePhoto(photo.getPhotoID().toString())) {
+                assertFalse(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
+            }
+        } catch (Exception e) {
+            fail();
+        }
+    }
 }
