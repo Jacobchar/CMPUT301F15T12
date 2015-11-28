@@ -25,9 +25,21 @@ public class TradeController {
      *
      * @param user2 Friend with whom the trade is occurring
      */
-    public void createNewTrade(User user2) {
-        Trade trade = new Trade(localUser, user2);
-
+    public Trade createNewTrade(User user2) {
+        final Trade trade = new Trade(localUser, user2);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    saver.storeTrade(trade);
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        return trade;
     }
 
     /**
@@ -63,6 +75,43 @@ public class TradeController {
                 } catch (IOException e) {
 
                 } catch (JSONException e) {
+
+                }
+            }
+        });
+        t.start();
+    }
+
+    public void addToOffer(final UUID tradeID, final Book book, final int offerToEdit){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Trade currentTrade = saver.retrieveTrade(tradeID.toString());
+                    saver.removeTrade(tradeID.toString());
+                    List<Book> tradeOffer;
+                    // Pressed 'change my offer' check if local user is user 1
+                    if(offerToEdit == 1 && localUser.getUUID().equals(currentTrade.getUser1UUID())){
+                        tradeOffer = currentTrade.getUser1Offer();
+                    }
+                    // Pressed 'change my offer' local user must be user 2
+                    else if(offerToEdit == 1){
+                        tradeOffer = currentTrade.getUser2Offer();
+                    }
+                    // Pressed 'change their offer' check if other user is user 1 or 2
+                    else if(offerToEdit != 1 && localUser.getUUID().equals(currentTrade.getUser1UUID())){
+                        tradeOffer = currentTrade.getUser2Offer();
+                    }
+                    else{
+                        tradeOffer = currentTrade.getUser1Offer();
+                    }
+                    tradeOffer.add(book);
+                    saver.storeTrade(currentTrade);
+                }
+                catch(IOException e){
+
+                }
+                catch(JSONException e){
 
                 }
             }
