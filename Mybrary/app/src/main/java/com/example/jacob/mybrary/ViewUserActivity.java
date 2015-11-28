@@ -52,4 +52,10 @@ public class ViewUserActivity extends AppCompatActivity {
         TextView bioTextView = (TextView) v.findViewById(R.id.bioTextView);
         bioTextView.setText(myUser.getBio());
     }
+
+    public void showInventory(View view){
+        Intent intent = new Intent(this,InventoryActivity.class);
+        intent.putExtra("inv", myUser.getInventory());
+        startActivity(intent);
+    }
 }
