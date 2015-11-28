@@ -131,7 +131,12 @@ public class ConnectionManager {
 
         Boolean newIsConnected = networkInfo != null && networkInfo.isConnected();
         if (!isConnected && newIsConnected) {
-            DataManager.getInstance().pushOfflineItems();
+            try {
+                DataManager.getInstance().pushOfflineItems();
+            } catch (IOException e) {
+                //Connection failure
+                newIsConnected = false;
+            }
         }
         isConnected = newIsConnected;
         return isConnected;
