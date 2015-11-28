@@ -1,6 +1,7 @@
 package com.example.jacob.mybrary;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.AndroidTestCase;
 
 import java.util.UUID;
 
@@ -9,15 +10,13 @@ import java.util.UUID;
  *
  * Tests for the Photo Class. Still need to fix setPhotoID and checkValidFormat.
  */
-public class PhotoTest extends ActivityInstrumentationTestCase2 {
+public class PhotoTest extends AndroidTestCase {
 
 
     private Integer size = 100;
     private String format = "Bitmap";
     private String encodedImage = "This is so encoded";
     private UUID photoID; // = test.fromString("test");
-
-    public PhotoTest() { super (Photo.class); }
 
     public void testCreatePhoto() {
         Photo photo = new Photo(size, format, encodedImage, photoID);

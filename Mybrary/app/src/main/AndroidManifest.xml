@@ -42,6 +42,10 @@
             android:label="@string/title_activity_propose_trade"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".AddBookToTradeActivity"
+            android:label="title_activity_add_book_to_trade"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".ViewUserActivity"
             android:label="@string/title_activity_view_user"
             android:theme="@style/AppTheme.NoActionBar"></activity>

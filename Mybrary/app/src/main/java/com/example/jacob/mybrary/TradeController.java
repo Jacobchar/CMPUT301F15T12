@@ -25,16 +25,28 @@ public class TradeController {
      *
      * @param user2 Friend with whom the trade is occurring
      */
-    public void createNewTrade(User user2) {
-        Trade trade = new Trade(localUser, user2);
-
+    public Trade createNewTrade(User user2) {
+        final Trade trade = new Trade(localUser, user2);
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    saver.storeTrade(trade);
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        return trade;
     }
 
     /**
-     *
-     * @param currentTradeID
-     * @param parent
-     * @param callingButton
+     * Fetch the correct user's inventory to allow addition of new items to a trade
+     * @param currentTradeID current trade so correct users are looked at
+     * @param parent calling activity to update the UI
+     * @param callingButton allows differentiation between whether you are looking at your own, or another users inventory
      */
     public void getUserOfferSelections(final UUID currentTradeID, final Activity parent, final int callingButton) {
         Thread t = new Thread(new Runnable() {
@@ -63,6 +75,55 @@ public class TradeController {
                 } catch (IOException e) {
 
                 } catch (JSONException e) {
+
+                }
+            }
+        });
+        t.start();
+    }
+
+    /**
+     * Allows for books to be added and removed from a trade offer
+     * @param tradeID ID for the trade currently being changed
+     * @param book book to be added or removed from the trade
+     * @param offerToEdit a check to see which user's offer will be changed
+     * @param addOffer true to add a book, false to remove the book
+     */
+    public void changeOffer(final UUID tradeID, final Book book, final int offerToEdit, final Boolean addOffer){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    Trade currentTrade = saver.retrieveTrade(tradeID.toString());
+                    saver.removeTrade(tradeID.toString());
+                    List<Book> tradeOffer;
+                    // Pressed 'change my offer' check if local user is user 1
+                    if(offerToEdit == 1 && localUser.getUUID().equals(currentTrade.getUser1UUID())){
+                        tradeOffer = currentTrade.getUser1Offer();
+                    }
+                    // Pressed 'change my offer' local user must be user 2
+                    else if(offerToEdit == 1){
+                        tradeOffer = currentTrade.getUser2Offer();
+                    }
+                    // Pressed 'change their offer' check if other user is user 1 or 2
+                    else if(offerToEdit != 1 && localUser.getUUID().equals(currentTrade.getUser1UUID())){
+                        tradeOffer = currentTrade.getUser2Offer();
+                    }
+                    else{
+                        tradeOffer = currentTrade.getUser1Offer();
+                    }
+                    if(addOffer){
+                        tradeOffer.add(book);
+                    }
+                    else{
+                        tradeOffer.remove(book);
+                    }
+                    saver.storeTrade(currentTrade);
+                }
+                catch(IOException e){
+
+                }
+                catch(JSONException e){
 
                 }
             }
