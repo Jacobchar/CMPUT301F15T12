@@ -129,7 +129,11 @@ public class ConnectionManager {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        isConnected = networkInfo != null && networkInfo.isConnected();
+        Boolean newIsConnected = networkInfo != null && networkInfo.isConnected();
+        if (!isConnected && newIsConnected) {
+            DataManager.getInstance().pushOfflineItems();
+        }
+        isConnected = newIsConnected;
         return isConnected;
     }
 
