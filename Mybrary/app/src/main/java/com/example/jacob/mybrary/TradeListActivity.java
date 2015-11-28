@@ -14,7 +14,8 @@ import android.widget.AdapterView;
  */
 
 public class TradeListActivity extends AppCompatActivity {
-    private ListView tradeListView;
+    private ListView inProgressTradeListView;
+    private ListView completedTradeListView;
     private AlertDialog alert;
 
     TradeController controller = new TradeController();
@@ -31,16 +32,21 @@ public class TradeListActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
-        tradeListView = controller.getTradeList(this);
-        onLongClickListener();
+        inProgressTradeListView = (ListView) findViewById(R.id.inProgressTradeListView);
+        completedTradeListView = (ListView) findViewById(R.id.completedTradesListView);
+
+        controller.getTradeList(this,inProgressTradeListView, completedTradeListView);
+
+        onLongClickListener(inProgressTradeListView);
+        onLongClickListener(completedTradeListView);
     }
 
-    public void onLongClickListener(){
-        tradeListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+    public void onLongClickListener(final ListView view){
+        view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
 
-                final Trade trade = (Trade) tradeListView.getItemAtPosition(pos);
+                final Trade trade = (Trade) view.getItemAtPosition(pos);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(TradeListActivity.this);
                 builder.setMessage("View or Delete the Trade?");
