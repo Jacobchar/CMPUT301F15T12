@@ -15,9 +15,8 @@ import java.util.UUID;
 
 public class EditBookActivity extends AppCompatActivity {
 
-    private Inventory inventory;
+    private InventoryController inventoryController = new InventoryController();
     private UUID id;
-    private Book book;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +24,9 @@ public class EditBookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_book);
 
         Bundle bundle = this.getIntent().getExtras();
+
         if( bundle != null) {
-            inventory = (Inventory) bundle.getSerializable("inv");
             id = (UUID) bundle.getSerializable("id");
-        } else {
-            inventory = new Inventory();
         }
     }
 
@@ -39,12 +36,18 @@ public class EditBookActivity extends AppCompatActivity {
      */
     public void saveNewBookInfo(View view){
 
-        Book book = inventory.getBookByID(id);
-        inventory.deleteBookByID(id);
+        final Book book = inventoryController.getInventory().getBookByID(id);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                inventoryController.getInventory().deleteBookByID(id);
+            }
+        });
+        thread.start();
 
         if (id != null) {
             TextView t = (TextView) findViewById(R.id.nameEditView);
-            String tmp = t.getText().toString();
             if (!t.getText().toString().equals(""))
                 book.setName(t.getText().toString());
 
@@ -67,13 +70,16 @@ public class EditBookActivity extends AppCompatActivity {
                 book.setSharedWithOthers(false);
             }
 
-            inventory.addBook(book);
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    inventoryController.getInventory().addBook(book);
+                }
+            });
+            thread.start();
         }
 
-        Intent data = new Intent();
-        data.putExtra("inv", inventory);
-
-        setResult(Activity.RESULT_OK, data);
+        setResult(Activity.RESULT_OK);
         finish();
 
     }
@@ -97,11 +103,7 @@ public class EditBookActivity extends AppCompatActivity {
     public TextView getCommentText(){
         return (TextView) findViewById(R.id.commentEditView);
     }
-    public Button getSaveButton(){
-        return (Button) findViewById(R.id.saveEditBookButton);
-    }
 
-    public Inventory getInventory(){
-        return inventory;
-    }
+    public Button getSaveButton(){ return (Button) findViewById(R.id.saveEditBookButton); }
+
 }
