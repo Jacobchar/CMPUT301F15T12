@@ -1,9 +1,12 @@
 package com.example.jacob.mybrary;
 
+import android.content.Context;
 import android.test.AndroidTestCase;
+import android.test.mock.MockContext;
 
 import org.json.JSONException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -19,7 +22,9 @@ public class DataManagerTest extends AndroidTestCase {
             DataManager dataManager = DataManager.getInstance();
             Book book = new Book("testBook", 1, "testCategory", true);
 
-            assertTrue(dataManager.storeBook(book));
+            if(!dataManager.storeBook(book)) {
+                assertTrue(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
+            }
 
             dataManager.removeBook(book.getItemID().toString());
         } catch (Exception e) {
@@ -32,9 +37,7 @@ public class DataManagerTest extends AndroidTestCase {
             DataManager dataManager = DataManager.getInstance();
             Book book = new Book("testBook", 1, "testCategory", true);
 
-            if (!dataManager.storeBook(book)) {
-                fail();
-            }
+            dataManager.storeBook(book);
 
             Book returnedBook = dataManager.retrieveBook(book.getItemID().toString());
 
@@ -80,7 +83,9 @@ public class DataManagerTest extends AndroidTestCase {
 
             dataManager.storeBook(book);
 
-            assertTrue(dataManager.removeBook(book.getItemID().toString()));
+            if (!dataManager.removeBook(book.getItemID().toString())) {
+                assertFalse(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
+            }
         } catch (Exception e) {
             fail();
         }
@@ -93,7 +98,9 @@ public class DataManagerTest extends AndroidTestCase {
             DataManager dataManager = DataManager.getInstance();
             User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
 
-            assertTrue(dataManager.storeUser(user));
+            if(!dataManager.storeUser(user)) {
+                assertTrue(FileManager.getInstance().fileExists("Users/" + user.getUUID().toString()));
+            }
 
             dataManager.removeBook(user.getUUID().toString());
         } catch (Exception e) {
@@ -106,16 +113,13 @@ public class DataManagerTest extends AndroidTestCase {
             DataManager dataManager = DataManager.getInstance();
             User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
 
-            if (!dataManager.storeUser(user)) {
-                fail();
-            }
+            dataManager.storeUser(user);
 
             //Wait for entries to be indexed
             Thread.sleep(1000);
 
             User returnedUser = dataManager.retrieveUser(user.getUUID().toString());
 
-            //TODO: Ensure that User has an equals() method.
             assertTrue(user.equals(returnedUser));
 
             dataManager.removeBook(user.getUUID().toString());
@@ -158,7 +162,9 @@ public class DataManagerTest extends AndroidTestCase {
 
             dataManager.storeUser(user);
 
-            assertTrue(dataManager.removeUser(user.getUUID().toString()));
+            if (dataManager.removeUser(user.getUUID().toString())) {
+                assertFalse(FileManager.getInstance().fileExists("Users/" + user.getUUID().toString()));
+            }
         } catch (Exception e) {
             fail();
         }
