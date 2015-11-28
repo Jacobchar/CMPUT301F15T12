@@ -41,14 +41,19 @@ public class ProposeTradeActivity extends AppCompatActivity {
             currentTrade = (UUID) extras.getSerializable("currentTrade");
         }
 
+
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+
         yourTradeOffer = (ListView) findViewById(R.id.yourItemsListView);
         theirTradeOffer = (ListView) findViewById(R.id.theirItemsListView);
         tradeController.getCurrentTradeOffer(this,currentTrade,yourTradeOffer,theirTradeOffer);
 
         onClickListener(yourTradeOffer, currentTrade, 1);
-        onClickListener(theirTradeOffer,currentTrade,0);
+        onClickListener(theirTradeOffer, currentTrade, 0);
     }
-
     /**
      * Listens for clicks to delete an item from a trade offer
      * @param view The view to watch for clicks
@@ -67,6 +72,9 @@ public class ProposeTradeActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         tradeController.changeOffer(tradeID, book, callingView, false);
+                        yourTradeOffer = (ListView) findViewById(R.id.yourItemsListView);
+                        theirTradeOffer = (ListView) findViewById(R.id.theirItemsListView);
+                        tradeController.getCurrentTradeOffer(ProposeTradeActivity.this,currentTrade,yourTradeOffer,theirTradeOffer);
                         dialog.cancel();
                     }
                 });

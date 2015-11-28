@@ -16,6 +16,7 @@ public class AddBookToTradeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_to_trade);
+
         controller = new TradeController();
 
         // http://stackoverflow.com/questions/2965109/passing-data-between-activities-in-android
@@ -36,7 +37,8 @@ public class AddBookToTradeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long id) {
 
                 final Book book = (Book) view.getItemAtPosition(pos);
-                controller.addToOffer(tradeID, book, offerToEdit);
+                controller.changeOffer(tradeID, book, offerToEdit,true);
+                finish();
             }
 
         });

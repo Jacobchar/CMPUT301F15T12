@@ -119,7 +119,6 @@ public class TradeController {
                         tradeOffer.remove(book);
                     }
                     saver.storeTrade(currentTrade);
-
                 }
                 catch(IOException e){
 
