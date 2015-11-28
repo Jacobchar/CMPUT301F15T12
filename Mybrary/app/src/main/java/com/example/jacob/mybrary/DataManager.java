@@ -44,7 +44,16 @@ public class DataManager {
     public void saveLocalUser() throws IOException {
         LocalUser user = LocalUser.getInstance();
         String userjson = GsonManager.getInstance().toJson(user);
+        if (ConnectionManager.getInstance().isConnected()) {
+            storeUser(user);
+        }
         FileManager.getInstance().saveJson("localUser.json", userjson);
+    }
+
+    public void pushOfflineItems() {
+        if (ConnectionManager.getInstance().isConnected()) {
+            //Go through the offline folders and push any items found.
+        }
     }
 
     //======================= BOOKS ==============================
