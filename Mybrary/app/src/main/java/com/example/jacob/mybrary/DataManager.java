@@ -13,6 +13,8 @@ import java.util.ArrayList;
  * This data management abstraction offers a simplified way of retrieving data. The data may either
  * be remote or cached locally.
  *
+ * (Sample partial match query: "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"name\",\"query\":\"Vic*\"}}}")
+ *
  * Created by Dominic on 2015-11-04.
  */
 public class DataManager {
@@ -64,6 +66,9 @@ public class DataManager {
             fm.saveJson("Offline/Books/" + book.getItemID().toString(), json);
         }
         fm.saveJson("Books/" + book.getItemID().toString(), json);
+
+        //Every time a book is added, the local user has changed.
+        saveLocalUser();
 
         //TODO: Add better verification.
         return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Books\",\"_id\":\"" + book.getItemID().toString());
