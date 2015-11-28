@@ -23,7 +23,7 @@ public class DataManager {
 
     public static DataManager getInstance() { return ourInstance; }
 
-    public DataManager() {
+    private DataManager() {
 
     }
 
@@ -61,6 +61,7 @@ public class DataManager {
                 String id = book.getName();
                 String json = fm.readFile(book);
                 cm.put("Books/" + id, json);
+                book.delete();
             }
 
             File tradeDir = new File(fm.getAppFolderName() + "Offline/Trades");
@@ -68,6 +69,7 @@ public class DataManager {
                 String id = trade.getName();
                 String json = fm.readFile(trade);
                 cm.put("Trades/" + id, json);
+                trade.delete();
             }
 
             File photoDir = new File(fm.getAppFolderName() + "Offline/Photos");
@@ -75,6 +77,7 @@ public class DataManager {
                 String id = photo.getName();
                 String json = fm.readFile(photo);
                 cm.put("Photos/" + id, json);
+                photo.delete();
             }
         }
     }

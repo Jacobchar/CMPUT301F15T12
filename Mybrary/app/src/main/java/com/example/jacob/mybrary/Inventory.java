@@ -46,7 +46,7 @@ public class Inventory implements Serializable {
 
         inventoryList.add(book);
         try {
-            DataManager dataManager = new DataManager();
+            DataManager dataManager = DataManager.getInstance();
             dataManager.storeBook(book);
         } catch (IOException e){
             e.printStackTrace();
@@ -120,7 +120,7 @@ public class Inventory implements Serializable {
 
 
         try {
-            DataManager dataManager = new DataManager();
+            DataManager dataManager = DataManager.getInstance();
             dataManager.removeBook(book.getItemID().toString());
         } catch (IOException e){
             e.printStackTrace();
@@ -147,7 +147,7 @@ public class Inventory implements Serializable {
 
 
         try {
-            DataManager dataManager = new DataManager();
+            DataManager dataManager = DataManager.getInstance();
             dataManager.removeBook(book.getItemID().toString());
         } catch (IOException e){
             e.printStackTrace();
