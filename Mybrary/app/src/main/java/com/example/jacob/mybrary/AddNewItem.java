@@ -15,12 +15,15 @@ import android.widget.TextView;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class AddNewItem extends AppCompatActivity {
 
     private InventoryController inventoryController = new InventoryController();
+    private ConnectionManager connectionManager = ConnectionManager.getInstance();
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,8 @@ public class AddNewItem extends AppCompatActivity {
      * Allows user to add a new book to their inventory.
      */
     public void saveNewBookInfo(View view){
+
+        activity = this;
 
         final Book book = new Book();
 
@@ -61,6 +66,7 @@ public class AddNewItem extends AppCompatActivity {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                connectionManager.updateConnectivity(activity);
                 inventoryController.getInventory().addBook(book);
             }
         });

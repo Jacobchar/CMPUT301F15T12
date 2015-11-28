@@ -11,12 +11,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.sql.Connection;
 import java.util.UUID;
 
 public class EditBookActivity extends AppCompatActivity {
 
     private InventoryController inventoryController = new InventoryController();
     private UUID id;
+    private ConnectionManager connectionManager = ConnectionManager.getInstance();
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,8 @@ public class EditBookActivity extends AppCompatActivity {
      * Allows user to add a new book to their inventory.
      */
     public void saveNewBookInfo(View view){
+
+        activity = this;
 
         final Book book = inventoryController.getInventory().getBookByID(id);
 
@@ -73,6 +78,7 @@ public class EditBookActivity extends AppCompatActivity {
             thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    connectionManager.updateConnectivity(activity);
                     inventoryController.getInventory().addBook(book);
                 }
             });

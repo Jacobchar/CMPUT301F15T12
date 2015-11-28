@@ -3,6 +3,8 @@ package com.example.jacob.mybrary;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -49,7 +51,6 @@ public class Inventory implements Serializable {
         } catch (IOException e){
             e.printStackTrace();
         }
-
 
     }
 
