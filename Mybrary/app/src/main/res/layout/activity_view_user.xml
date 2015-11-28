@@ -161,6 +161,7 @@
         android:layout_height="wrap_content"
         android:text="View Inventory"
         android:id="@+id/view_inventory_button"
+        android:background="@drawable/button_corners"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="showInventory"/>
