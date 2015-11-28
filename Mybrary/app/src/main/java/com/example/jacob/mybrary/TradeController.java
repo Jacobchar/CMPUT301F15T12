@@ -43,10 +43,10 @@ public class TradeController {
     }
 
     /**
-     *
-     * @param currentTradeID
-     * @param parent
-     * @param callingButton
+     * Fetch the correct user's inventory to allow addition of new items to a trade
+     * @param currentTradeID current trade so correct users are looked at
+     * @param parent calling activity to update the UI
+     * @param callingButton allows differentiation between whether you are looking at your own, or another users inventory
      */
     public void getUserOfferSelections(final UUID currentTradeID, final Activity parent, final int callingButton) {
         Thread t = new Thread(new Runnable() {
@@ -82,7 +82,14 @@ public class TradeController {
         t.start();
     }
 
-    public void addToOffer(final UUID tradeID, final Book book, final int offerToEdit){
+    /**
+     * Allows for books to be added and removed from a trade offer
+     * @param tradeID ID for the trade currently being changed
+     * @param book book to be added or removed from the trade
+     * @param offerToEdit a check to see which user's offer will be changed
+     * @param addOffer true to add a book, false to remove the book
+     */
+    public void changeOffer(final UUID tradeID, final Book book, final int offerToEdit, final Boolean addOffer){
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -105,8 +112,14 @@ public class TradeController {
                     else{
                         tradeOffer = currentTrade.getUser1Offer();
                     }
-                    tradeOffer.add(book);
+                    if(addOffer){
+                        tradeOffer.add(book);
+                    }
+                    else{
+                        tradeOffer.remove(book);
+                    }
                     saver.storeTrade(currentTrade);
+
                 }
                 catch(IOException e){
 
