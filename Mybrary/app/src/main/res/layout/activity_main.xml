@@ -12,12 +12,11 @@
         android:layout_height="wrap_content"
         android:text="View Profile"
         android:id="@+id/profileViewButton"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="45dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="openProfileActivity"
-        android:background="@drawable/button_corners"
-        android:radius="10dp"/>
+        android:background="@drawable/button_corners"/>
 
     <Button
         android:layout_width="230dp"
@@ -28,7 +27,7 @@
         android:layout_alignStart="@+id/profileViewButton"
         android:onClick="openInventoryActivity"
         android:background="@drawable/button_corners"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="15dp" />
 
     <Button
         android:layout_width="230dp"
@@ -39,7 +38,7 @@
         android:layout_below="@+id/InventoryViewButton"
         android:layout_alignStart="@+id/InventoryViewButton"
         android:background="@drawable/button_corners"
-        android:layout_marginTop="31dp" />
+        android:layout_marginTop="15dp" />
 
     <Button
         android:layout_width="230dp"
@@ -48,7 +47,7 @@
         android:id="@+id/TradeViewButton"
         android:layout_below="@+id/FriendsListViewButton"
         android:layout_alignStart="@+id/FriendsListViewButton"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button_corners"
         android:onClick="openTradeListActivity" />
 
@@ -60,7 +59,7 @@
         android:id="@+id/TopTradersViewButton"
         android:layout_below="@+id/TradeViewButton"
         android:layout_alignStart="@+id/TradeViewButton"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button_corners"
         android:onClick="openTopTradersActivity" />
 
@@ -73,7 +72,7 @@
         android:layout_below="@+id/TopTradersViewButton"
         android:layout_alignStart="@+id/TopTradersViewButton"
         android:background="@drawable/button_corners"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
