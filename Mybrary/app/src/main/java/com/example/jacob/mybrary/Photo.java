@@ -1,7 +1,6 @@
 package com.example.jacob.mybrary;
 
 import android.graphics.Bitmap;
-
 import java.util.UUID;
 
 /**
@@ -68,4 +67,27 @@ public class Photo {
     public UUID getPhotoID() {return photoID;}
     public void setPhotoID(UUID photoID) {this.photoID = photoID;}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Photo photo = (Photo) o;
+
+        if (size != null ? !size.equals(photo.size) : photo.size != null) return false;
+        if (format != null ? !format.equals(photo.format) : photo.format != null) return false;
+        if (encodedImage != null ? !encodedImage.equals(photo.encodedImage) : photo.encodedImage != null)
+            return false;
+        return !(photoID != null ? !photoID.equals(photo.photoID) : photo.photoID != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = size != null ? size.hashCode() : 0;
+        result = 31 * result + (format != null ? format.hashCode() : 0);
+        result = 31 * result + (encodedImage != null ? encodedImage.hashCode() : 0);
+        result = 31 * result + (photoID != null ? photoID.hashCode() : 0);
+        return result;
+    }
 }
