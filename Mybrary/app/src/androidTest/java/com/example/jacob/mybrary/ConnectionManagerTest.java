@@ -96,4 +96,15 @@ public class ConnectionManagerTest extends AndroidTestCase {
             fail();
         }
     }
+
+    public void testPartialMatch() {
+        ConnectionManager connectionManager = ConnectionManager.getInstance();
+
+        try {
+            String result = connectionManager.query("Users/", "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"name\",\"query\":\"Vic*\"}}}");
+            assertNotNull(result);
+        } catch (IOException e) {
+            fail();
+        }
+    }
 }

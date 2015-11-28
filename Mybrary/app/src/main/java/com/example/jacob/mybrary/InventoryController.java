@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.UUID;
 
 /**
@@ -32,7 +33,7 @@ public class InventoryController {
         adapter = new ArrayAdapter<Book>(activity, R.layout.simple_list_item, localUser.getInventory().getBooks());
 
         listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        refreshList();
     }
 
 

@@ -38,9 +38,9 @@ public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
         InventoryActivity activity = (InventoryActivity) getActivity();
         assertNotNull(activity);
 
-        ListView list = (ListView) activity.findViewById(R.id.tradeListView);
+        //ListView list = (ListView) activity.findViewById(R.id.tradeListView);
 
-        TouchUtils.longClickView(this, list.getChildAt(0));
+        //TouchUtils.longClickView(this, list.getChildAt(0));
 
         assertTrue(activity.getAlertDialog().isShowing());
 
@@ -50,9 +50,9 @@ public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
         InventoryActivity activity = (InventoryActivity) getActivity();
 
 
-        ListView list = (ListView) activity.findViewById(R.id.tradeListView);
+        //ListView list = (ListView) activity.findViewById(R.id.tradeListView);
 
-        TouchUtils.longClickView(this, list.getChildAt(0));
+        //TouchUtils.longClickView(this, list.getChildAt(0));
 
         final Button editButton = activity.getAlertDialog().getButton(DialogInterface.BUTTON_POSITIVE);
 

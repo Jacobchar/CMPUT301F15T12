@@ -12,6 +12,9 @@ import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -33,6 +36,7 @@ public class InventoryActivity extends AppCompatActivity {
     private InventoryController inventoryController = new InventoryController();
     private Activity activity;
     private ListView inventoryListView;
+    private ConnectionManager connectionManager = ConnectionManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,9 @@ public class InventoryActivity extends AppCompatActivity {
                         Thread thread = new Thread(new Runnable() {
                             @Override
                             public void run() {
+                                connectionManager.updateConnectivity(activity);
                                 inventoryController.getInventory().deleteBookByName(book.getName());
+
                             }
                         });
                         thread.start();
