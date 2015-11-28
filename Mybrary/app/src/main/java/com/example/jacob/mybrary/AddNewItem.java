@@ -7,27 +7,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class AddNewItem extends AppCompatActivity {
 
-    private Inventory inventory;
+    private InventoryController inventoryController = new InventoryController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_item);
-
-        Bundle bundle = this.getIntent().getExtras();
-        if( bundle != null) {
-            inventory = (Inventory) bundle.getSerializable("inv");
-        } else {
-            inventory = new Inventory();
-        }
     }
 
     /**
@@ -35,7 +33,7 @@ public class AddNewItem extends AppCompatActivity {
      */
     public void saveNewBookInfo(View view){
 
-        Book book = new Book();
+        final Book book = new Book();
 
         TextView t = (TextView) findViewById(R.id.nameEditView);
         if (!t.getText().toString().equals(""))
@@ -60,12 +58,15 @@ public class AddNewItem extends AppCompatActivity {
         if (!t.getText().toString().equals(""))
             book.addNewComment(t.getText().toString());
 
-        inventory.addBook(book);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                inventoryController.getInventory().addBook(book);
+            }
+        });
+        thread.start();
 
-        Intent data = new Intent();
-        data.putExtra("inv", inventory);
-
-        setResult(Activity.RESULT_OK, data);
+        setResult(Activity.RESULT_OK);
         finish();
 
     }
@@ -89,13 +90,8 @@ public class AddNewItem extends AppCompatActivity {
     public TextView getCommentText(){
         return (TextView) findViewById(R.id.commentEditView);
     }
-    public Button getSaveButton(){
-        return (Button) findViewById(R.id.SaveNewBookButton);
-    }
 
-    public Inventory getInventory(){
-        return inventory;
-    }
+    public Button getSaveButton(){ return (Button) findViewById(R.id.SaveNewBookButton); }
 
 
 }

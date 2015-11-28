@@ -27,32 +27,50 @@ import java.util.UUID;
 
 public class InventoryActivity extends AppCompatActivity {
 
-    // used LonelyTwitter here
-
     private ArrayAdapter<Book> adapter;
-    private ListView listView;
     private Inventory inventory = new Inventory();
     private AlertDialog alert;
+    private InventoryController inventoryController = new InventoryController();
+    private Activity activity;
+    private ListView inventoryListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-        fillInventory();
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        inventoryListView = (ListView) findViewById(R.id.inventoryListView);
+        activity = this;
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                inventoryController.fillInventory(activity, inventoryListView);
+            }
+        });
+        thread.start();
+
+
+        inventoryListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
 
-                final Book book = (Book) listView.getItemAtPosition(pos);
+                final Book book = (Book) inventoryListView.getItemAtPosition(pos);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
                 builder.setMessage("What would you like to do?");
                 builder.setCancelable(true);
+
                 builder.setPositiveButton("Delete Item", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        inventory.deleteBookByName(book.getName());
-                        adapter.notifyDataSetChanged();
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                inventoryController.getInventory().deleteBookByName(book.getName());
+                            }
+                        });
+                        thread.start();
+                        inventoryController.refreshList();
                         dialog.cancel();
                     }
                 });
@@ -76,36 +94,12 @@ public class InventoryActivity extends AppCompatActivity {
         });
 
 
-    }
 
-    /**
-     * Fills your inventory ListView on opening the inventory activity.
-     */
-    void fillInventory(){
-
-        listView = (ListView) findViewById(R.id.inventoryListView);
-
-        //Book book = new Book("testName", 0, "It's A Book", true);
-        //Book book2 = new Book("BookBook", 1, "No Book", false);
-
-        //inventory.addBook(book);
-        //inventory.addBook(book2);
-
-        adapter = new ArrayAdapter<>(this, R.layout.simple_list_item, inventory.getBooks());
-
-        listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
     }
 
     public void addNewItem(View view){
 
-        Intent intent = new Intent(this, AddNewItem.class);
-        Bundle bundle = new Bundle();
-
-        bundle.putSerializable("inv", inventory);
-
-        intent.putExtras(bundle);
-
+        Intent intent = new Intent(activity, AddNewItem.class);
         startActivityForResult(intent, 1);
 
     }
@@ -115,13 +109,15 @@ public class InventoryActivity extends AppCompatActivity {
         Intent intent = new Intent(this, EditBookActivity.class);
         Bundle bundle = new Bundle();
 
-        bundle.putSerializable("inv", inventory);
         bundle.putSerializable("id", id);
 
         intent.putExtras(bundle);
-
         startActivityForResult(intent, 1);
 
+    }
+
+    public AlertDialog getAlertDialog(){
+        return this.alert;
     }
 
     @Override
@@ -129,42 +125,9 @@ public class InventoryActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == Activity.RESULT_OK){
-            inventory = (Inventory) data.getSerializableExtra("inv");
-        }
-        adapter.notifyDataSetChanged();
-        fillInventory();
+        inventoryController.refreshList();
+        inventoryController.fillInventory(activity, inventoryListView);
     }
-
-    public void searchForBook(){
-        /* Dom/Jake's tests:
-            try {
-                DataManager dataManager = DataManager.getInstance();
-
-                Book book3 = new Book("testBook3", 3, "testCategory3", true);
-
-                //Wait for entries to be indexed
-                Thread.sleep(1000);
-
-                ArrayList<Book> returnedBooks = dataManager.searchBooks("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testBook2\"}}}");
-
-                assertTrue(returnedBooks.size() == 1);
-                assertTrue(returnedBooks.contains(book2));
-
-            } catch (Exception e) {
-
-            }
-        */
-    }
-
-    public AlertDialog getAlertDialog(){
-        return this.alert;
-    }
-
-
-
-
-
 
 
 }
