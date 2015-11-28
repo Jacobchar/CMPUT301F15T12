@@ -26,7 +26,8 @@
                 android:text="NAME"
                 android:id="@+id/nameTitleCreateView"
                 android:layout_below="@+id/usernameTextCreateView"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -43,7 +44,8 @@
                 android:text="CITY"
                 android:id="@+id/cityTitleCreateView"
                 android:layout_below="@+id/nameTextCreateView"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -60,7 +62,8 @@
                 android:text="PHONE NUMBER"
                 android:id="@+id/phoneTitleCreateView"
                 android:layout_below="@+id/cityTextCreateView"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -78,7 +81,8 @@
                 android:text="EMAIL"
                 android:id="@+id/emailTitleCreateView"
                 android:layout_below="@+id/phoneTextCreateView"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -97,7 +101,8 @@
                 android:text="GENDER"
                 android:id="@+id/genderTitleCreateView"
                 android:layout_below="@+id/emailTextCreateView"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -114,7 +119,8 @@
                 android:text="BIO"
                 android:id="@+id/bioTitleCreateView"
                 android:layout_below="@+id/genderTextCreateView"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:textStyle="bold" />
 
             <EditText
                 android:layout_width="match_parent"

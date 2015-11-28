@@ -44,6 +44,12 @@ public class FileManager {
      * @param content json element being saved
      */
     public void saveJson(String path, String content) throws IOException {
+        File file = new File(appFolderName + path);
+        //Create any parent folders if needed
+        file.getParentFile().mkdirs();
+        //Only creates a file if one doesn't exist
+        file.createNewFile();
+
         FileWriter writer = new FileWriter(appFolderName + path);
         BufferedWriter out = new BufferedWriter(writer);
         out.write(content);
@@ -82,5 +88,10 @@ public class FileManager {
 
     public String getAppFolderName() {
         return appFolderName;
+    }
+
+    public Boolean fileExists(String path) {
+        File file = new File(appFolderName + path);
+        return file.exists();
     }
 }

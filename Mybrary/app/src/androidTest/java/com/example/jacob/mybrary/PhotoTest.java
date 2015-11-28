@@ -13,7 +13,7 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
 
 
     private Integer size = 100;
-    private String format = "PNG";
+    private String format = "Bitmap";
     private String encodedImage = "This is so encoded";
     private UUID photoID; // = test.fromString("test");
 
@@ -32,7 +32,6 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
         assertFalse(photo.checkValidSize(photo.getSize()));
     }
 
-    /*
     public void testCheckValidFormat(){
         Photo photo = new Photo(size, format, encodedImage, photoID);
         assertTrue(photo.checkValidFormat(photo.getFormat()));
@@ -80,10 +79,11 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
         assertEquals(photo.getPhotoID(), photoID);
     }
 
-    /*
+
     public void testSetPhotoID() {
         Photo photo = new Photo(size, format, encodedImage, photoID);
-        photo.setPhotoID(photoID.fromString("still a test"));
-        assertEquals(photo.getPhotoID(),  UUID.fromString("still a test"));
-    }*/
+        UUID test = new UUID(0xAAAAAAAA, 0x99999999);
+        photo.setPhotoID(test);
+        assertEquals(photo.getPhotoID(), test);
+    }
 }

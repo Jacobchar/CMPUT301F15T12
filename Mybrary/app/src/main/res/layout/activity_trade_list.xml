@@ -7,23 +7,53 @@
     android:background="@color/tan_dark"
     tools:context="com.example.jacob.mybrary.TradeListActivity">
 
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="Trades"
+    android:id="@+id/tradesTitleView"
+    android:layout_alignParentTop="true"
+    android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Trades"
-        android:id="@+id/tradesTitleView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="Trades in Progress"
+    android:background="@color/tan_light"
+    android:id="@+id/inProgressTradeTitleView"
+    android:layout_below="@+id/tradesTitleView"
+    android:layout_alignParentStart="true" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/tradeListView"
-        android:layout_below="@+id/tradesTitleView"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+<ListView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="New Text"
+    android:id="@+id/inProgressTradeListView"
+    android:layout_alignParentStart="true"
+    android:layout_below="@+id/inProgressTradeTitleView"
+    android:layout_alignParentEnd="true"
+    android:background="@color/tan_light"
+    android:layout_above="@+id/completedTradesListView" />
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="Completed Trades"
+    android:background="@color/tan_light"
+    android:id="@+id/completedTradesTextView"
+    android:layout_centerVertical="true"
+    android:layout_alignParentStart="true" />
+
+<ListView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="New Text"
+    android:background="@color/tan_light"
+    android:id="@+id/completedTradesListView"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentEnd="true"
+    android:layout_below="@+id/completedTradesTextView" />
 </RelativeLayout>

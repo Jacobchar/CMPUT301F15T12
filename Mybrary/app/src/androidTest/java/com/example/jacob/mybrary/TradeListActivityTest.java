@@ -20,6 +20,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
         super(TradeListActivity.class);
     }
 
+
     public void testTradeList(){
         LocalUser user = LocalUser.getInstance();
         DataManager saver = DataManager.getInstance();
@@ -29,7 +30,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
             saver.storeTrade(testTrade);
             Thread.sleep(2000);
             TradeListActivity activity = (TradeListActivity) getActivity();
-            ListView  text = (ListView) activity.findViewById(R.id.tradeListView);
+            ListView  text = (ListView) activity.findViewById(R.id.inProgressTradeListView);
             Trade trade = (Trade) text.getAdapter().getItem(0);
             assertNotNull(trade);
             saver.removeTrade(testTrade.getTradeID().toString());
@@ -53,7 +54,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
             TradeListActivity activity = (TradeListActivity) getActivity();
             assertNotNull(activity);
 
-            ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+            ListView text = (ListView) activity.findViewById(R.id.inProgressTradeListView);
 
             // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
             // Answered by Markn12, edited by Nathan Tuggy
@@ -83,7 +84,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
             TradeListActivity activity = (TradeListActivity) getActivity();
             assertNotNull(activity);
 
-            ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+            ListView text = (ListView) activity.findViewById(R.id.inProgressTradeListView);
 
             // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
             // Answered by Markn12, edited by Nathan Tuggy
@@ -142,7 +143,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
 
             TradeListActivity activity = (TradeListActivity) getActivity();
             assertNotNull(activity);
-            ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+            ListView text = (ListView) activity.findViewById(R.id.inProgressTradeListView);
 
             int startNumberOfTrades = text.getAdapter().getCount();
             // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
@@ -162,7 +163,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
 
             saver.removeTrade(testTrade.getTradeID().toString());
 
-            int endNumberTrades = ((ListView) activity.findViewById(R.id.tradeListView)).getAdapter().getCount();
+            int endNumberTrades = ((ListView) activity.findViewById(R.id.inProgressTradeListView)).getAdapter().getCount();
             assertTrue(endNumberTrades ==( startNumberOfTrades-1));
         }
         catch(IOException e){
@@ -185,7 +186,7 @@ public class TradeListActivityTest extends ActivityInstrumentationTestCase2 {
             final TradeListActivity activity = (TradeListActivity) getActivity();
             assertNotNull(activity);
 
-            ListView text = (ListView) activity.findViewById(R.id.tradeListView);
+            ListView text = (ListView) activity.findViewById(R.id.inProgressTradeListView);
 
             // http://stackoverflow.com/questions/23454654/how-to-simulate-an-user-click-to-a-listview-item-in-junit-testing
             // Answered by Markn12, edited by Nathan Tuggy

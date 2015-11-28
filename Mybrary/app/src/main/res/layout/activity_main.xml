@@ -12,43 +12,43 @@
         android:layout_height="wrap_content"
         android:text="View Profile"
         android:id="@+id/profileViewButton"
-        android:layout_marginTop="61dp"
-        android:background="#A9A9A9"
+        android:layout_marginTop="45dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:onClick="openProfileActivity"/>
+        android:onClick="openProfileActivity"
+        android:background="@drawable/button_corners"/>
 
     <Button
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="Inventory"
         android:id="@+id/InventoryViewButton"
-        android:background="#Da70D6"
         android:layout_below="@+id/profileViewButton"
         android:layout_alignStart="@+id/profileViewButton"
         android:onClick="openInventoryActivity"
-        android:layout_marginTop="30dp" />
+        android:background="@drawable/button_corners"
+        android:layout_marginTop="15dp" />
 
     <Button
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="Friends List"
         android:id="@+id/FriendsListViewButton"
-        android:background="#FFDEAD"
         android:onClick="openFriendsListActivity"
         android:layout_below="@+id/InventoryViewButton"
         android:layout_alignStart="@+id/InventoryViewButton"
-        android:layout_marginTop="31dp" />
+        android:background="@drawable/button_corners"
+        android:layout_marginTop="15dp" />
 
     <Button
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:text="Trades List"
         android:id="@+id/TradeViewButton"
-        android:background="#4682b4"
         android:layout_below="@+id/FriendsListViewButton"
         android:layout_alignStart="@+id/FriendsListViewButton"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_corners"
         android:onClick="openTradeListActivity" />
 
 
@@ -57,10 +57,10 @@
         android:layout_height="wrap_content"
         android:text="Top Traders"
         android:id="@+id/TopTradersViewButton"
-        android:background="#8FBC8F"
         android:layout_below="@+id/TradeViewButton"
         android:layout_alignStart="@+id/TradeViewButton"
-        android:layout_marginTop="27dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/button_corners"
         android:onClick="openTopTradersActivity" />
 
     <Button
@@ -68,17 +68,17 @@
         android:layout_height="wrap_content"
         android:text="Settings"
         android:id="@+id/SettingsViewButton"
-        android:background="#B22222"
         android:onClick="openSettingsActivity"
         android:layout_below="@+id/TopTradersViewButton"
         android:layout_alignStart="@+id/TopTradersViewButton"
-        android:layout_marginTop="25dp" />
+        android:background="@drawable/button_corners"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="mybrary"
+        android:text="Mybrary"
         android:id="@+id/mybraryTitleView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

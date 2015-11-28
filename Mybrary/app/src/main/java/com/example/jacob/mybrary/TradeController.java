@@ -30,6 +30,12 @@ public class TradeController {
 
     }
 
+    /**
+     *
+     * @param currentTradeID
+     * @param parent
+     * @param callingButton
+     */
     public void getUserOfferSelections(final UUID currentTradeID, final Activity parent, final int callingButton) {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -52,7 +58,7 @@ public class TradeController {
                     ListView view = (ListView) parent.findViewById(R.id.addBookToTradeListView);
                     ArrayAdapter<Book> adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, bookList);
 
-                    updateUI(view,adapter,parent);
+                    updateUI(view, adapter, parent);
 
                 } catch (IOException e) {
 
@@ -101,18 +107,31 @@ public class TradeController {
      * Get the list of trades relevant to the local user
      *
      * @param parent the calling activity
+     * @param inProgressTradeView  view which shows in progress trades
+     * @param completedTradeView view which shows the completed trades
      * @return the list of trades found
      */
-    public ListView getTradeList(final Activity parent) {
-        final ListView tradeListView = (ListView) parent.findViewById(R.id.tradeListView);
+    public void getTradeList(final Activity parent,final ListView inProgressTradeView, final ListView completedTradeView) {
         Thread t = new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try {
                     ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*.myUUID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}");
-                    ArrayAdapter<Trade> adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, occuredTrades);
-                    updateUI(tradeListView, adapter, parent);
+                    ArrayList<Trade> completeTrades = new ArrayList<>();
+                    for(Trade trade:occuredTrades){
+                        if(trade.isComplete()){
+                            completeTrades.add(trade);
+                        }
+                    }
+                    for(Trade trade:completeTrades){
+                        occuredTrades.remove(trade);
+                    }
+                    ArrayAdapter<Trade> inProgressAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, occuredTrades);
+                    updateUI(inProgressTradeView, inProgressAdapter, parent);
+                    ArrayAdapter<Trade> completeAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, completeTrades);
+                    updateUI(completedTradeView, completeAdapter, parent);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                     return;
@@ -123,7 +142,6 @@ public class TradeController {
             }
         });
         t.start();
-        return tradeListView;
     }
 
     public void updateUI(final ListView view, final ArrayAdapter<?> adapter, Activity parent) {
@@ -190,6 +208,7 @@ public class TradeController {
      * NOTE: This runs slowly because the server needs to update before the UI updates
      *
      * @param trade the trade to be removed from the database
+     *
      */
     public void deleteTrade(final Activity parent, final Trade trade) {
         Thread t = new Thread(new Runnable() {
@@ -200,7 +219,7 @@ public class TradeController {
                     saver.removeTrade(trade.getTradeID().toString());
                     // Wait for the server to remove the trade
                     Thread.sleep(1500);
-                    getTradeList(parent);
+                    getTradeList(parent, (ListView) parent.findViewById(R.id.inProgressTradeListView),(ListView) parent.findViewById(R.id.completedTradesListView));
                 } catch (IOException e) {
                     e.printStackTrace();
                     return;

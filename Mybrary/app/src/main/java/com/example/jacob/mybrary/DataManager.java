@@ -75,8 +75,8 @@ public class DataManager {
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean removeBook(String id) throws IOException {
+        FileManager.getInstance().removeFile("Books/" + id);
         if (ConnectionManager.getInstance().isConnected()) {
-            FileManager.getInstance().removeFile("Books/" + id);
             String result = ConnectionManager.getInstance().remove("Books/" + id);
             return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Books\",\"_id\":\"" + id);
         } else {
@@ -139,7 +139,7 @@ public class DataManager {
         if (ConnectionManager.getInstance().isConnected()) {
             result = ConnectionManager.getInstance().put(path, json);
         }
-        fm.saveJson("Books/" + user.getUUID().toString(), json);
+        fm.saveJson("Users/" + user.getUUID().toString(), json);
         //TODO: Add better verification.
         return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + user.getUUID().toString());
     }
