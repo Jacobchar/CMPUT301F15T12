@@ -50,9 +50,32 @@ public class DataManager {
         FileManager.getInstance().saveJson("localUser.json", userjson);
     }
 
-    public void pushOfflineItems() {
+    public void pushOfflineItems() throws IOException {
         if (ConnectionManager.getInstance().isConnected()) {
+            FileManager fm = FileManager.getInstance();
+            ConnectionManager cm = ConnectionManager.getInstance();
+
             //Go through the offline folders and push any items found.
+            File bookDir = new File(fm.getAppFolderName() + "Offline/Books");
+            for (File book : bookDir.listFiles()) {
+                String id = book.getName();
+                String json = fm.readFile(book);
+                cm.put("Books/" + id, json);
+            }
+
+            File tradeDir = new File(fm.getAppFolderName() + "Offline/Trades");
+            for (File trade : tradeDir.listFiles()) {
+                String id = trade.getName();
+                String json = fm.readFile(trade);
+                cm.put("Trades/" + id, json);
+            }
+
+            File photoDir = new File(fm.getAppFolderName() + "Offline/Photos");
+            for (File photo : photoDir.listFiles()) {
+                String id = photo.getName();
+                String json = fm.readFile(photo);
+                cm.put("Photos/" + id, json);
+            }
         }
     }
 
