@@ -13,7 +13,7 @@ public class PhotoTest extends ActivityInstrumentationTestCase2 {
 
 
     private Integer size = 100;
-    private String format = "JPEG";
+    private String format = "Bitmap";
     private String encodedImage = "This is so encoded";
     private UUID photoID; // = test.fromString("test");
 
