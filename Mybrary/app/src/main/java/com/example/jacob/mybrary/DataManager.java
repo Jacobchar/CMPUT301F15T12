@@ -82,6 +82,10 @@ public class DataManager {
      */
     public Boolean removeBook(String id) throws IOException {
         FileManager.getInstance().removeFile("Books/" + id);
+
+        //Every time a book is deleted, the local user has changed.
+        saveLocalUser();
+
         if (ConnectionManager.getInstance().isConnected()) {
             String result = ConnectionManager.getInstance().remove("Books/" + id);
             return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Books\",\"_id\":\"" + id);
