@@ -1,5 +1,6 @@
 package com.example.jacob.mybrary;
 
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
 import java.io.IOException;
@@ -21,11 +22,10 @@ import java.util.UUID;
  *
  */
 
+
 public class Inventory implements Serializable {
 
     private ArrayList<Book> inventoryList = new ArrayList<Book>();
-    private ArrayList observers;
-    private DataManager dataManager;
 
     /**
      * Grab a user's full inventory.
@@ -43,7 +43,12 @@ public class Inventory implements Serializable {
     public void addBook(final Book book) {
 
         inventoryList.add(book);
-        //dataManager.storeBook(book);
+        try {
+            DataManager dataManager = new DataManager();
+            dataManager.storeBook(book);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
 
 
     }
@@ -112,12 +117,13 @@ public class Inventory implements Serializable {
 
         inventoryList.remove(book);
 
-        /*
+
         try {
+            DataManager dataManager = new DataManager();
             dataManager.removeBook(book.getItemID().toString());
         } catch (IOException e){
-
-        }*/
+            e.printStackTrace();
+        }
 
         return true;
 
@@ -136,15 +142,15 @@ public class Inventory implements Serializable {
         if (book == null) return false;
 
         inventoryList = getBooks();
-
         inventoryList.remove(book);
 
-        /*
+
         try {
+            DataManager dataManager = new DataManager();
             dataManager.removeBook(book.getItemID().toString());
         } catch (IOException e){
-
-        }*/
+            e.printStackTrace();
+        }
 
         return true;
 

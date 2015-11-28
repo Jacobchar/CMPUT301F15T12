@@ -15,7 +15,7 @@ import java.util.UUID;
  * the User's inventory, and a unique User id generated on creation.
  *
  */
-public class User implements Parcelable, Comparable{
+public class User implements Parcelable, Comparable {
     private String name;
     private String emailAddress;
     private String phoneNumber;
