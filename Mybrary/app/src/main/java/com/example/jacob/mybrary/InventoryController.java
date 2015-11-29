@@ -2,6 +2,7 @@ package com.example.jacob.mybrary;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -48,55 +49,74 @@ public class InventoryController {
         final String query = "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"name\",\"query\":\"" + name + "*\"}}}";
 
         ConnectionManager.getInstance().updateConnectivity(activity);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ArrayList<Book> queryVal = dataManager.searchBooks(query);
-                    Iterator<Book> iterator = queryVal.iterator();
-                    while (iterator.hasNext()){
-                        returnVal.add(iterator.next());
-                    }
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+        new runQuery().execute(query);
 
-            }
-        });
-        thread.start();
+    }
 
+    private class runQuery extends AsyncTask<String, Void, ArrayList<Book>> {
 
+        @Override
+        protected ArrayList<Book> doInBackground(String... query) {
 
-        if (returnVal.size() == 0){
-
-            // no books returned
-
-        } else {
-            // grab all the UUIDs of my friends
-            ArrayList<User> friends = LocalUser.getInstance().getFriendsList().getUsers();
-
-            Iterator<Book> bookIterator = returnVal.iterator();
-
-            boolean bookExists = false;
-            // check if book has an owner in my friends list
-            while (bookIterator.hasNext()) {
-                Iterator<User> iterator = friends.iterator();
-                while (iterator.hasNext()) {
-                    int i = bookIterator.next().getOwnerID().compareTo(iterator.next().getUUID());
-                    if (i == 0){
-                        bookExists = true;
-                        break;
-                    }
-                }
-                if (!bookExists){
-                    bookIterator.remove(); // will this remove it from just iterator or list too?
-                }
+            ArrayList<Book> returnVal = null;
+            try {
+                returnVal = dataManager.searchBooks(query[0]);
+            } catch (Exception e){
+                e.printStackTrace();
             }
 
-            // display final matches
+            if (returnVal.size() == 0){
 
+                return returnVal;
+
+            } else {
+                // grab all the UUIDs of my friends
+                ArrayList<User> friends = LocalUser.getInstance().getFriendsList().getUsers();
+
+                Iterator<Book> bookIterator = returnVal.iterator();
+
+                boolean bookExists = false;
+                UUID bookID = null;
+                UUID friendID = null;
+                UUID localUserID = LocalUser.getInstance().getUUID();
+
+                Book book = null;
+
+                // check if book has an owner in my friends list
+                while (bookIterator.hasNext()) {
+
+                    Iterator<User> iterator = friends.iterator();
+                    book = bookIterator.next();
+                    bookID = book.getOwnerID();
+
+                    int z = bookID.compareTo(localUserID);
+                    if (z != 0) { // make sure it's not YOUR book
+                        while (iterator.hasNext()) {
+                            friendID = iterator.next().getUUID();
+                            int i = bookID.compareTo(friendID);
+                            if (i == 0) {
+                                bookExists = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!bookExists){
+                        //returnVal.remove(book);
+                        bookIterator.remove();
+                    }
+                    bookExists = false;
+                }
+            }
+            return returnVal;
         }
 
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(ArrayList<Book> result) {
+            //Intent intent = new Intent(FriendsListActivity.this, ViewUserActivity.class);
+            //intent.putExtra("user", result);
+            //startActivity(intent);
+        }
     }
 
 
