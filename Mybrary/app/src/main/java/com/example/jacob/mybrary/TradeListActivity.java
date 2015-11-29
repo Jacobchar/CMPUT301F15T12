@@ -39,6 +39,8 @@ public class TradeListActivity extends AppCompatActivity {
 
         onLongClickListener(inProgressTradeListView);
         onLongClickListener(completedTradeListView);
+        onClickListener(inProgressTradeListView);
+        onClickListener(completedTradeListView);
     }
 
     public void onLongClickListener(final ListView view){
@@ -49,26 +51,15 @@ public class TradeListActivity extends AppCompatActivity {
                 final Trade trade = (Trade) view.getItemAtPosition(pos);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(TradeListActivity.this);
-                builder.setMessage("View or Delete the Trade?");
+                builder.setMessage("Delete this trade?");
                 builder.setCancelable(true);
-                builder.setPositiveButton("View", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(TradeListActivity.this, ViewIndividualTradeActivity.class);
-                        // http://stackoverflow.com/questions/2965109/passing-data-between-activities-in-android
-                        // Answered by Pentium10
-                        intent.putExtra("currentTrade", trade.getTradeID());
-                        startActivity(intent);
-                        dialog.cancel();
-                    }
-                });
-                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         controller.deleteTrade(TradeListActivity.this, trade);
                         dialog.cancel();
                     }
                 });
-
-                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -80,6 +71,23 @@ public class TradeListActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onClickListener(final ListView view){
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Trade trade = (Trade) parent.getItemAtPosition(position);
+                Intent intent = new Intent(TradeListActivity.this, ViewIndividualTradeActivity.class);
+                // http://stackoverflow.com/questions/2965109/passing-data-between-activities-in-android
+                // Answered by Pentium10
+                intent.putExtra("currentTrade", trade.getTradeID());
+                startActivity(intent);
+            }
+
+        });
+    }
+
+
 
 
     public AlertDialog getAlertDialog(){

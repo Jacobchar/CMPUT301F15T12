@@ -190,7 +190,7 @@ public class TradeController {
             @Override
             public void run() {
                 try {
-                    ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*.myUUID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}");
+                    ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*ID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}");
                     ArrayList<Trade> completeTrades = new ArrayList<>();
                     for(Trade trade:occuredTrades){
                         if(trade.isComplete()){
