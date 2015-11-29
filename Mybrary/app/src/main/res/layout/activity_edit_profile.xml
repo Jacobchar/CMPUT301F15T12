@@ -137,6 +137,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:onClick="setUser"
-        android:background="@drawable/button_corners"/>
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle"/>
 
 </RelativeLayout>

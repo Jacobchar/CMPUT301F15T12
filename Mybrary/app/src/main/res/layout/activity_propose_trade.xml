@@ -46,7 +46,6 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Send Request"
@@ -54,7 +53,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="sendRequestButton"
-        android:background="@drawable/button_corners" />
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle" />
+    <!--style="?android:attr/buttonStyleSmall"-->
 
     <ListView
         android:layout_width="wrap_content"
@@ -67,7 +68,6 @@
         android:layout_below="@+id/theirItemsTitleView" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Yours"
@@ -75,10 +75,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:onClick="addYourOfferButton"
-        android:background="@drawable/button_corners" />
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle" />
+    <!--style="?android:attr/buttonStyleSmall"-->
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Theirs"
@@ -86,7 +87,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:onClick="addTheirOfferButton"
-        android:background="@drawable/button_corners" />
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle" />
+    <!--style="?android:attr/buttonStyleSmall"-->
 
 </RelativeLayout>
 

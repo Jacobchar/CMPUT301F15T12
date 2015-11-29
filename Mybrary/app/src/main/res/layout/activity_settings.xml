@@ -16,7 +16,8 @@
         android:layout_alignParentStart="true"
         android:textSize="25dp"
         android:onClick="openEditProfileActivity"
-        android:background="@drawable/button_corners"/>
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle"/>
 
     <CheckBox
         android:layout_width="match_parent"

@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Capture"
         android:id="@+id/captureButton"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_gravity="center_horizontal|bottom"
+        style="@style/ButtonStyle" />
 
 </FrameLayout>

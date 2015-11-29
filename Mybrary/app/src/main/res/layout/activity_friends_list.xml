@@ -27,7 +27,8 @@
         android:layout_marginBottom="34dp"
         android:layout_width="230dp"
         android:onClick="addNewFriend"
-        android:background="@drawable/button_corners"/>
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle"/>
 
     <ListView
         android:layout_width="wrap_content"

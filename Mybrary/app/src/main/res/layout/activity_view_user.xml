@@ -164,6 +164,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="showInventory"
-        android:background="@drawable/button_corners"/>
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle"/>
 
 </RelativeLayout>

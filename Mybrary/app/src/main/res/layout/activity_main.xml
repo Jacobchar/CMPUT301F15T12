@@ -16,7 +16,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:onClick="openProfileActivity"
-        android:background="@drawable/button_corners"/>
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle"/>
 
     <Button
         android:layout_width="230dp"
@@ -27,7 +28,8 @@
         android:layout_alignStart="@+id/profileViewButton"
         android:onClick="openInventoryActivity"
         android:background="@drawable/button_corners"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        style="@style/ButtonStyle" />
 
     <Button
         android:layout_width="230dp"
@@ -38,7 +40,8 @@
         android:layout_below="@+id/InventoryViewButton"
         android:layout_alignStart="@+id/InventoryViewButton"
         android:background="@drawable/button_corners"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        style="@style/ButtonStyle" />
 
     <Button
         android:layout_width="230dp"
@@ -49,7 +52,8 @@
         android:layout_alignStart="@+id/FriendsListViewButton"
         android:layout_marginTop="15dp"
         android:background="@drawable/button_corners"
-        android:onClick="openTradeListActivity" />
+        android:onClick="openTradeListActivity"
+        style="@style/ButtonStyle" />
 
 
     <Button
@@ -61,7 +65,8 @@
         android:layout_alignStart="@+id/TradeViewButton"
         android:layout_marginTop="15dp"
         android:background="@drawable/button_corners"
-        android:onClick="openTopTradersActivity" />
+        android:onClick="openTopTradersActivity"
+        style="@style/ButtonStyle" />
 
     <Button
         android:layout_width="230dp"
@@ -72,7 +77,8 @@
         android:layout_below="@+id/TopTradersViewButton"
         android:layout_alignStart="@+id/TopTradersViewButton"
         android:background="@drawable/button_corners"
-        android:layout_marginTop="15dp" />
+        android:layout_marginTop="15dp"
+        style="@style/ButtonStyle" />
 
     <TextView
         android:layout_width="wrap_content"

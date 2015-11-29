@@ -110,7 +110,9 @@
                 android:id="@+id/uploadButton"
                 android:onClick="takePhoto"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_corners" />
+                android:background="@drawable/button_corners"
+                style="@style/ButtonStyle"
+                android:layout_margin="3dp" />
 
             <Button
                 android:layout_width="150dp"
@@ -119,7 +121,9 @@
                 android:id="@+id/SaveNewBookButton"
                 android:onClick="saveNewBookInfo"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/button_corners"/>
+                android:background="@drawable/button_corners"
+                style="@style/ButtonStyle"
+                android:layout_margin="3dp" />
 
 
         </LinearLayout>

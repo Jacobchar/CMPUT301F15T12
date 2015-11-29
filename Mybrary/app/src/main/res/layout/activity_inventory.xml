@@ -29,7 +29,6 @@
         android:layout_above="@+id/searchButton" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search Friends Inventories"
@@ -38,10 +37,11 @@
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/inventoryListView"
         android:layout_toEndOf="@+id/inventoryTitleView"
-        android:background="@drawable/button_corners" />
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle"/>
+    <!--style="?android:attr/buttonStyleSmall"-->
 
     <Button
-        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Item"
@@ -50,6 +50,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/inventoryTitleView"
-        android:background="@drawable/button_corners" />
+        android:background="@drawable/button_corners"
+        style="@style/ButtonStyle"/>
+    <!--style="?android:attr/buttonStyleSmall"-->
 
 </RelativeLayout>
