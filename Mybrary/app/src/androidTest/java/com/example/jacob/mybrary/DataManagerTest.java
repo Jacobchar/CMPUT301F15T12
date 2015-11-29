@@ -60,7 +60,7 @@ public class DataManagerTest extends AndroidTestCase {
         }
     }
 
-    public void testSearchBooks() {
+    public void testSearchBooksOnline() {
         try {
             ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
@@ -118,6 +118,7 @@ public class DataManagerTest extends AndroidTestCase {
 
             assertFalse(dataManager.storeBook(book));
             assertTrue(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
+            assertTrue(FileManager.getInstance().fileExists("Offline/Books/" + book.getItemID().toString()));
 
             dataManager.removeBook(book.getItemID().toString());
         } catch (Exception e) {
@@ -347,8 +348,9 @@ public class DataManagerTest extends AndroidTestCase {
 
             assertFalse(dataManager.storeTrade(trade));
             assertTrue(FileManager.getInstance().fileExists("Trades/" + trade.getTradeID().toString()));
+            assertTrue(FileManager.getInstance().fileExists("Offline/Trades/" + trade.getTradeID().toString()));
 
-            dataManager.removeBook(trade.getTradeID().toString());
+            dataManager.removeTrade(trade.getTradeID().toString());
         } catch (Exception e) {
             fail();
         }
@@ -389,15 +391,74 @@ public class DataManagerTest extends AndroidTestCase {
 
 
     //=========================PHOTOS===============================
-    public void testPutPhoto() {
+    public void testPutPhotoOnline() {
         try {
-            UUID photoID = new UUID(0xAAAAAAAA, 0x99999999);
+            ConnectionManager.getInstance().setDebugOnline();
+            UUID photoID = UUID.randomUUID();
             DataManager dataManager = DataManager.getInstance();
             Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
 
-            if(!dataManager.storePhoto(photo)) {
-                assertTrue(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
+            assertTrue(dataManager.storePhoto(photo));
+            //assertTrue(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
+
+            dataManager.removePhoto(photo.getPhotoID().toString());
+        } catch (Exception e) {
+            fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
+        }
+    }
+
+    public void testGetPhotoOnline() {
+        try {
+            ConnectionManager.getInstance().setDebugOnline();
+            UUID photoID = UUID.randomUUID();
+            DataManager dataManager = DataManager.getInstance();
+            Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
+
+            if (!dataManager.storePhoto(photo)) {
+                fail();
             }
+
+            Photo returnedPhoto = dataManager.retrieveOnlinePhoto(photo.getPhotoID().toString());
+
+            assertTrue(photo.equals(returnedPhoto));
+
+            dataManager.removePhoto(photo.getPhotoID().toString());
+        } catch (Exception e) {
+            fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
+        }
+    }
+
+    public void testRemovePhotoOnline() {
+        try {
+            ConnectionManager.getInstance().setDebugOnline();
+            UUID photoID = UUID.randomUUID();
+            DataManager dataManager = DataManager.getInstance();
+            Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
+
+            dataManager.storePhoto(photo);
+            assertTrue(dataManager.removePhoto(photo.getPhotoID().toString()));
+            //assertFalse(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
+        } catch (Exception e) {
+            fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
+        }
+    }
+
+    public void testPutPhotoOffline() {
+        try {
+            ConnectionManager.getInstance().setDebugOffline();
+            UUID photoID = UUID.randomUUID();
+            DataManager dataManager = DataManager.getInstance();
+            Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
+
+            assertFalse(dataManager.storePhoto(photo));
+            assertTrue(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
+            assertTrue(FileManager.getInstance().fileExists("Offline/Photos/" + photo.getPhotoID().toString()));
 
             dataManager.removePhoto(photo.getPhotoID().toString());
         } catch (Exception e) {
@@ -405,15 +466,16 @@ public class DataManagerTest extends AndroidTestCase {
         }
     }
 
-    public void testGetPhoto() {
+    public void testGetPhotoOffline() {
         try {
-            UUID photoID = new UUID(0xAAAAAAAA, 0x99999999);
+            ConnectionManager.getInstance().setDebugOffline();
+            UUID photoID = UUID.randomUUID();
             DataManager dataManager = DataManager.getInstance();
             Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
 
-            dataManager.storePhoto(photo);
+            assertFalse(dataManager.storePhoto(photo));
 
-            Photo returnedPhoto = dataManager.retrievePhoto(photo.getPhotoID().toString());
+            Photo returnedPhoto = dataManager.retrieveCachedPhoto(photo.getPhotoID().toString());
 
             assertTrue(photo.equals(returnedPhoto));
 
@@ -423,16 +485,17 @@ public class DataManagerTest extends AndroidTestCase {
         }
     }
 
-    public void testRemovePhoto() {
+    public void testRemovePhotoOffline() {
         try {
-            UUID photoID = new UUID(0xAAAAAAAA, 0x99999999);
+            ConnectionManager.getInstance().setDebugOffline();
+            UUID photoID = UUID.randomUUID();
             DataManager dataManager = DataManager.getInstance();
             Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
 
-            dataManager.storePhoto(photo);
-            if(!dataManager.removePhoto(photo.getPhotoID().toString())) {
-                assertFalse(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
-            }
+            assertFalse(dataManager.storePhoto(photo));
+
+            assertFalse(dataManager.removePhoto(photo.getPhotoID().toString()));
+            assertFalse(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
         } catch (Exception e) {
             fail();
         }
