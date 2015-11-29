@@ -102,7 +102,7 @@
 
 
             <Button
-                android:layout_width="124dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="Take Photo"
                 android:id="@+id/uploadButton"
@@ -110,8 +110,8 @@
                 android:layout_gravity="center_horizontal" />
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
                 android:text="Save Changes"
                 android:id="@+id/SaveNewBookButton"
                 android:onClick="saveNewBookInfo"

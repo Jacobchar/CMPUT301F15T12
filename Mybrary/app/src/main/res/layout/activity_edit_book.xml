@@ -101,6 +101,22 @@
                 android:layout_toEndOf="@+id/genderTitleView" />
 
 
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Take Photo"
+                android:id="@+id/uploadButton"
+                android:onClick="takePhoto"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Save Changes"
+                android:id="@+id/saveEditBookButton"
+                android:onClick="saveNewBookInfo"
+                android:layout_gravity="center_horizontal"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
@@ -109,14 +125,6 @@
                 android:id="@+id/tmp"
                 android:layout_below="@+id/genderTextView"
                 android:layout_alignParentStart="true" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:text="Save Changes"
-                android:id="@+id/saveEditBookButton"
-                android:onClick="saveNewBookInfo"
-                android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
 
