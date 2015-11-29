@@ -2,6 +2,7 @@ package com.example.jacob.mybrary;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +25,7 @@ public class AddNewItem extends AppCompatActivity {
     private InventoryController inventoryController = new InventoryController();
     private ConnectionManager connectionManager = ConnectionManager.getInstance();
     private Activity activity;
+    private Camera mCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,13 @@ public class AddNewItem extends AppCompatActivity {
 
     }
 
+    public void takePhoto(View view) {
+
+        Intent intent = new Intent(this, CameraActivity.class);
+        startActivity(intent);
+        //Upload the photo
+    }
+
     public TextView getNameText(){
         return (TextView) findViewById(R.id.nameEditView);
     }
@@ -102,6 +111,7 @@ public class AddNewItem extends AppCompatActivity {
     @Override
     public void onPause(){
         super.onPause();
+
         connectionManager.updateConnectivity(activity);
         Thread thread = new Thread(new Runnable() {
             @Override

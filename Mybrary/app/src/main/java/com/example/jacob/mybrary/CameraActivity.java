@@ -15,6 +15,7 @@ public class CameraActivity extends AppCompatActivity {
     private Camera mCamera = null;
     private CameraView mCameraView = null;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
@@ -40,5 +41,4 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
     }
-
 }

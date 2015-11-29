@@ -92,6 +92,7 @@ public class EditBookActivity extends AppCompatActivity {
     }
 
     public void takePhoto(View view) {
+
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
         //Upload the photo

@@ -207,9 +207,9 @@ public class DataManager {
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean removeUser(String id) throws IOException {
+        FileManager.getInstance().removeFile("Users/" + id);
         if (ConnectionManager.getInstance().isConnected()) {
             pushOfflineItems();
-            FileManager.getInstance().removeFile("Users/" + id);
             String result = ConnectionManager.getInstance().remove("Users/" + id);
             return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + id);
         } else {
@@ -266,9 +266,22 @@ public class DataManager {
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean storeTrade(Trade trade) throws IOException {
-        String json = GsonManager.getInstance().toJson(trade);
+        FileManager fm = FileManager.getInstance();
+        String result = "";
         String path = "Trades/" + trade.getTradeID().toString();
-        String result = ConnectionManager.getInstance().put(path, json);
+        String json = GsonManager.getInstance().toJson(trade);
+        if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
+            result = ConnectionManager.getInstance().put(path, json);
+        } else {
+            //Store for later
+            fm.saveJson("Offline/Trades/" + trade.getTradeID().toString(), json);
+        }
+        fm.saveJson("Trades/" + trade.getTradeID().toString(), json);
+
+        //Every time a trade is added, the local user has changed.
+        saveLocalUser();
+
         //TODO: Add better verification.
         return result.contains("{\"_index\":\"cmput301f15t12\",\"_type\":\"Trades\",\"_id\":\"" + trade.getTradeID().toString());
     }
@@ -280,8 +293,18 @@ public class DataManager {
      * @throws IOException Thrown if an error occurred during communication.
      */
     public Boolean removeTrade(String id) throws IOException {
-        String result = ConnectionManager.getInstance().remove("Trades/" + id);
-        return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Trades\",\"_id\":\"" + id);
+        FileManager.getInstance().removeFile("Trades/" + id);
+
+        //Every time a trade is deleted, the local user has changed.
+        saveLocalUser();
+
+        if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
+            String result = ConnectionManager.getInstance().remove("Trades/" + id);
+            return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Trades\",\"_id\":\"" + id);
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -292,10 +315,16 @@ public class DataManager {
      * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
      */
     public Trade retrieveTrade(String id) throws IOException, JSONException {
-        String result = ConnectionManager.getInstance().get("Trades/" + id);
-        JSONObject obj = new JSONObject(result);
-        String tradejson = obj.getJSONObject("_source").toString();
-        return GsonManager.getInstance().fromJson(tradejson, Trade.class);
+        if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
+            String result = ConnectionManager.getInstance().get("Trades/" + id);
+            JSONObject obj = new JSONObject(result);
+            String tradejson = obj.getJSONObject("_source").toString();
+            return GsonManager.getInstance().fromJson(tradejson, Trade.class);
+        } else {
+            String tradejson = FileManager.getInstance().readFile("Trades/" + id);
+            return GsonManager.getInstance().fromJson(tradejson, Trade.class);
+        }
     }
 
     /**
