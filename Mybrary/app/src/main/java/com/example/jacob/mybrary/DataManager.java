@@ -51,6 +51,10 @@ public class DataManager {
         FileManager.getInstance().saveJson("localUser.json", userjson);
     }
 
+    /**
+     * Pushes all items that were made while offline onto the server.
+     * @throws IOException Thrown if an error occurred during communication.
+     */
     public void pushOfflineItems() throws IOException {
         if (ConnectionManager.getInstance().isConnected()) {
             FileManager fm = FileManager.getInstance();

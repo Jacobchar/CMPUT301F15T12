@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/tan_dark"
+    android:background="@color/background_color"
     tools:context="com.example.jacob.mybrary.TradeListActivity">
 
 <TextView
@@ -21,7 +21,7 @@
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceSmall"
     android:text="Trades in Progress"
-    android:background="@color/tan_light"
+    android:background="@color/secondary_color"
     android:id="@+id/inProgressTradeTitleView"
     android:layout_below="@+id/tradesTitleView"
     android:layout_alignParentStart="true" />
@@ -34,7 +34,7 @@
     android:layout_alignParentStart="true"
     android:layout_below="@+id/inProgressTradeTitleView"
     android:layout_alignParentEnd="true"
-    android:background="@color/tan_light"
+    android:background="@color/secondary_color"
     android:layout_above="@+id/completedTradesListView" />
 
 <TextView
@@ -42,7 +42,7 @@
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceSmall"
     android:text="Completed Trades"
-    android:background="@color/tan_light"
+    android:background="@color/secondary_color"
     android:id="@+id/completedTradesTextView"
     android:layout_centerVertical="true"
     android:layout_alignParentStart="true" />
@@ -51,7 +51,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="New Text"
-    android:background="@color/tan_light"
+    android:background="@color/secondary_color"
     android:id="@+id/completedTradesListView"
     android:layout_alignParentStart="true"
     android:layout_alignParentEnd="true"

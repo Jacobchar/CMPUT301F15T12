@@ -1,4 +1,7 @@
 <resources>
+    <color name="background_color">#c0c0c0</color>
+    <color name="secondary_color">#a0a0a0</color>
+
     <string name="app_name">Mybrary</string>
 
     <string name="hello_world">Hello world!</string>
