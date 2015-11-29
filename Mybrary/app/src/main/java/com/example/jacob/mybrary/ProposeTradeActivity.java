@@ -77,7 +77,7 @@ public class ProposeTradeActivity extends AppCompatActivity {
                 builder.setCancelable(true);
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        tradeController.changeOffer(tradeID, book, callingView, false);
+                        tradeController.changeOffer(ProposeTradeActivity.this,tradeID, book, callingView, false);
                         yourTradeOffer = (ListView) findViewById(R.id.yourItemsListView);
                         theirTradeOffer = (ListView) findViewById(R.id.theirItemsListView);
                         tradeController.getCurrentTradeOffer(ProposeTradeActivity.this,currentTrade,yourTradeOffer,theirTradeOffer);
@@ -97,7 +97,7 @@ public class ProposeTradeActivity extends AppCompatActivity {
     }
 
     public void sendRequestButton(View v){
-        tradeController.setAcceptedStatus(true,currentTrade, true);
+        tradeController.setAcceptedStatus(this,true,currentTrade, true);
         Toast.makeText(this,"Trade offer sent",Toast.LENGTH_SHORT).show();
         finish();
     }

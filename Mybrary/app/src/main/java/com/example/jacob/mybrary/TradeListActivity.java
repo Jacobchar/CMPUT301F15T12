@@ -18,7 +18,7 @@ public class TradeListActivity extends AppCompatActivity {
     private ListView completedTradeListView;
     private AlertDialog alert;
 
-    TradeController controller = new TradeController();
+    private TradeController controller = new TradeController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

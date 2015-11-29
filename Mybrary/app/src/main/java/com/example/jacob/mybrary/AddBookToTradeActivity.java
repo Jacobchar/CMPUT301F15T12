@@ -37,7 +37,7 @@ public class AddBookToTradeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long id) {
 
                 final Book book = (Book) view.getItemAtPosition(pos);
-                controller.changeOffer(tradeID, book, offerToEdit,true);
+                controller.changeOffer(AddBookToTradeActivity.this,tradeID, book, offerToEdit,true);
                 finish();
             }
 

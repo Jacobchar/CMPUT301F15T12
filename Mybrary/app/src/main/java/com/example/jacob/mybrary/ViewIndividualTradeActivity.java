@@ -55,7 +55,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
             builder.setCancelable(true);
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    controller.setTradeComplete(currentTrade);
+                    controller.setTradeComplete(ViewIndividualTradeActivity.this,currentTrade);
                     dialog.cancel();
                 }
             });
@@ -78,15 +78,15 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     }
 
     public void acceptTradeButton(View v){
-        controller.setAcceptedStatus(true, currentTrade,false);
+        controller.setAcceptedStatus(this, true, currentTrade, false);
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        controller.sendAcceptedEmail(emailIntent, currentTrade);
+        controller.sendAcceptedEmail(this, emailIntent, currentTrade);
         startActivity(Intent.createChooser(emailIntent, "Send Trade Info"));
 
     }
 
     public void declineTradeButton(View v){
-        controller.setAcceptedStatus(false,currentTrade,false);
+        controller.setAcceptedStatus(this,false,currentTrade,false);
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewIndividualTradeActivity.this);
         builder.setMessage("Would you like to create a counter offer?");
         builder.setCancelable(true);

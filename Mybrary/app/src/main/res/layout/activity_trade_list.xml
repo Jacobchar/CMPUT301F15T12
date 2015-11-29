@@ -31,11 +31,10 @@
     android:layout_height="wrap_content"
     android:text="New Text"
     android:id="@+id/inProgressTradeListView"
-    android:layout_alignParentStart="true"
-    android:layout_below="@+id/inProgressTradeTitleView"
-    android:layout_alignParentEnd="true"
     android:background="@color/tan_light"
-    android:layout_above="@+id/completedTradesListView" />
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginBottom="303dp" />
 
 <TextView
     android:layout_width="wrap_content"
@@ -53,7 +52,6 @@
     android:text="New Text"
     android:background="@color/tan_light"
     android:id="@+id/completedTradesListView"
-    android:layout_alignParentStart="true"
-    android:layout_alignParentEnd="true"
-    android:layout_below="@+id/completedTradesTextView" />
+    android:layout_below="@+id/completedTradesTextView"
+    android:layout_alignParentStart="true" />
 </RelativeLayout>

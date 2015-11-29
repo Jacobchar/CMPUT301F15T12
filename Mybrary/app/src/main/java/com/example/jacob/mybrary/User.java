@@ -168,6 +168,11 @@ public class User implements Parcelable, Comparable {
     }
 
     @Override
+    public String toString(){
+        return this.getName() + " has " + this.getSuccTrades() + " trade(s).";
+    }
+
+    @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (emailAddress != null ? emailAddress.hashCode() : 0);
@@ -243,7 +248,7 @@ public class User implements Parcelable, Comparable {
     public int compareTo(Object o) {
         if (o.getClass().equals(User.class)){
             User user = (User) o;
-            return succTrades - user.getSuccTrades();
+            return this.getSuccTrades()-user.getSuccTrades();
         }
         return 0;
     }
