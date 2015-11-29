@@ -97,7 +97,7 @@ public class ProposeTradeActivity extends AppCompatActivity {
     }
 
     public void sendRequestButton(View v){
-        tradeController.setAcceptedStatus(true,currentTrade);
+        tradeController.setAcceptedStatus(true,currentTrade, true);
         Toast.makeText(this,"Trade offer sent",Toast.LENGTH_SHORT).show();
         finish();
     }

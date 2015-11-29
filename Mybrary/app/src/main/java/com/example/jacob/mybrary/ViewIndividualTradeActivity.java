@@ -78,7 +78,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     }
 
     public void acceptTradeButton(View v){
-        controller.setAcceptedStatus(true, currentTrade);
+        controller.setAcceptedStatus(true, currentTrade,false);
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         controller.sendAcceptedEmail(emailIntent, currentTrade);
         startActivity(Intent.createChooser(emailIntent, "Send Trade Info"));
@@ -86,7 +86,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     }
 
     public void declineTradeButton(View v){
-        controller.setAcceptedStatus(false,currentTrade);
+        controller.setAcceptedStatus(false,currentTrade,false);
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewIndividualTradeActivity.this);
         builder.setMessage("Would you like to create a counter offer?");
         builder.setCancelable(true);
