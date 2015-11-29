@@ -60,13 +60,26 @@ public class FileManager {
 
     /**
      * Loads the file's json element
-     * @param path the path of the file to be loaded.
+     * @param path the path (relative to the app directory) of the file to be loaded.
      * @return Returns the string found in the given file.
      */
     public String readFile(String path) throws IOException {
         StringBuilder rv = new StringBuilder();
         String line;
         FileReader reader = new FileReader(appFolderName + path);
+        BufferedReader in = new BufferedReader(reader);
+        while ((line = in.readLine()) != null) {
+            rv.append(line);
+        }
+        in.close();
+        reader.close();
+        return rv.toString();
+    }
+
+    public String readFile(File file) throws IOException {
+        StringBuilder rv = new StringBuilder();
+        String line;
+        FileReader reader = new FileReader(file);
         BufferedReader in = new BufferedReader(reader);
         while ((line = in.readLine()) != null) {
             rv.append(line);

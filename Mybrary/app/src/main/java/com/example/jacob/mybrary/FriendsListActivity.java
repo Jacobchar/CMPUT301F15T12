@@ -29,45 +29,23 @@ public class FriendsListActivity extends AppCompatActivity {
     private FriendListController friendListController = new FriendListController();
     LocalUser localUser = LocalUser.getInstance();
     DataManager dataManager = DataManager.getInstance();
+    private AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
+//        listView.setClickable(true);
 
         fillFriendsList();
 
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+    }
 
-                final String name = (String) listView.getItemAtPosition(pos);
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(FriendsListActivity.this);
-                builder.setMessage("Unfriend " + name + "?");
-                builder.setCancelable(true);
-                builder.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Delete friend from friendlist object
-
-                        friendListController.removeFriend(name, FriendsListActivity.this);
-
-                        //adapter.notifyDataSetChanged();
-                        dialog.cancel();
-                    }
-                });
-
-                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-                listAdapter.notifyDataSetChanged();
-                infoDialog = builder.create();
-                infoDialog.show();
-                return true;
-            }
-        });
+    @Override
+    public void onResume(){
+        super.onResume();
+        onLongClickListener(listView);
+        fillFriendsList();
     }
 
     @Override
@@ -92,16 +70,51 @@ public class FriendsListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void onLongClickListener(final ListView view){
+        view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
+
+                final String name = (String) view.getItemAtPosition(pos);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(FriendsListActivity.this);
+                builder.setMessage("Unfriend " + name + "?");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        friendListController.removeFriend(name, FriendsListActivity.this);
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                alert = builder.create();
+                alert.show();
+                return true;
+            }
+        });
+    }
+
+    public void onClickListener(final ListView view){
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final String name = (String) parent.getItemAtPosition(position);
+                //todo - call controller to start new intent
+            }
+
+        });
+    }
 
     public void fillFriendsList(){
         listView = (ListView) findViewById(R.id.listView);
-        ArrayList<String> friends = localUser.getFriendsList().getNames();
-
-        //= new String[] {"Dominieque", "Jackylnn", "Victor", "Betty", "Daphne"};
-
-        listAdapter = new ArrayAdapter<String>(this, R.layout.simple_list_item, friends);
-        listView.setAdapter(listAdapter);
-        listAdapter.notifyDataSetChanged();
+        //ArrayList<String> friends = localUser.getFriendsList().getNames();
+        friendListController.updateFriendList(this, listView, FriendsListActivity.this);
      }
 
     public void deleteFriend(){
@@ -125,18 +138,8 @@ public class FriendsListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         String username = input.getText().toString();
-
-
                         //Add friend on separate thread
                         friendListController.addNewFriend(username, FriendsListActivity.this);
-
-                        try {
-                            dataManager.saveLocalUser();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        listAdapter.notifyDataSetChanged();
                     }
                 });
 
@@ -147,7 +150,7 @@ public class FriendsListActivity extends AppCompatActivity {
                         dialogInterface.cancel();
                     }
                 });
-
+        fillFriendsList();
         infoDialog.show();
 
     }

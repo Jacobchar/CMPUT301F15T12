@@ -18,8 +18,6 @@ import java.util.UUID;
  */
 public class FriendsList implements Parcelable{
     private Collection<UUID> friendList;
-    DataManager dataManager = DataManager.getInstance();
-
     FriendsList(){
         friendList = new ArrayList<>();
     }
@@ -85,6 +83,7 @@ public class FriendsList implements Parcelable{
      * @return ArrayList of users
      */
     public ArrayList<User> getUsers(){
+        DataManager dataManager = DataManager.getInstance();
         ArrayList<User> userList = new ArrayList<>();
         for (UUID uuid : friendList){
             try {
