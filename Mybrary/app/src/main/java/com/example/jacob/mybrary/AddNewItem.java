@@ -61,7 +61,7 @@ public class AddNewItem extends AppCompatActivity {
             book.setCategory(categorySpinner.getSelectedItem().toString().trim());
 
         CheckBox c = (CheckBox) findViewById(R.id.shareEditView);
-        if (c.isEnabled()){
+        if (c.isChecked()){
             book.setSharedWithOthers(true);
         } else {
             book.setSharedWithOthers(false);

@@ -78,7 +78,7 @@ public class EditBookActivity extends AppCompatActivity {
                 book.addNewComment(t.getText().toString());
 
             CheckBox c = (CheckBox) findViewById(R.id.shareEditView);
-            if (c.isEnabled()) {
+            if (c.isChecked()) {
                 book.setSharedWithOthers(true);
             } else {
                 book.setSharedWithOthers(false);
