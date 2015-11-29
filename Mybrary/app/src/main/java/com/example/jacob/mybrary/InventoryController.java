@@ -176,9 +176,16 @@ public class InventoryController {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(ArrayList<Book> returnVal) {
+
+            Inventory inventory = new Inventory();
+            inventory.convertFriendsArrayListToInventory(returnVal);
+
             Intent intent = new Intent(localActivity, ViewGivenInventoryActivity.class);
-            intent.putExtra("inventory", returnVal);
+            intent.putExtra("title", "Search Results");
+            intent.putExtra("inventory", inventory);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             localContext.startActivity(intent);
+
         }
     }
 

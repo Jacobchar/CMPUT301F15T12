@@ -54,6 +54,7 @@ public class Inventory implements Serializable {
 
     }
 
+
     /**
      * Get the size of your inventory.
      * Note: number of unique books, not total copies of all books
@@ -192,6 +193,13 @@ public class Inventory implements Serializable {
         }
 
         return false;
+    }
+
+    public void convertFriendsArrayListToInventory(ArrayList<Book> arrayList){
+        Iterator<Book> iterator = arrayList.iterator();
+        while(iterator.hasNext()) {
+            inventoryList.add(iterator.next());
+        }
     }
 
 }

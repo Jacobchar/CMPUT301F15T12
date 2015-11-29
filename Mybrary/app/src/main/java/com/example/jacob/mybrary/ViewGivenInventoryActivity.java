@@ -9,16 +9,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.UUID;
 
 public class ViewGivenInventoryActivity extends AppCompatActivity {
 
     private InventoryController inventoryController = new InventoryController();
-    private Activity activity;
     private ListView inventoryListView;
+    private TextView titleEditText;
     private Inventory inventory;
+    private Activity activity;
+    private String activityTitle = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,13 @@ public class ViewGivenInventoryActivity extends AppCompatActivity {
 
         if( bundle != null) {
             inventory = (Inventory) bundle.getSerializable("inventory");
+            activityTitle = (String) bundle.getSerializable("title");
         }
 
         inventoryListView = (ListView) findViewById(R.id.givenInventoryListView);
+        titleEditText = (TextView) findViewById(R.id.givenInventoryTitleView);
+        titleEditText.setText(activityTitle);
+
         activity = this;
 
         Thread thread = new Thread(new Runnable() {

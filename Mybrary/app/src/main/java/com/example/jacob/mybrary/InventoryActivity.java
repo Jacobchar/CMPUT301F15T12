@@ -113,28 +113,29 @@ public class InventoryActivity extends AppCompatActivity {
     public void searchInventory(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
-        builder.setMessage("Search for a book!");
+        builder.setMessage("Input a Book Name or Category:");
         builder.setCancelable(true);
 
         final EditText searchParam = new EditText(InventoryActivity.this);
         searchParam.setInputType(InputType.TYPE_CLASS_TEXT);
-        searchParam.setHint("Type the first few letters to find all partial matches");
+        searchParam.setHint("Type 'a' for all results like a*");
         builder.setView(searchParam);
 
-        builder.setPositiveButton("Search By Book Name", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Search By Name", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 inventoryController.searchForBookByName(searchParam.getText().toString(), activity, getApplicationContext());
                 dialog.cancel();
             }
         });
-        builder.setNegativeButton("Search By Book Category", new DialogInterface.OnClickListener() {
+
+        builder.setNeutralButton("Search By Category", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 inventoryController.searchForBookByCategory(searchParam.getText().toString(), activity, getApplicationContext());
                 dialog.cancel();
             }
         });
 
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.cancel();
             }
@@ -168,25 +169,6 @@ public class InventoryActivity extends AppCompatActivity {
 
         inventoryController.refreshList();
         inventoryController.fillInventory(activity, inventoryListView);
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        connectionManager.updateConnectivity(activity);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DataManager dataManager = DataManager.getInstance();
-                try {
-                    dataManager.saveLocalUser();
-                } catch (IOException e){
-                    e.printStackTrace();
-                }
-
-            }
-        });
-        thread.start();
     }
 
 }
