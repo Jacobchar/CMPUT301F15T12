@@ -14,6 +14,7 @@ import java.io.IOException;
  * This class helps us instantiate the camera, most of the code involving the camera was taken from:
  * http://blog.rhesoft.com/2015/04/02/tutorial-how-to-use-camera-with-android-and-android-studio/
  * The above link is to the tutorial that walked us through using the camera in our app.
+ *
  */
 public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
 
