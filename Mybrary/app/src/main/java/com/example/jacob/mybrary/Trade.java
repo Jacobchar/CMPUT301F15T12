@@ -152,4 +152,40 @@ public class Trade {
     public void setIsComplete(Boolean isComplete) {
         this.isComplete = isComplete;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Trade trade = (Trade) o;
+
+        if (user1 != null ? !user1.equals(trade.user1) : trade.user1 != null) return false;
+        if (user2 != null ? !user2.equals(trade.user2) : trade.user2 != null) return false;
+        if (user1Offer != null ? !user1Offer.equals(trade.user1Offer) : trade.user1Offer != null)
+            return false;
+        if (user2Offer != null ? !user2Offer.equals(trade.user2Offer) : trade.user2Offer != null)
+            return false;
+        if (user1Accepted != null ? !user1Accepted.equals(trade.user1Accepted) : trade.user1Accepted != null)
+            return false;
+        if (user2Accepted != null ? !user2Accepted.equals(trade.user2Accepted) : trade.user2Accepted != null)
+            return false;
+        if (isComplete != null ? !isComplete.equals(trade.isComplete) : trade.isComplete != null)
+            return false;
+        return !(tradeID != null ? !tradeID.equals(trade.tradeID) : trade.tradeID != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = user1 != null ? user1.hashCode() : 0;
+        result = 31 * result + (user2 != null ? user2.hashCode() : 0);
+        result = 31 * result + (user1Offer != null ? user1Offer.hashCode() : 0);
+        result = 31 * result + (user2Offer != null ? user2Offer.hashCode() : 0);
+        result = 31 * result + (user1Accepted != null ? user1Accepted.hashCode() : 0);
+        result = 31 * result + (user2Accepted != null ? user2Accepted.hashCode() : 0);
+        result = 31 * result + (isComplete != null ? isComplete.hashCode() : 0);
+        result = 31 * result + (tradeID != null ? tradeID.hashCode() : 0);
+        return result;
+    }
 }

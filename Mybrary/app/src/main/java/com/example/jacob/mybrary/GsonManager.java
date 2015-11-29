@@ -17,7 +17,7 @@ public class GsonManager {
 
     private static GsonManager instance = null;
 
-    protected GsonManager(){}
+    private GsonManager(){}
 
     /**
      * Creating as a Singleton
