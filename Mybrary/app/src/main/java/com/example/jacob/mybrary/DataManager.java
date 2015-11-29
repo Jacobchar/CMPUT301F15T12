@@ -366,6 +366,7 @@ public class DataManager {
      * @throws IOException Thrown if an error occurred during communication.
      * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
      */
+    @Deprecated
     public Photo retrievePhoto(String id) throws IOException, JSONException {
         if (ConnectionManager.getInstance().isConnected()) {
             String result = ConnectionManager.getInstance().get("Photos/" + id);
@@ -376,5 +377,17 @@ public class DataManager {
             String photoJson = FileManager.getInstance().readFile("Photos/" + id);
             return GsonManager.getInstance().fromJson(photoJson, Photo.class);
         }
+    }
+
+    public Photo retrieveCachedPhoto(String id) throws IOException, JSONException {
+        String photoJson = FileManager.getInstance().readFile("Photos/" + id);
+        return GsonManager.getInstance().fromJson(photoJson, Photo.class);
+    }
+
+    public Photo retrieveOnlinePhoto(String id) throws IOException, JSONException {
+        String result = ConnectionManager.getInstance().get("Photos/" + id);
+        JSONObject obj = new JSONObject(result);
+        String photoJson = obj.getJSONObject("_source").toString();
+        return GsonManager.getInstance().fromJson(photoJson, Photo.class);
     }
 }
