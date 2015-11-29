@@ -143,7 +143,7 @@ public class TradeController {
      * @param status         true or false for whether the user has accepted
      * @param currentTradeID the unique ID for the trade being altered
      */
-    public void setAcceptedStatus(final Boolean status, final UUID currentTradeID) {
+    public void setAcceptedStatus(final Boolean status, final UUID currentTradeID, final Boolean setOtherUser) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -151,10 +151,16 @@ public class TradeController {
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
                     saver.removeTrade(currentTradeID.toString());
 
-                    if (localUser.getUUID().equals(trade.getUser1UUID())) {
+                    if (localUser.getUUID().equals(trade.getUser1UUID()) ){
                         trade.setUser1Accepted(status);
+                        if(setOtherUser){
+                            trade.setUser2Accepted(!status);
+                        }
                     } else {
                         trade.setUser2Accepted(status);
+                        if(setOtherUser){
+                            trade.setUser1Accepted(!status);
+                        }
                     }
                     saver.storeTrade(trade);
                 } catch (IOException e) {
@@ -184,7 +190,7 @@ public class TradeController {
             @Override
             public void run() {
                 try {
-                    ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*.myUUID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}");
+                    ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*ID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}");
                     ArrayList<Trade> completeTrades = new ArrayList<>();
                     for(Trade trade:occuredTrades){
                         if(trade.isComplete()){

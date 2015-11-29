@@ -11,8 +11,10 @@ import java.util.UUID;
  */
 
 public class Trade {
-    private User user1;
-    private User user2;
+    private String user1name;
+    private String user2name;
+    private UUID user1ID;
+    private UUID user2ID;
     private List<Book> user1Offer;
     private List<Book> user2Offer;
     private Boolean user1Accepted = false;
@@ -20,17 +22,20 @@ public class Trade {
     private Boolean isComplete = false;
     private UUID tradeID;
 
+
     /**
      * Trade between two users
      * @param user1 One user who is taking part of the trade
      * @param user2 A second user who is taking part in the trade
      */
     public Trade(User user1, User user2){
-        tradeID = tradeID.randomUUID();
+        tradeID = UUID.randomUUID();
         this.user1Offer = new ArrayList<>();
         this.user2Offer = new ArrayList<>();
-        this.user1 = user1;
-        this.user2 = user2;
+        this.user1name = user1.getName();
+        this.user2name = user2.getName();
+        this.user1ID = user1.getUUID();
+        this.user2ID = user2.getUUID();
     }
     /**
      * Set whether user 1 has accepted the current trade offer
@@ -71,12 +76,12 @@ public class Trade {
     @Override
     public String toString(){
         if(isComplete()){
-            return user1.getName() + "'s trade with " + user2.getName() + "\n"+"Complete";
+            return user1name + "'s trade with " + user2name + "\n"+"Complete";
         }
         else{
-            return user1.getName() + "'s trade with " + user2.getName() + "\n" +
-                    user1.getName() + " has accepted: "+ getUser1Accepted().toString() +"\n"+
-                    user2.getName() + " has accepted: "+ getUser2Accepted().toString() +"\n"+
+            return user1name + "'s trade with " + user2name + "\n" +
+                    user1name + " has accepted: "+ getUser1Accepted().toString() +"\n"+
+                    user2name + " has accepted: "+ getUser2Accepted().toString() +"\n"+
                     "In Progress";
         }
 
@@ -87,7 +92,7 @@ public class Trade {
      * @return UUID for user 1
      */
     public UUID getUser1UUID(){
-        return this.user1.getUUID();
+        return this.user1ID;
     }
 
     /**
@@ -95,7 +100,7 @@ public class Trade {
      * @return UUID for user 2
      */
     public UUID getUser2UUID(){
-        return this.user2.getUUID();
+        return this.user2ID;
     }
 
     /**
@@ -160,8 +165,12 @@ public class Trade {
 
         Trade trade = (Trade) o;
 
-        if (user1 != null ? !user1.equals(trade.user1) : trade.user1 != null) return false;
-        if (user2 != null ? !user2.equals(trade.user2) : trade.user2 != null) return false;
+        if (user1name != null ? !user1name.equals(trade.user1name) : trade.user1name != null)
+            return false;
+        if (user2name != null ? !user2name.equals(trade.user2name) : trade.user2name != null)
+            return false;
+        if (user1ID != null ? !user1ID.equals(trade.user1ID) : trade.user1ID != null) return false;
+        if (user2ID != null ? !user2ID.equals(trade.user2ID) : trade.user2ID != null) return false;
         if (user1Offer != null ? !user1Offer.equals(trade.user1Offer) : trade.user1Offer != null)
             return false;
         if (user2Offer != null ? !user2Offer.equals(trade.user2Offer) : trade.user2Offer != null)
@@ -178,8 +187,10 @@ public class Trade {
 
     @Override
     public int hashCode() {
-        int result = user1 != null ? user1.hashCode() : 0;
-        result = 31 * result + (user2 != null ? user2.hashCode() : 0);
+        int result = user1name != null ? user1name.hashCode() : 0;
+        result = 31 * result + (user2name != null ? user2name.hashCode() : 0);
+        result = 31 * result + (user1ID != null ? user1ID.hashCode() : 0);
+        result = 31 * result + (user2ID != null ? user2ID.hashCode() : 0);
         result = 31 * result + (user1Offer != null ? user1Offer.hashCode() : 0);
         result = 31 * result + (user2Offer != null ? user2Offer.hashCode() : 0);
         result = 31 * result + (user1Accepted != null ? user1Accepted.hashCode() : 0);
