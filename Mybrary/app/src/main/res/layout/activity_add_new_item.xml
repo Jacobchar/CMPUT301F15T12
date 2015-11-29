@@ -58,17 +58,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="New Category"
-                android:id="@+id/categoryTitleView"
-                android:layout_below="@+id/QuantityTextView"
+                android:text="Category"
+                android:id="@+id/CategoryTitleView"
+                android:layout_below="@+id/QuantityTitleView"
                 android:layout_alignParentStart="true" />
 
-            <EditText
+            <Spinner
+                android:id="@+id/categorySpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/categoryEditView"
-                android:layout_below="@+id/QuantityTextView"
-                android:layout_toEndOf="@+id/phoneTitleView" />
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"
+                android:layout_below="@+id/CategoryTextView"
+                android:layout_alignParentStart="true"/>
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -117,14 +119,6 @@
                 android:onClick="saveNewBookInfo"
                 android:layout_gravity="center_horizontal"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="    "
-                android:id="@+id/tmp"
-                android:layout_below="@+id/genderTextView"
-                android:layout_alignParentStart="true" />
 
         </LinearLayout>
 

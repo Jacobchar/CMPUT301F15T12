@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.json.JSONException;
@@ -31,6 +32,12 @@ public class AddNewItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_item);
+
+        Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        String [] categories = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories);
+        categorySpinner.setAdapter(adapter);
+
     }
 
     /**
@@ -50,9 +57,9 @@ public class AddNewItem extends AppCompatActivity {
         if (!t.getText().toString().equals(""))
             book.setQuantity(Integer.parseInt(t.getText().toString()));
 
-        t = (TextView) findViewById(R.id.categoryEditView);
-        if (!t.getText().toString().equals(""))
-            book.setCategory(t.getText().toString());
+        Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
+        if (!categorySpinner.getSelectedItem().toString().equals(""))
+            book.setCategory(categorySpinner.getSelectedItem().toString().trim());
 
         CheckBox c = (CheckBox) findViewById(R.id.shareEditView);
         if (c.isEnabled()){
@@ -91,28 +98,6 @@ public class AddNewItem extends AppCompatActivity {
         startActivity(intent);
         //Upload the photo
     }
-
-    public TextView getNameText(){
-        return (TextView) findViewById(R.id.nameEditView);
-    }
-
-    public TextView getQuantityText(){
-        return (TextView) findViewById(R.id.QuantityEditView);
-    }
-
-    public TextView getCategoryText(){
-        return (TextView) findViewById(R.id.categoryEditView);
-    }
-
-    public CheckBox getCheckBox(){
-        return (CheckBox) findViewById(R.id.shareEditView);
-    }
-
-    public TextView getCommentText(){
-        return (TextView) findViewById(R.id.commentEditView);
-    }
-
-    public Button getSaveButton(){ return (Button) findViewById(R.id.SaveNewBookButton); }
 
     @Override
     public void onPause(){
