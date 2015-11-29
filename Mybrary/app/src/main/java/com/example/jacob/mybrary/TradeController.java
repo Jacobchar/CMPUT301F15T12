@@ -369,7 +369,7 @@ public class TradeController {
             t.start();
         }
 
-    public void sendAcceptedEmail(final Activity parent,final Intent emailIntent, final UUID currentTradeID) {
+    public void sendAcceptedEmail(final Activity parent, final UUID currentTradeID) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -384,14 +384,6 @@ public class TradeController {
                     User user = saver.retrieveUser(otherUser.toString());
                     final String emailAddress = user.getEmailAddress();
                     final String tradeInfo = trade.getUser1Offer().toString() + "\n" + trade.getUser2Offer().toString();
-
-
-                    emailIntent.setData(Uri.parse("mailto:"));
-                    emailIntent.setType("text/plain");
-                    emailIntent.putExtra(Intent.EXTRA_EMAIL, emailAddress);
-                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Trade Accepted");
-                    emailIntent.putExtra(Intent.EXTRA_TEXT, tradeInfo);
-
 
                 } catch (IOException e) {
                     Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
