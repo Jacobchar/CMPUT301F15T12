@@ -27,6 +27,7 @@ public class AddNewItem extends AppCompatActivity {
     private ConnectionManager connectionManager = ConnectionManager.getInstance();
     private Activity activity;
     private Camera mCamera;
+    private final Book book = new Book();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class AddNewItem extends AppCompatActivity {
         setContentView(R.layout.activity_add_new_item);
 
         Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
-        String [] categories = new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        String[] categories = book.getPossibleCategories();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories);
         categorySpinner.setAdapter(adapter);
 
@@ -46,8 +47,6 @@ public class AddNewItem extends AppCompatActivity {
     public void saveNewBookInfo(View view){
 
         activity = this;
-
-        final Book book = new Book();
 
         TextView t = (TextView) findViewById(R.id.nameEditView);
         if (!t.getText().toString().equals(""))

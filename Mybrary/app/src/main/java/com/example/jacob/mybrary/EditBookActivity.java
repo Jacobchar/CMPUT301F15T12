@@ -36,7 +36,8 @@ public class EditBookActivity extends AppCompatActivity {
         }
 
         Spinner categorySpinner = (Spinner) findViewById(R.id.categorySpinner);
-        String [] categories = new String[]{"No Change", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+        Book book = new Book();
+        String[] categories = book.getPossibleCategoriesWithNoChangeOption();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories);
         categorySpinner.setAdapter(adapter);
     }

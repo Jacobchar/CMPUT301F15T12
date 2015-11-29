@@ -26,6 +26,12 @@ public class Book implements Serializable {
 
     private ArrayList<UUID> photoIDs;
 
+    private String[] possibleCategories = new String[]{"Non Fiction", "Horror", "Biography",
+            "Action/Adventure", "Science Fiction", "Textbook", "Comic Book", "Cooking", "DIY", "Other"};
+    private String[] possibleCategoriesWithNoChangeOption = new String[]{"No Change", "Non Fiction",
+            "Horror", "Biography", "Action/Adventure", "Science Fiction", "Textbook", "Comic Book",
+            "Cooking", "DIY", "Other"};
+
     /**
      * Basic empty Book constructor.
      */
@@ -66,9 +72,9 @@ public class Book implements Serializable {
 
         // sharedWithOthers
         if (sharedWithOthers) {
-            string = string + " , is shared with others ";
+            string = string + ", is shared with others";
         } else {
-            string = string + ", isn't shared with others ";
+            string = string + ", isn't shared with others";
         }
 
         // loop through comments
@@ -77,8 +83,12 @@ public class Book implements Serializable {
         } else {
             string = string + ", Comments: ";
             Iterator<String> i = comments.iterator();
+            int z = 0;
             while (i.hasNext()){
+                if (z != 0)
+                    string = string + ", ";
                 string = string + i.next();
+                z++;
             }
         }
 
@@ -134,6 +144,14 @@ public class Book implements Serializable {
 
     public void setSharedWithOthers(boolean sharedWithOthers) {
         this.sharedWithOthers = sharedWithOthers;
+    }
+
+    public String[] getPossibleCategories() {
+        return possibleCategories;
+    }
+
+    public String[] getPossibleCategoriesWithNoChangeOption() {
+        return possibleCategoriesWithNoChangeOption;
     }
 
     public UUID getItemID() { return itemID; }
