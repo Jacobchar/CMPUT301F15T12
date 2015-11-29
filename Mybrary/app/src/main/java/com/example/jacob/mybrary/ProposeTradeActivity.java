@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -54,6 +55,11 @@ public class ProposeTradeActivity extends AppCompatActivity {
         onClickListener(yourTradeOffer, currentTrade, 1);
         onClickListener(theirTradeOffer, currentTrade, 0);
     }
+
+    @Override
+    public void onBackPressed(){
+        Toast.makeText(this,"Please confirm your trade",Toast.LENGTH_SHORT).show();
+    }
     /**
      * Listens for clicks to delete an item from a trade offer
      * @param view The view to watch for clicks
@@ -91,7 +97,9 @@ public class ProposeTradeActivity extends AppCompatActivity {
     }
 
     public void sendRequestButton(View v){
-
+        tradeController.setAcceptedStatus(true,currentTrade);
+        Toast.makeText(this,"Trade offer sent",Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     public void addYourOfferButton(View v){
@@ -111,5 +119,7 @@ public class ProposeTradeActivity extends AppCompatActivity {
         intent.putExtra("currentTrade", currentTrade);
         startActivity(intent);
     }
+
+
 
 }
