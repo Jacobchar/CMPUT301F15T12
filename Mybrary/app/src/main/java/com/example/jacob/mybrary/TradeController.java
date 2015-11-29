@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -34,8 +35,7 @@ public class TradeController {
             public void run() {
                 try {
                     saver.storeTrade(trade);
-                }
-                catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -46,9 +46,10 @@ public class TradeController {
 
     /**
      * Fetch the correct user's inventory to allow addition of new items to a trade
+     *
      * @param currentTradeID current trade so correct users are looked at
-     * @param parent calling activity to update the UI
-     * @param callingButton allows differentiation between whether you are looking at your own, or another users inventory
+     * @param parent         calling activity to update the UI
+     * @param callingButton  allows differentiation between whether you are looking at your own, or another users inventory
      */
     public void getUserOfferSelections(final UUID currentTradeID, final Activity parent, final int callingButton) {
         Thread t = new Thread(new Runnable() {
@@ -57,17 +58,15 @@ public class TradeController {
                 try {
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
                     UUID userRequiredInventory;
-                    if(callingButton ==1){
+                    if (callingButton == 1) {
                         userRequiredInventory = localUser.getUUID();
-                    }
-                    else if(localUser.getUUID().equals(trade.getUser1UUID())){
+                    } else if (localUser.getUUID().equals(trade.getUser1UUID())) {
                         userRequiredInventory = trade.getUser2UUID();
-                    }
-                    else{
+                    } else {
                         userRequiredInventory = trade.getUser1UUID();
                     }
                     Inventory inv = saver.retrieveUser(userRequiredInventory.toString()).getInventory();
-                    ArrayList<Book> bookList =  inv.getBooks();
+                    ArrayList<Book> bookList = inv.getBooks();
 
                     ListView view = (ListView) parent.findViewById(R.id.addBookToTradeListView);
                     ArrayAdapter<Book> adapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, bookList);
@@ -75,9 +74,9 @@ public class TradeController {
                     updateUI(view, adapter, parent);
 
                 } catch (IOException e) {
-
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
                 } catch (JSONException e) {
-
+                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
                 }
             }
         });
@@ -86,51 +85,48 @@ public class TradeController {
 
     /**
      * Allows for books to be added and removed from a trade offer
-     * @param tradeID ID for the trade currently being changed
-     * @param book book to be added or removed from the trade
+     *
+     * @param tradeID     ID for the trade currently being changed
+     * @param book        book to be added or removed from the trade
      * @param offerToEdit a check to see which user's offer will be changed
-     * @param addOffer true to add a book, false to remove the book
+     * @param addOffer    true to add a book, false to remove the book
      */
-    public void changeOffer(final UUID tradeID, final Book book, final int offerToEdit, final Boolean addOffer){
+    public void changeOffer(final Activity parent, final UUID tradeID, final Book book, final int offerToEdit, final Boolean addOffer) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     Trade currentTrade = saver.retrieveTrade(tradeID.toString());
                     saver.removeTrade(tradeID.toString());
                     List<Book> tradeOffer;
                     // Pressed 'change my offer' check if local user is user 1
-                    if(offerToEdit == 1 && localUser.getUUID().equals(currentTrade.getUser1UUID())){
+                    if (offerToEdit == 1 && localUser.getUUID().equals(currentTrade.getUser1UUID())) {
                         tradeOffer = currentTrade.getUser1Offer();
                     }
                     // Pressed 'change my offer' local user must be user 2
-                    else if(offerToEdit == 1){
+                    else if (offerToEdit == 1) {
                         tradeOffer = currentTrade.getUser2Offer();
                     }
                     // Pressed 'change their offer' check if other user is user 1 or 2
-                    else if(offerToEdit != 1 && localUser.getUUID().equals(currentTrade.getUser1UUID())){
+                    else if (offerToEdit != 1 && localUser.getUUID().equals(currentTrade.getUser1UUID())) {
                         tradeOffer = currentTrade.getUser2Offer();
-                    }
-                    else{
+                    } else {
                         tradeOffer = currentTrade.getUser1Offer();
                     }
-                    if(addOffer){
+                    if (addOffer) {
                         tradeOffer.add(book);
-                    }
-                    else{
+                    } else {
                         tradeOffer.remove(book);
                     }
                     saver.storeTrade(currentTrade);
                     Thread.sleep(1500);
-                }
-                catch(IOException e){
 
-                }
-                catch(JSONException e){
-
-                }
-                catch(InterruptedException e){
-
+                } catch (IOException e) {
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
+                } catch (JSONException e) {
+                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
+                } catch (InterruptedException e) {
+                    Toast.makeText(parent, "View update interrupted, please reload the current screen", Toast.LENGTH_SHORT);
                 }
             }
         });
@@ -143,7 +139,7 @@ public class TradeController {
      * @param status         true or false for whether the user has accepted
      * @param currentTradeID the unique ID for the trade being altered
      */
-    public void setAcceptedStatus(final Boolean status, final UUID currentTradeID, final Boolean setOtherUser) {
+    public void setAcceptedStatus(final Activity parent,final Boolean status, final UUID currentTradeID, final Boolean setOtherUser) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -151,24 +147,22 @@ public class TradeController {
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
                     saver.removeTrade(currentTradeID.toString());
 
-                    if (localUser.getUUID().equals(trade.getUser1UUID()) ){
+                    if (localUser.getUUID().equals(trade.getUser1UUID())) {
                         trade.setUser1Accepted(status);
-                        if(setOtherUser){
+                        if (setOtherUser) {
                             trade.setUser2Accepted(!status);
                         }
                     } else {
                         trade.setUser2Accepted(status);
-                        if(setOtherUser){
+                        if (setOtherUser) {
                             trade.setUser1Accepted(!status);
                         }
                     }
                     saver.storeTrade(trade);
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                    return;
+                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
                 }
 
             }
@@ -179,12 +173,12 @@ public class TradeController {
     /**
      * Get the list of trades relevant to the local user
      *
-     * @param parent the calling activity
-     * @param inProgressTradeView  view which shows in progress trades
-     * @param completedTradeView view which shows the completed trades
+     * @param parent              the calling activity
+     * @param inProgressTradeView view which shows in progress trades
+     * @param completedTradeView  view which shows the completed trades
      * @return the list of trades found
      */
-    public void getTradeList(final Activity parent,final ListView inProgressTradeView, final ListView completedTradeView) {
+    public void getTradeList(final Activity parent, final ListView inProgressTradeView, final ListView completedTradeView) {
         Thread t = new Thread(new Runnable() {
 
             @Override
@@ -192,12 +186,12 @@ public class TradeController {
                 try {
                     ArrayList<Trade> occuredTrades = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"user*ID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}");
                     ArrayList<Trade> completeTrades = new ArrayList<>();
-                    for(Trade trade:occuredTrades){
-                        if(trade.isComplete()){
+                    for (Trade trade : occuredTrades) {
+                        if (trade.isComplete()) {
                             completeTrades.add(trade);
                         }
                     }
-                    for(Trade trade:completeTrades){
+                    for (Trade trade : completeTrades) {
                         occuredTrades.remove(trade);
                     }
                     ArrayAdapter<Trade> inProgressAdapter = new ArrayAdapter<>(parent, R.layout.simple_list_item, occuredTrades);
@@ -206,11 +200,9 @@ public class TradeController {
                     updateUI(completedTradeView, completeAdapter, parent);
 
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                    return;
+                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
                 }
             }
         });
@@ -240,7 +232,7 @@ public class TradeController {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1500);
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
 
                     if (trade.getUser1UUID().equals(localUser.getUUID())) {
@@ -251,13 +243,11 @@ public class TradeController {
                         fetchUserOffer(parent, trade.getUser1Offer(), theirItemsListView);
                     }
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                    return;
-                }catch(InterruptedException e){
-                    e.printStackTrace();
+                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
+                } catch (InterruptedException e) {
+                    Toast.makeText(parent, "View update interrupted, please reload the current screen", Toast.LENGTH_SHORT);
                 }
             }
 
@@ -284,7 +274,6 @@ public class TradeController {
      * NOTE: This runs slowly because the server needs to update before the UI updates
      *
      * @param trade the trade to be removed from the database
-     *
      */
     public void deleteTrade(final Activity parent, final Trade trade) {
         Thread t = new Thread(new Runnable() {
@@ -294,27 +283,29 @@ public class TradeController {
                 try {
                     saver.removeTrade(trade.getTradeID().toString());
                     // Wait for the server to remove the trade
-                    Thread.sleep(1500);
-                    getTradeList(parent, (ListView) parent.findViewById(R.id.inProgressTradeListView),(ListView) parent.findViewById(R.id.completedTradesListView));
+                    Thread.sleep(1000);
+                    getTradeList(parent, (ListView) parent.findViewById(R.id.inProgressTradeListView), (ListView) parent.findViewById(R.id.completedTradesListView));
                 } catch (IOException e) {
-                    e.printStackTrace();
-                    return;
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
+
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    return;
+                    Toast.makeText(parent, "View update interrupted, please reload the current screen", Toast.LENGTH_SHORT);
                 }
             }
-        });
+        }
+
+        );
         t.start();
     }
 
-    /**
-     * Sets the selected trade to complete
-     * Removes the trade from the server, and replaces it with the updated one
-     *
-     * @param currentTradeID trade to be completed
-     */
-    public void setTradeComplete(final UUID currentTradeID) {
+                /**
+                 * Sets the selected trade to complete
+                 * Removes the trade from the server, and replaces it with the updated one
+                 *
+                 * @param currentTradeID trade to be completed
+                 */
+
+    public void setTradeComplete(final Activity parent,final UUID currentTradeID) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -322,23 +313,36 @@ public class TradeController {
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
                     saver.removeTrade(trade.getTradeID().toString());
                     trade.setIsComplete(true);
+
+                    User user1 = saver.retrieveUser(trade.getUser1UUID().toString());
+                    user1.setSuccTrades(user1.getSuccTrades() + 1);
+                    saver.removeUser(user1.getUUID().toString());
+                    saver.storeUser(user1);
+
+                    User user2 = saver.retrieveUser(trade.getUser2UUID().toString());
+                    user2.setSuccTrades(user2.getSuccTrades() + 1);
+                    saver.removeUser(user2.getUUID().toString());
+                    saver.storeUser(user2);
+
                     saver.storeTrade(trade);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
                 }
             }
-        });
-        t.start();
-    }
+        }
+            );
+            t.start();
+        }
 
-    /**
-     * Check if both users have accepted the trade, then prompts if the trade is complete or not
-     *
-     * @param currentTradeID UUID for the trade currently being looked at
-     * @param parent         the activity calling this method
-     */
+                /**
+                 * Check if both users have accepted the trade, then prompts if the trade is complete or not
+                 *
+                 * @param currentTradeID UUID for the trade currently being looked at
+                 * @param parent         the activity calling this method
+                 */
+
     public void checkIfAccepted(final UUID currentTradeID, final ViewIndividualTradeActivity parent) {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -355,16 +359,17 @@ public class TradeController {
                     }
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
                 }
             }
-        });
-        t.start();
-    }
+        }
+            );
+            t.start();
+        }
 
-    public void sendAcceptedEmail(final Intent emailIntent, final UUID currentTradeID){
+    public void sendAcceptedEmail(final Activity parent,final Intent emailIntent, final UUID currentTradeID) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -389,14 +394,15 @@ public class TradeController {
 
 
                 } catch (IOException e) {
-
+                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
                 } catch (JSONException e) {
-
+                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
                 }
             }
-        });
-        t.start();
+        }
+            );
+            t.start();
+        }
+
+
     }
-
-
-}

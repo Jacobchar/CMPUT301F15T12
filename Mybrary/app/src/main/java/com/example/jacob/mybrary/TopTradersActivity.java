@@ -27,24 +27,22 @@ public class TopTradersActivity extends AppCompatActivity {
     DataManager dataManager = DataManager.getInstance();
     private ListView listView;
     private ArrayAdapter<String> listAdapter;
+    TopTraderController topController = new TopTraderController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_traders);
-        fillList(false);
+
         ToggleButton toggleButton = (ToggleButton) findViewById(R.id.tradersToggleButton);
         toggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    fillList(true);
-                }
-                else{
-                    fillList(false);
-                }
+                topController.fillView(TopTradersActivity.this, isChecked);
             }
         });
+
+        topController.fillView(this, true);
     }
 
 

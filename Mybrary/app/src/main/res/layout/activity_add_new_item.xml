@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background="@color/tan_dark"
+    android:background="@color/background_color"
     tools:context="com.example.jacob.mybrary.AddNewItem">
 
     <ScrollView
@@ -109,7 +109,8 @@
                 android:text="Take Photo"
                 android:id="@+id/uploadButton"
                 android:onClick="takePhoto"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/button_corners" />
 
             <Button
                 android:layout_width="150dp"
@@ -117,7 +118,8 @@
                 android:text="Save Changes"
                 android:id="@+id/SaveNewBookButton"
                 android:onClick="saveNewBookInfo"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/button_corners"/>
 
 
         </LinearLayout>
