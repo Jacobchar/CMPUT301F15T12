@@ -22,6 +22,7 @@ public class Trade {
     private Boolean isComplete = false;
     private UUID tradeID;
 
+
     /**
      * Trade between two users
      * @param user1 One user who is taking part of the trade
