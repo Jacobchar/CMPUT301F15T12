@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.UUID;
 
 /**
@@ -36,26 +38,55 @@ public class InventoryController {
         refreshList();
     }
 
+    public void searchForBookByName(String name){
+        String query = null;
+        ArrayList<Book> returnVal = new ArrayList<>();
 
-    public void searchForBook(){
-        /* Dom/Jake's tests:
-            try {
-                DataManager dataManager = DataManager.getInstance();
 
-                Book book3 = new Book("testBook3", 3, "testCategory3", true);
+        // grab all books that match / partially match a given name
+        query = "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"name\",\"query\":\"" + name + "*\"}}}";
 
-                //Wait for entries to be indexed
-                Thread.sleep(1000);
+        try {
+            returnVal = dataManager.searchBooks(query);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
-                ArrayList<Book> returnedBooks = dataManager.searchBooks("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testBook2\"}}}");
+        if (returnVal.size() == 0){
 
-                assertTrue(returnedBooks.size() == 1);
-                assertTrue(returnedBooks.contains(book2));
+            // no books returned
 
-            } catch (Exception e) {
+        } else {
+            // grab all the UUIDs of my friends
+            ArrayList<User> friends = LocalUser.getInstance().getFriendsList().getUsers();
 
+            Iterator<Book> bookIterator = returnVal.iterator();
+
+            boolean bookExists = false;
+            // check if book has an owner in my friends list
+            while (bookIterator.hasNext()) {
+                Iterator<User> iterator = friends.iterator();
+                while (iterator.hasNext()) {
+                    int i = bookIterator.next().getOwnerID().compareTo(iterator.next().getUUID());
+                    if (i == 0){
+                        bookExists = true;
+                        break;
+                    }
+                }
+                if (!bookExists){
+                    bookIterator.remove(); // will this remove it from just iterator or list too?
+                }
             }
-        */
+
+            // display final matches
+
+        }
+
+    }
+
+
+    public void searchForBookByCategory(){
+
     }
 
 

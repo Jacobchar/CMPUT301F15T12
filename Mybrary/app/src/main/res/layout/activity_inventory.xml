@@ -32,8 +32,9 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search"
+        android:text="Search Friends Inventories"
         android:id="@+id/searchButton"
+        android:onClick="searchInventory"
         android:layout_alignParentBottom="true"
         android:layout_alignEnd="@+id/inventoryListView"
         android:layout_toEndOf="@+id/inventoryTitleView" />

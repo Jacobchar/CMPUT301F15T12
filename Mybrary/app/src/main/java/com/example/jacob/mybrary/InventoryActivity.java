@@ -98,14 +98,20 @@ public class InventoryActivity extends AppCompatActivity {
             }
         });
 
-
-
     }
 
     public void addNewItem(View view){
 
         Intent intent = new Intent(activity, AddNewItem.class);
         startActivityForResult(intent, 1);
+
+    }
+
+
+    public void searchInventory(View view){
+
+        String name = "A";
+        inventoryController.searchForBookByName(name);
 
     }
 
