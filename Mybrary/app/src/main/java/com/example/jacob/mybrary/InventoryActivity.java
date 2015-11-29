@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -110,8 +112,35 @@ public class InventoryActivity extends AppCompatActivity {
 
     public void searchInventory(View view) {
 
-        String name = "A";
-        inventoryController.searchForBookByName(name, activity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
+        builder.setMessage("Search for a book!");
+        builder.setCancelable(true);
+
+        final EditText searchParam = new EditText(this);
+        searchParam.setHint("Type the first few letters to find all partial matches");
+        alert.setView(searchParam);
+
+        builder.setPositiveButton("Search By Book Name", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                inventoryController.searchForBookByName(searchParam.getText().toString(), activity, getApplicationContext());
+                dialog.cancel();
+            }
+        });
+        builder.setNegativeButton("Search By Book Category", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                inventoryController.searchForBookByCategory(searchParam.getText().toString(), activity, getApplicationContext());
+                dialog.cancel();
+            }
+        });
+
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        });
+
+        alert = builder.create();
+        alert.show();
 
     }
 

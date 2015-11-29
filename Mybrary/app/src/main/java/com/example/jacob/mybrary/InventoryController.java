@@ -1,11 +1,15 @@
 package com.example.jacob.mybrary;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.io.IOException;
@@ -28,6 +32,8 @@ public class InventoryController {
     final private DataManager dataManager = DataManager.getInstance();
     private LocalUser localUser = LocalUser.getInstance();
     private ArrayAdapter<Book> adapter;
+    private Activity localActivity = null;
+    private Context localContext = null;
 
 
     /**
@@ -35,21 +41,78 @@ public class InventoryController {
      */
     void fillInventory(Activity activity, ListView listView){
 
+        localActivity = activity;
+
         adapter = new ArrayAdapter<Book>(activity, R.layout.simple_list_item, localUser.getInventory().getBooks());
 
         listView.setAdapter(adapter);
         refreshList();
     }
 
-    public void searchForBookByName(String name, Activity activity){
+    void fillInventory(Activity activity, ListView listView, Inventory inventory){
 
-        final ArrayList<Book> returnVal = new ArrayList<>();
+        localActivity = activity;
 
-        // grab all books that match / partially match a given name
-        final String query = "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"name\",\"query\":\"" + name + "*\"}}}";
+        adapter = new ArrayAdapter<Book>(activity, R.layout.simple_list_item, inventory.getBooks());
 
-        ConnectionManager.getInstance().updateConnectivity(activity);
-        new runQuery().execute(query);
+        listView.setAdapter(adapter);
+        refreshList();
+    }
+
+    public void searchForBookByName(String name, Activity activity, Context context){
+
+        localActivity = activity;
+        localContext = context;
+
+        if (name == ""){
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setMessage("Don't enter empty parameters.");
+            builder.setCancelable(true);
+
+            builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+
+            // grab all books that match / partially match a given name
+            final String query = "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"name\",\"query\":\"" + name + "*\"}}}";
+
+            ConnectionManager.getInstance().updateConnectivity(activity);
+            new runQuery().execute(query);
+        }
+
+    }
+
+    public void searchForBookByCategory(String category, Activity activity, Context context){
+
+        localActivity = activity;
+        localContext = context;
+
+        if (category == "") {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setMessage("Don't enter empty parameters.");
+            builder.setCancelable(true);
+
+            builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        } else {
+            // grab all books that match / partially match a given name
+            final String query = "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"category\",\"query\":\"" + category + "*\"}}}";
+
+            ConnectionManager.getInstance().updateConnectivity(activity);
+            new runQuery().execute(query);
+        }
 
     }
 
@@ -90,7 +153,7 @@ public class InventoryController {
                     bookID = book.getOwnerID();
 
                     int z = bookID.compareTo(localUserID);
-                    if (z != 0) { // make sure it's not YOUR book
+                    if ((z != 0) & book.isSharedWithOthers()) { // make sure it's not YOUR book, and it's visible
                         while (iterator.hasNext()) {
                             friendID = iterator.next().getUUID();
                             int i = bookID.compareTo(friendID);
@@ -112,16 +175,11 @@ public class InventoryController {
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
-        protected void onPostExecute(ArrayList<Book> result) {
-            //Intent intent = new Intent(FriendsListActivity.this, ViewUserActivity.class);
-            //intent.putExtra("user", result);
-            //startActivity(intent);
+        protected void onPostExecute(ArrayList<Book> returnVal) {
+            Intent intent = new Intent(localActivity, ViewGivenInventoryActivity.class);
+            intent.putExtra("inventory", returnVal);
+            localContext.startActivity(intent);
         }
-    }
-
-
-    public void searchForBookByCategory(){
-
     }
 
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jacob.mybrary">
+    package="com.example.jacob.mybrary" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -12,65 +13,70 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".FriendsListActivity"
-            android:label="@string/title_activity_friends_list"></activity>
+            android:label="@string/title_activity_friends_list" />
         <activity
             android:name=".InventoryActivity"
             android:label="@string/title_activity_inventory"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TradeListActivity"
             android:label="@string/title_activity_trade_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ViewIndividualTradeActivity"
             android:label="@string/title_activity_view_individual_trade"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ProposeTradeActivity"
             android:label="@string/title_activity_propose_trade"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddBookToTradeActivity"
             android:label="title_activity_add_book_to_trade"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ViewUserActivity"
             android:label="@string/title_activity_view_user"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Main2Activity"
-            android:label="@string/title_activity_main2"></activity>
+            android:label="@string/title_activity_main2" />
         <activity
             android:name=".AddNewItem"
-            android:label="@string/title_activity_add_new_item"></activity>
+            android:label="@string/title_activity_add_new_item" />
         <activity
             android:name=".EditBookActivity"
-            android:label="@string/title_activity_edit_book"></activity>
+            android:label="@string/title_activity_edit_book" />
         <activity
             android:name=".CreateUserActivity"
             android:label="@string/title_activity_create_user"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".TopTradersActivity"
-            android:label="TopTradesActivity"></activity>
+            android:label="TopTradesActivity" />
+        <activity
+            android:name=".ViewGivenInventoryActivity"
+            android:label="@string/title_activity_view_given_inventory" >
+        </activity>
     </application>
 
 </manifest>
