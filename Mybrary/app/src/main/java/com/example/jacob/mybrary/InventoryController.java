@@ -9,8 +9,10 @@ import android.widget.ListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by Victoria.
@@ -38,19 +40,32 @@ public class InventoryController {
         refreshList();
     }
 
-    public void searchForBookByName(String name){
-        String query = null;
-        ArrayList<Book> returnVal = new ArrayList<>();
+    public void searchForBookByName(String name, Activity activity){
 
+        final ArrayList<Book> returnVal = new ArrayList<>();
 
         // grab all books that match / partially match a given name
-        query = "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"name\",\"query\":\"" + name + "*\"}}}";
+        final String query = "{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"default_field\":\"name\",\"query\":\"" + name + "*\"}}}";
 
-        try {
-            returnVal = dataManager.searchBooks(query);
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        ConnectionManager.getInstance().updateConnectivity(activity);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ArrayList<Book> queryVal = dataManager.searchBooks(query);
+                    Iterator<Book> iterator = queryVal.iterator();
+                    while (iterator.hasNext()){
+                        returnVal.add(iterator.next());
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        thread.start();
+
+
 
         if (returnVal.size() == 0){
 

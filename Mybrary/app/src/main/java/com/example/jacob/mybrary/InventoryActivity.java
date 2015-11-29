@@ -100,7 +100,7 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
-    public void addNewItem(View view){
+    public void addNewItem(View view) {
 
         Intent intent = new Intent(activity, AddNewItem.class);
         startActivityForResult(intent, 1);
@@ -108,14 +108,14 @@ public class InventoryActivity extends AppCompatActivity {
     }
 
 
-    public void searchInventory(View view){
+    public void searchInventory(View view) {
 
         String name = "A";
-        inventoryController.searchForBookByName(name);
+        inventoryController.searchForBookByName(name, activity);
 
     }
 
-    public void editItem(UUID id){
+    public void editItem(UUID id) {
 
         Intent intent = new Intent(this, EditBookActivity.class);
         Bundle bundle = new Bundle();
