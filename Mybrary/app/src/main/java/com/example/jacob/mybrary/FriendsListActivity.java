@@ -147,7 +147,6 @@ public class FriendsListActivity extends AppCompatActivity {
                 });
         fillFriendsList();
         infoDialog.show();
-
     }
 
     private class showFriend extends AsyncTask<String, Void, User> {
