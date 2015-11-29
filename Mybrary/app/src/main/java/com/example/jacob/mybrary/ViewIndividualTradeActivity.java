@@ -78,9 +78,10 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     }
 
     public void acceptTradeButton(View v){
-        controller.setAcceptedStatus(true,currentTrade);
-        Button accepted = (Button) findViewById(R.id.acceptButton);
-        accepted.setClickable(false);
+        controller.setAcceptedStatus(true, currentTrade);
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        controller.sendAcceptedEmail(emailIntent, currentTrade);
+        startActivity(Intent.createChooser(emailIntent, "Send Trade Info"));
 
     }
 

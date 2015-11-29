@@ -25,6 +25,7 @@ public class FriendsListActivity extends AppCompatActivity {
     DataManager dataManager = DataManager.getInstance();
     ConnectionManager connectionManager = ConnectionManager.getInstance();
     private AlertDialog alert;
+    private TradeController tradeController = new TradeController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +100,34 @@ public class FriendsListActivity extends AppCompatActivity {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String name = (String) parent.getItemAtPosition(position);
-                new showFriend().execute(name);
+               final String name = (String) parent.getItemAtPosition(position);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(FriendsListActivity.this);
+                builder.setMessage("");
+                builder.setCancelable(true);
+                builder.setPositiveButton("Offer Trade", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        new offerTrade().execute(name);
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setNegativeButton("View Profile", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        new showFriend().execute(name);
+                        dialog.cancel();
+                    }
+                });
+
+                alert = builder.create();
+                alert.show();
+
             }
 
         });
@@ -163,6 +190,24 @@ public class FriendsListActivity extends AppCompatActivity {
         protected void onPostExecute(User result) {
             Intent intent = new Intent(FriendsListActivity.this, ViewUserActivity.class);
             intent.putExtra("user", result);
+            startActivity(intent);
+        }
+    }
+
+    private class offerTrade extends AsyncTask<String, Void, User> {
+        @Override
+        protected User doInBackground(String... name) {
+
+            connectionManager.updateConnectivity(FriendsListActivity.this);
+            User myFriend = localUser.getFriendsList().getByName(name[0]).get(0);
+            return myFriend;
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(User result) {
+            Trade newTrade = tradeController.createNewTrade(result);
+            Intent intent = new Intent(FriendsListActivity.this, ProposeTradeActivity.class);
+            intent.putExtra("currentTrade", newTrade.getTradeID());
             startActivity(intent);
         }
     }

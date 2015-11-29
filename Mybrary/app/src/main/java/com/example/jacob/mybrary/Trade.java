@@ -1,5 +1,6 @@
 package com.example.jacob.mybrary;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,8 @@ public class Trade {
      */
     public Trade(User user1, User user2){
         tradeID = tradeID.randomUUID();
+        this.user1Offer = new ArrayList<>();
+        this.user2Offer = new ArrayList<>();
         this.user1 = user1;
         this.user2 = user2;
     }

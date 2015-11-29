@@ -1,6 +1,8 @@
 package com.example.jacob.mybrary;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -119,11 +121,15 @@ public class TradeController {
                         tradeOffer.remove(book);
                     }
                     saver.storeTrade(currentTrade);
+                    Thread.sleep(1500);
                 }
                 catch(IOException e){
 
                 }
                 catch(JSONException e){
+
+                }
+                catch(InterruptedException e){
 
                 }
             }
@@ -228,6 +234,7 @@ public class TradeController {
             @Override
             public void run() {
                 try {
+                    Thread.sleep(2000);
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
 
                     if (trade.getUser1UUID().equals(localUser.getUUID())) {
@@ -243,6 +250,8 @@ public class TradeController {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     return;
+                }catch(InterruptedException e){
+                    e.printStackTrace();
                 }
             }
 
@@ -343,6 +352,40 @@ public class TradeController {
                     e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+    }
+
+    public void sendAcceptedEmail(final Intent emailIntent, final UUID currentTradeID){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
+                    UUID otherUser;
+                    if (trade.getUser1UUID().equals(localUser.getUUID())) {
+                        otherUser = trade.getUser2UUID();
+                    } else {
+                        otherUser = trade.getUser1UUID();
+                    }
+                    User user = saver.retrieveUser(otherUser.toString());
+                    final String emailAddress = user.getEmailAddress();
+                    final String tradeInfo = trade.getUser1Offer().toString() + "\n" + trade.getUser2Offer().toString();
+
+
+                    emailIntent.setData(Uri.parse("mailto:"));
+                    emailIntent.setType("text/plain");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, emailAddress);
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Trade Accepted");
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, tradeInfo);
+
+
+                } catch (IOException e) {
+
+                } catch (JSONException e) {
+
                 }
             }
         });
