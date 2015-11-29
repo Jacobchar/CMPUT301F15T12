@@ -116,9 +116,10 @@ public class InventoryActivity extends AppCompatActivity {
         builder.setMessage("Search for a book!");
         builder.setCancelable(true);
 
-        final EditText searchParam = new EditText(this);
+        final EditText searchParam = new EditText(InventoryActivity.this);
+        searchParam.setInputType(InputType.TYPE_CLASS_TEXT);
         searchParam.setHint("Type the first few letters to find all partial matches");
-        alert.setView(searchParam);
+        builder.setView(searchParam);
 
         builder.setPositiveButton("Search By Book Name", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
