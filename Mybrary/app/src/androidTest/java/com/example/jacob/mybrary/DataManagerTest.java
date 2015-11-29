@@ -174,59 +174,21 @@ public class DataManagerTest extends AndroidTestCase {
 
 
     //=========================TRADES===============================
-//    public void testPutTrade() {
-//        DataManager dataManager = DataManager.getInstance();
-//        Trade trade = new Trade();
-//
-//        assertTrue(dataManager.storeTrade(trade));
-//
-//        dataManager.removeTrade(trade.tradeID.toString());
-//    }
-//
-//    public void testGetTrade() {
-//        DataManager dataManager = DataManager.getInstance();
-//        Trade trade = new Trade();
-//
-//        if (!dataManager.storeTrade(trade)) {
-//            fail();
-//        }
-//
-//        Trade returnedTrade = dataManager.retrieveTrade(trade.tradeID.toString());
-//
-//        //TODO: Ensure that Trade has an equals() method.
-//        assertTrue(trade.equals(returnedTrade));
-//
-//        dataManager.removeTrade(trade.tradeID.toString());
-//    }
-//
-//    public void testSearchTrades() {
-//        DataManager dataManager = DataManager.getInstance();
-//        Trade trade1 = new Trade();
-//        Trade trade2 = new Trade();
-//        Trade trade3 = new Trade();
-//
-//        dataManager.storeTrade(trade1);
-//        dataManager.storeTrade(trade2);
-//        dataManager.storeTrade(trade3);
-//
-//        ArrayList<Trade> returnedTrades = dataManager.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"val\",\"query\":2}}}");
-//
-//        assertTrue(returnedTrades.size() == 1);
-//        assertTrue(returnedTrades.contains(trade2));
-//
-//        dataManager.removeBook(trade1.tradeID.toString());
-//        dataManager.removeBook(trade2.tradeID.toString());
-//        dataManager.removeBook(trade3.tradeID.toString());
-//    }
-//
-//    public void testRemoveTrade() {
-//        DataManager dataManager = DataManager.getInstance();
-//        Trade trade = new Trade();
-//
-//        dataManager.storeTrade(trade);
-//
-//        assertTrue(dataManager.removeTrade(trade.tradeID.toString()));
-//    }
+    public void testPutTrade() {
+
+    }
+
+    public void testGetTrade() {
+
+    }
+
+    public void testSearchTrades() {
+
+    }
+
+    public void testRemoveTrade() {
+
+    }
 
 
     //=========================PHOTOS===============================

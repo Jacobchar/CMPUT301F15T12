@@ -31,10 +31,7 @@ public class Photo {
      * @return true/false if photo is in the valid format
      */
     public Boolean checkValidFormat(String format){
-        if(format == "Bitmap"){
-            return true;
-        }
-        return false;
+        return format == "Bitmap";
     }
 
 
@@ -53,8 +50,7 @@ public class Photo {
      * @return returns a json string.
      */
     public String convertImageToJson(Bitmap image){
-        GsonManager gman = new GsonManager();
-        return gman.toJson(image);
+        return GsonManager.getInstance().toJson(image);
     }
 
     /*All the Getters and Setters*/

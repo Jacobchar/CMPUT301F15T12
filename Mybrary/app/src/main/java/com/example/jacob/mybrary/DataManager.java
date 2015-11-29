@@ -379,11 +379,25 @@ public class DataManager {
         }
     }
 
+    /**
+     * Retrieves a locally cached photo.
+     * @param id Identifier of the photo to be retrieved.
+     * @return Returns the Photo object with the given id.
+     * @throws IOException Thrown if an error occured while reading the file.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
+     */
     public Photo retrieveCachedPhoto(String id) throws IOException, JSONException {
         String photoJson = FileManager.getInstance().readFile("Photos/" + id);
         return GsonManager.getInstance().fromJson(photoJson, Photo.class);
     }
 
+    /**
+     * Retrieves a stored photo from the server.
+     * @param id Identifier of the photo to be retrieved.
+     * @return Returns the Photo object stored on the server.
+     * @throws IOException Thrown if an error occurred during communication.
+     * @throws JSONException Thrown if the JSON was malformed (Possibly if an older version of an object is retrieved).
+     */
     public Photo retrieveOnlinePhoto(String id) throws IOException, JSONException {
         String result = ConnectionManager.getInstance().get("Photos/" + id);
         JSONObject obj = new JSONObject(result);
