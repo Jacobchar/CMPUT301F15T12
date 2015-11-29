@@ -137,4 +137,12 @@ public class ConnectionManager {
     public boolean isConnected() {
         return isConnected;
     }
+
+    protected void setDebugOffline() {
+        isConnected = false;
+    }
+
+    protected  void setDebugOnline() {
+        isConnected = true;
+    }
 }

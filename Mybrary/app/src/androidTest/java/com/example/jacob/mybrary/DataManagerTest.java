@@ -19,27 +19,34 @@ import java.util.UUID;
  */
 public class DataManagerTest extends AndroidTestCase {
     //=========================BOOKS===============================
-    public void testPutBook() {
+    public void testPutBookOnline() {
         try {
+            ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
             Book book = new Book("testBook", 1, "testCategory", true);
 
             if(!dataManager.storeBook(book)) {
-                assertTrue(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
+                fail();
+                //assertTrue(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
             }
 
             dataManager.removeBook(book.getItemID().toString());
         } catch (Exception e) {
             fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
         }
     }
 
-    public void testGetBook() {
+    public void testGetBookOnline() {
         try {
+            ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
             Book book = new Book("testBook", 1, "testCategory", true);
 
-            dataManager.storeBook(book);
+            if (!dataManager.storeBook(book)) {
+                fail();
+            }
 
             Book returnedBook = dataManager.retrieveBook(book.getItemID().toString());
 
@@ -48,11 +55,14 @@ public class DataManagerTest extends AndroidTestCase {
             dataManager.removeBook(book.getItemID().toString());
         } catch (Exception e) {
             fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
         }
     }
 
     public void testSearchBooks() {
         try {
+            ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
             Book book1 = new Book("testBook1", 1, "testCategory1", true);
             Book book2 = new Book("testBook2", 2, "testCategory2", true);
@@ -65,7 +75,7 @@ public class DataManagerTest extends AndroidTestCase {
             //Wait for entries to be indexed
             Thread.sleep(1000);
 
-            ArrayList<Book> returnedBooks = dataManager.searchBooks("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testBook2\"}}}");
+            ArrayList<Book> returnedBooks = dataManager.searchBooks("{\"query\":{\"query_string\":{\"default_field\":\"itemID\",\"query\":\"" + book2.getItemID().toString() + "\"}}}");
 
             assertTrue(returnedBooks.size() == 1);
             assertTrue(returnedBooks.contains(book2));
@@ -75,28 +85,83 @@ public class DataManagerTest extends AndroidTestCase {
             dataManager.removeBook(book3.getItemID().toString());
         } catch (Exception e) {
             fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
         }
     }
 
-    public void testRemoveBook() {
+    public void testRemoveBookOnline() {
         try {
+            ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
             Book book = new Book("testBook", 1, "testCategory", true);
 
-            dataManager.storeBook(book);
+            if (!dataManager.storeBook(book)) {
+                fail();
+            }
 
             if (!dataManager.removeBook(book.getItemID().toString())) {
                 assertFalse(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
             }
         } catch (Exception e) {
             fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
         }
     }
 
+    public void testPutBookOffline() {
+        try {
+            ConnectionManager.getInstance().setDebugOffline();
+            DataManager dataManager = DataManager.getInstance();
+            Book book = new Book("testBook", 1, "testCategory", true);
+
+            assertFalse(dataManager.storeBook(book));
+            assertTrue(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
+
+            dataManager.removeBook(book.getItemID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testGetBookOffline() {
+        try {
+            ConnectionManager.getInstance().setDebugOffline();
+            DataManager dataManager = DataManager.getInstance();
+            Book book = new Book("testBook", 1, "testCategory", true);
+
+            assertFalse(dataManager.storeBook(book));
+
+            Book returnedBook = dataManager.retrieveBook(book.getItemID().toString());
+
+            assertTrue(book.equals(returnedBook));
+
+            dataManager.removeBook(book.getItemID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testRemoveBookOffline() {
+        try {
+            ConnectionManager.getInstance().setDebugOffline();
+            DataManager dataManager = DataManager.getInstance();
+            Book book = new Book("testBook", 1, "testCategory", true);
+
+            assertFalse(dataManager.storeBook(book));
+
+            assertFalse(dataManager.removeBook(book.getItemID().toString()));
+            assertFalse(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
+        } catch (Exception e) {
+            fail();
+        }
+    }
 
     //=========================USERS===============================
-    public void testPutUser() {
+    public void testPutUserOnline() {
         try {
+            ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
             User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
 
@@ -107,11 +172,14 @@ public class DataManagerTest extends AndroidTestCase {
             dataManager.removeBook(user.getUUID().toString());
         } catch (Exception e) {
             fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
         }
     }
 
-    public void testGetUser() {
+    public void testGetUserOnline() {
         try {
+            ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
             User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
 
@@ -127,11 +195,14 @@ public class DataManagerTest extends AndroidTestCase {
             dataManager.removeBook(user.getUUID().toString());
         } catch (Exception e) {
             fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
         }
     }
 
-    public void testSearchUsers() {
+    public void testSearchUsersOnline() {
         try {
+            ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
             User user1 = new User("testName1", "testEmail1", "testPhNo1", "testGender1", "testBio1", "testCity1");
             User user2 = new User("testName2", "testEmail2", "testPhNo2", "testGender2", "testBio2", "testCity2");
@@ -144,7 +215,7 @@ public class DataManagerTest extends AndroidTestCase {
             //Wait for entries to be indexed
             Thread.sleep(1000);
 
-            ArrayList<User> returnedUsers = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\"testName2\"}}}");
+            ArrayList<User> returnedUsers = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"myUUID\",\"query\":\"" + user2.getUUID().toString() + "\"}}}");
 
             assertTrue(returnedUsers.size() == 1);
             assertTrue(returnedUsers.contains(user2));
@@ -154,11 +225,14 @@ public class DataManagerTest extends AndroidTestCase {
             dataManager.removeBook(user3.getUUID().toString());
         } catch (Exception e) {
             fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
         }
     }
 
-    public void testRemoveUser() {
+    public void testRemoveUserOnline() {
         try {
+            ConnectionManager.getInstance().setDebugOnline();
             DataManager dataManager = DataManager.getInstance();
             User user = new User("testName", "testEmail", "testPhNo", "testGender", "testBio", "testCity");
 
@@ -169,25 +243,148 @@ public class DataManagerTest extends AndroidTestCase {
             }
         } catch (Exception e) {
             fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
         }
     }
 
 
     //=========================TRADES===============================
-    public void testPutTrade() {
+    public void testPutTradeOnline() {
+        try {
+            ConnectionManager.getInstance().setDebugOnline();
+            DataManager dataManager = DataManager.getInstance();
+            Trade trade = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
 
+            if(!dataManager.storeTrade(trade)) {
+                fail();
+                //assertTrue(FileManager.getInstance().fileExists("Trades/" + trade.getTradeID().toString()));
+            }
+
+            dataManager.removeBook(trade.getTradeID().toString());
+        } catch (Exception e) {
+            fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
+        }
     }
 
-    public void testGetTrade() {
+    public void testGetTradeOnline() {
+        try {
+            ConnectionManager.getInstance().setDebugOnline();
+            DataManager dataManager = DataManager.getInstance();
+            Trade trade = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
 
+            if (!dataManager.storeTrade(trade)) {
+                fail();
+            }
+
+            Trade returnedTrade = dataManager.retrieveTrade(trade.getTradeID().toString());
+
+            assertTrue(trade.equals(returnedTrade));
+
+            dataManager.removeBook(trade.getTradeID().toString());
+        } catch (Exception e) {
+            fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
+        }
     }
 
-    public void testSearchTrades() {
+    public void testSearchTradesOnline() {
+        try {
+            ConnectionManager.getInstance().setDebugOnline();
+            DataManager dataManager = DataManager.getInstance();
+            Trade trade1 = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
+            Trade trade2 = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
+            Trade trade3 = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
 
+            dataManager.storeTrade(trade1);
+            dataManager.storeTrade(trade2);
+            dataManager.storeTrade(trade3);
+
+            //Wait for entries to be indexed
+            Thread.sleep(1000);
+
+            ArrayList<Trade> returnedTrades = dataManager.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + trade2.getTradeID().toString() + "\"}}}");
+
+            assertTrue(returnedTrades.size() == 1);
+            assertTrue(returnedTrades.contains(trade2));
+
+            dataManager.removeBook(trade1.getTradeID().toString());
+            dataManager.removeBook(trade2.getTradeID().toString());
+            dataManager.removeBook(trade3.getTradeID().toString());
+        } catch (Exception e) {
+            fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
+        }
     }
 
-    public void testRemoveTrade() {
+    public void testRemoveTradeOnline() {
+        try {
+            ConnectionManager.getInstance().setDebugOnline();
+            DataManager dataManager = DataManager.getInstance();
+            Trade trade = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
 
+            if (!dataManager.storeTrade(trade)) {
+                fail();
+            }
+
+            assertTrue(dataManager.removeTrade(trade.getTradeID().toString()));
+        } catch (Exception e) {
+            fail();
+        } finally {
+            ConnectionManager.getInstance().setDebugOffline();
+        }
+    }
+
+    public void testPutTradeOffline() {
+        try {
+            ConnectionManager.getInstance().setDebugOffline();
+            DataManager dataManager = DataManager.getInstance();
+            Trade trade = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
+
+            assertFalse(dataManager.storeTrade(trade));
+            assertTrue(FileManager.getInstance().fileExists("Trades/" + trade.getTradeID().toString()));
+
+            dataManager.removeBook(trade.getTradeID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testGetTradeOffline() {
+        try {
+            ConnectionManager.getInstance().setDebugOffline();
+            DataManager dataManager = DataManager.getInstance();
+            Trade trade = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
+
+            assertFalse(dataManager.storeTrade(trade));
+
+            Trade returnedTrade = dataManager.retrieveTrade(trade.getTradeID().toString());
+
+            assertTrue(trade.equals(returnedTrade));
+
+            dataManager.removeBook(trade.getTradeID().toString());
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    public void testRemoveTradeOffline() {
+        try {
+            ConnectionManager.getInstance().setDebugOffline();
+            DataManager dataManager = DataManager.getInstance();
+            Trade trade = new Trade(new User("", "", "", "", "", ""), new User("", "", "", "", "", ""));
+
+            assertFalse(dataManager.storeTrade(trade));
+
+            assertFalse(dataManager.removeTrade(trade.getTradeID().toString()));
+            assertFalse(FileManager.getInstance().fileExists("Trades/" + trade.getTradeID().toString()));
+        } catch (Exception e) {
+            fail();
+        }
     }
 
 
