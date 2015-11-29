@@ -118,10 +118,9 @@ public class FriendsList implements Parcelable{
         try {
             //this should be modified to do a partial match
             userList = dataManager.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"name\",\"query\":\""+ name +"\"}}}");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace(); //create new empty list of size zero
+            userList = new ArrayList<>();
         }
         return userList;
     }

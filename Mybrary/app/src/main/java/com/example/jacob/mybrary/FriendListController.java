@@ -79,7 +79,7 @@ public class FriendListController {
                     localUser.getFriendsList().addFriend(userList.get(0));
                     System.out.println(userList.get(0).getName());
                 } else {
-                    System.out.println("Crap!");
+                    System.out.println("Crap!"); // this should display something to the user!!
                 }
 
                 try {
