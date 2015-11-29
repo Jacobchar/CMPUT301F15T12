@@ -35,7 +35,7 @@ public class FriendsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
-        listView.setClickable(true);
+//        listView.setClickable(true);
 
         fillFriendsList();
 
@@ -140,12 +140,6 @@ public class FriendsListActivity extends AppCompatActivity {
                         String username = input.getText().toString();
                         //Add friend on separate thread
                         friendListController.addNewFriend(username, FriendsListActivity.this);
-
-                        try {
-                            dataManager.saveLocalUser();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     }
                 });
 
