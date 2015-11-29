@@ -45,6 +45,7 @@ public class DataManager {
         LocalUser user = LocalUser.getInstance();
         String userjson = GsonManager.getInstance().toJson(user);
         if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
             storeUser(user);
         }
         FileManager.getInstance().saveJson("localUser.json", userjson);
@@ -57,27 +58,33 @@ public class DataManager {
 
             //Go through the offline folders and push any items found.
             File bookDir = new File(fm.getAppFolderName() + "Offline/Books");
-            for (File book : bookDir.listFiles()) {
-                String id = book.getName();
-                String json = fm.readFile(book);
-                cm.put("Books/" + id, json);
-                book.delete();
+            if (bookDir.exists()) {
+                for (File book : bookDir.listFiles()) {
+                    String id = book.getName();
+                    String json = fm.readFile(book);
+                    cm.put("Books/" + id, json);
+                    book.delete();
+                }
             }
 
             File tradeDir = new File(fm.getAppFolderName() + "Offline/Trades");
-            for (File trade : tradeDir.listFiles()) {
-                String id = trade.getName();
-                String json = fm.readFile(trade);
-                cm.put("Trades/" + id, json);
-                trade.delete();
+            if (tradeDir.exists()) {
+                for (File trade : tradeDir.listFiles()) {
+                    String id = trade.getName();
+                    String json = fm.readFile(trade);
+                    cm.put("Trades/" + id, json);
+                    trade.delete();
+                }
             }
 
             File photoDir = new File(fm.getAppFolderName() + "Offline/Photos");
-            for (File photo : photoDir.listFiles()) {
-                String id = photo.getName();
-                String json = fm.readFile(photo);
-                cm.put("Photos/" + id, json);
-                photo.delete();
+            if (photoDir.exists()) {
+                for (File photo : photoDir.listFiles()) {
+                    String id = photo.getName();
+                    String json = fm.readFile(photo);
+                    cm.put("Photos/" + id, json);
+                    photo.delete();
+                }
             }
         }
     }
@@ -95,6 +102,7 @@ public class DataManager {
         String path = "Books/" + book.getItemID().toString();
         String json = GsonManager.getInstance().toJson(book);
         if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
             result = ConnectionManager.getInstance().put(path, json);
         } else {
             //Store for later
@@ -122,6 +130,7 @@ public class DataManager {
         saveLocalUser();
 
         if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
             String result = ConnectionManager.getInstance().remove("Books/" + id);
             return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Books\",\"_id\":\"" + id);
         } else {
@@ -138,6 +147,7 @@ public class DataManager {
      */
     public Book retrieveBook(String id) throws IOException, JSONException {
         if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
             String result = ConnectionManager.getInstance().get("Books/" + id);
             JSONObject obj = new JSONObject(result);
             String bookjson = obj.getJSONObject("_source").toString();
@@ -182,6 +192,7 @@ public class DataManager {
         String path = "Users/" + user.getUUID().toString();
         String json = GsonManager.getInstance().toJson(user);
         if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
             result = ConnectionManager.getInstance().put(path, json);
         }
         fm.saveJson("Users/" + user.getUUID().toString(), json);
@@ -197,6 +208,7 @@ public class DataManager {
      */
     public Boolean removeUser(String id) throws IOException {
         if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
             FileManager.getInstance().removeFile("Users/" + id);
             String result = ConnectionManager.getInstance().remove("Users/" + id);
             return result.contains("{\"found\":true,\"_index\":\"cmput301f15t12\",\"_type\":\"Users\",\"_id\":\"" + id);
@@ -214,6 +226,7 @@ public class DataManager {
      */
     public User retrieveUser(String id) throws IOException, JSONException {
         if (ConnectionManager.getInstance().isConnected()) {
+            pushOfflineItems();
             String result = ConnectionManager.getInstance().get("Users/" + id);
             JSONObject obj = new JSONObject(result);
             String userjson = obj.getJSONObject("_source").toString();
