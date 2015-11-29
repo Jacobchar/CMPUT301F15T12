@@ -80,7 +80,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     public void acceptTradeButton(View v){
         controller.setAcceptedStatus(this, true, currentTrade, false);
 
-        controller.sendAcceptedEmail(this, currentTrade);
+       // controller.sendAcceptedEmail(this, currentTrade);
 
 
     }

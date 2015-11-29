@@ -368,6 +368,7 @@ public class TradeController {
             );
             t.start();
         }
+    /*
 
     public void sendAcceptedEmail(final Activity parent, final UUID currentTradeID) {
         Thread t = new Thread(new Runnable() {
@@ -395,6 +396,6 @@ public class TradeController {
             );
             t.start();
         }
-
+*/
 
     }
