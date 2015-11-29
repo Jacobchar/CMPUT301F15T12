@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.UUID;
 
 //Class to hold the data for an individual user of the app
@@ -111,6 +112,15 @@ public class User implements Parcelable, Comparable {
      */
     public Inventory getInventory() {
         return inventory;
+    }
+
+    /**
+     * Returns the Inventory of the User that is shared with Others
+     * @return
+     */
+    public Inventory getPublicInventory() {
+
+        return inventory.getPublicBooks();
     }
 
     /**

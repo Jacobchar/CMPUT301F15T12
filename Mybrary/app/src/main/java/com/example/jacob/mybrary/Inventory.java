@@ -202,4 +202,17 @@ public class Inventory implements Serializable {
         }
     }
 
+    public Inventory getPublicBooks(){
+        Inventory inv = new Inventory();
+        Book book;
+
+        Iterator<Book> iterator = inventoryList.iterator();
+        while(iterator.hasNext()){
+            book = iterator.next();
+            if (book.isSharedWithOthers())
+                inv.addBook(iterator.next());
+        }
+        return inv;
+    }
+
 }

@@ -55,7 +55,7 @@ public class ViewUserActivity extends AppCompatActivity {
 
     public void showInventory(View view){
         Intent intent = new Intent(this,InventoryActivity.class);
-        intent.putExtra("inv", myUser.getInventory());
+        intent.putExtra("inv", myUser.getPublicInventory());
         startActivity(intent);
     }
 }
