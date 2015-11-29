@@ -26,12 +26,6 @@ public class Book implements Serializable {
 
     private ArrayList<UUID> photoIDs;
 
-    private String[] possibleCategories = new String[]{"Non Fiction", "Horror", "Biography",
-            "Action/Adventure", "Science Fiction", "Textbook", "Comic Book", "Cooking", "DIY", "Other"};
-    private String[] possibleCategoriesWithNoChangeOption = new String[]{"No Change", "Non Fiction",
-            "Horror", "Biography", "Action/Adventure", "Science Fiction", "Textbook", "Comic Book",
-            "Cooking", "DIY", "Other"};
-
     /**
      * Basic empty Book constructor.
      */
@@ -147,11 +141,14 @@ public class Book implements Serializable {
     }
 
     public String[] getPossibleCategories() {
-        return possibleCategories;
+        return new String[]{"Non Fiction", "Horror", "Biography",
+                "Action/Adventure", "Science Fiction", "Textbook", "Comic Book", "Cooking", "DIY", "Other"};
     }
 
     public String[] getPossibleCategoriesWithNoChangeOption() {
-        return possibleCategoriesWithNoChangeOption;
+        return new String[]{"No Change", "Non Fiction",
+                "Horror", "Biography", "Action/Adventure", "Science Fiction", "Textbook", "Comic Book",
+                "Cooking", "DIY", "Other"};
     }
 
     public UUID getItemID() { return itemID; }

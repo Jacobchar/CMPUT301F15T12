@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -120,7 +121,10 @@ public class User implements Parcelable, Comparable {
      */
     public Inventory getPublicInventory() {
 
-        return inventory.getPublicBooks();
+        ArrayList<Book> arrayList = inventory.getPublicBooks();
+        Inventory inventory = new Inventory();
+        inventory.convertFriendsArrayListToInventory(arrayList);
+        return inventory;
     }
 
     /**
