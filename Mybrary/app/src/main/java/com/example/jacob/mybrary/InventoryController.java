@@ -189,6 +189,14 @@ public class InventoryController {
         }
     }
 
+    public void cloneItem(Book book){
+
+        Book clonedBook = new Book(book.getName(), book.getQuantity(), book.getCategory(), book.isSharedWithOthers());
+        // add photo later
+        localUser.getInventory().addBook(clonedBook);
+
+    }
+
 
     public Inventory getInventory(){
         return localUser.getInventory();
