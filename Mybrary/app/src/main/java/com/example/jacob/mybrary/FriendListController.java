@@ -35,21 +35,6 @@ public class FriendListController {
         });
     }
 
-    /*
-    public void showFriend(final String name, final Context context){
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                connectionManager.updateConnectivity(context);
-                User myFriend = localUser.getFriendsList().getByName(name).get(0);
-                Intent intent = new Intent(this, ViewUserActivity.class);
-                intent.putExtra("user", myFriend);
-                startActivity(intent);
-            }
-        });
-        t.start();
-    }
-    */
 
     public void updateFriendList(final Activity parent, final ListView friendListView, final Context context) {
         Thread t = new Thread(new Runnable() {

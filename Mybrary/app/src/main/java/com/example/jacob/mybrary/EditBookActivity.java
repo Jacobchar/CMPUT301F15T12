@@ -91,6 +91,10 @@ public class EditBookActivity extends AppCompatActivity {
 
     }
 
+    public void uploadPhoto(View view) {
+        //TO-DO: upload photo/take photo
+    }
+
     public TextView getNameText(){
         return (TextView) findViewById(R.id.nameEditView);
     }
