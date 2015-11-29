@@ -104,9 +104,9 @@
             <Button
                 android:layout_width="124dp"
                 android:layout_height="wrap_content"
-                android:text="Upload Photo"
+                android:text="Take Photo"
                 android:id="@+id/uploadButton"
-                android:onClick="uploadPhoto"
+                android:onClick="takePhoto"
                 android:layout_gravity="center_horizontal" />
 
             <Button
