@@ -155,6 +155,7 @@ public class DataManager {
             String result = ConnectionManager.getInstance().get("Books/" + id);
             JSONObject obj = new JSONObject(result);
             String bookjson = obj.getJSONObject("_source").toString();
+            FileManager.getInstance().saveJson("Books/" + id, bookjson);
             return GsonManager.getInstance().fromJson(bookjson, Book.class);
         } else {
             String bookjson = FileManager.getInstance().readFile("Books/" + id);
@@ -234,6 +235,7 @@ public class DataManager {
             String result = ConnectionManager.getInstance().get("Users/" + id);
             JSONObject obj = new JSONObject(result);
             String userjson = obj.getJSONObject("_source").toString();
+            FileManager.getInstance().saveJson("Users/" + id, userjson);
             return GsonManager.getInstance().fromJson(userjson, User.class);
         } else {
             String userjson = FileManager.getInstance().readFile("Users/" + id);
@@ -324,6 +326,7 @@ public class DataManager {
             String result = ConnectionManager.getInstance().get("Trades/" + id);
             JSONObject obj = new JSONObject(result);
             String tradejson = obj.getJSONObject("_source").toString();
+            FileManager.getInstance().saveJson("Trades/" + id, tradejson);
             return GsonManager.getInstance().fromJson(tradejson, Trade.class);
         } else {
             String tradejson = FileManager.getInstance().readFile("Trades/" + id);
@@ -435,6 +438,7 @@ public class DataManager {
         String result = ConnectionManager.getInstance().get("Photos/" + id);
         JSONObject obj = new JSONObject(result);
         String photoJson = obj.getJSONObject("_source").toString();
+        FileManager.getInstance().saveJson("Photos/" + id, photoJson);
         return GsonManager.getInstance().fromJson(photoJson, Photo.class);
     }
 }
