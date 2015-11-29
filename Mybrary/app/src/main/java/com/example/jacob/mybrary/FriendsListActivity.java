@@ -3,7 +3,7 @@ package com.example.jacob.mybrary;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.provider.ContactsContract;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
@@ -13,13 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class FriendsListActivity extends AppCompatActivity {
 
@@ -29,13 +23,13 @@ public class FriendsListActivity extends AppCompatActivity {
     private FriendListController friendListController = new FriendListController();
     LocalUser localUser = LocalUser.getInstance();
     DataManager dataManager = DataManager.getInstance();
+    ConnectionManager connectionManager = ConnectionManager.getInstance();
     private AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friends_list);
-//        listView.setClickable(true);
 
         fillFriendsList();
 
@@ -45,6 +39,7 @@ public class FriendsListActivity extends AppCompatActivity {
     public void onResume(){
         super.onResume();
         onLongClickListener(listView);
+        onClickListener(listView);
         fillFriendsList();
     }
 
@@ -104,8 +99,8 @@ public class FriendsListActivity extends AppCompatActivity {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final String name = (String) parent.getItemAtPosition(position);
-                //todo - call controller to start new intent
+                String name = (String) parent.getItemAtPosition(position);
+                new showFriend().execute(name);
             }
 
         });
@@ -154,4 +149,22 @@ public class FriendsListActivity extends AppCompatActivity {
         infoDialog.show();
 
     }
+
+    private class showFriend extends AsyncTask<String, Void, User> {
+        @Override
+        protected User doInBackground(String... name) {
+
+            connectionManager.updateConnectivity(FriendsListActivity.this);
+            User myFriend = localUser.getFriendsList().getByName(name[0]).get(0);
+            return myFriend;
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(User result) {
+            Intent intent = new Intent(FriendsListActivity.this, ViewUserActivity.class);
+            intent.putExtra("user", result);
+            startActivity(intent);
+        }
+    }
+
 }
