@@ -22,3 +22,6 @@ Testing if an activity actually opened: https://github.com/joshua2ua/lonelyTwitt
 retrieved on October 1st 2015  
     
 Using wildcards in elastic search queries: https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html
+
+Sorting a List using compareTo and collections:
+https://docs.oracle.com/javase/6/docs/api/java/util/Collections.html#sort(java.util.List)
