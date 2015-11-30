@@ -98,7 +98,7 @@ public class AddNewItem extends AppCompatActivity {
     }
 
     /**
-     * Opens Camera intent.
+     * Opens Camera intent and saves photo to server.
      * @param view Takes in a view
      */
     public void takePhoto(View view) {

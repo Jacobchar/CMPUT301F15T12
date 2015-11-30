@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * Created by Jacob on 2015-11-28.
  *
- * This class helps us instantiate the camera, most of the code involving the camera was taken from:
+ * This class helps us instantiate the camera, almost all of the code involving the camera was taken from:
  * http://blog.rhesoft.com/2015/04/02/tutorial-how-to-use-camera-with-android-and-android-studio/
  * The above link is to the tutorial that walked us through using the camera in our app.
  *
