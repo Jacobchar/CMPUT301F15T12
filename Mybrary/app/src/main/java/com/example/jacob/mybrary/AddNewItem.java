@@ -105,7 +105,23 @@ public class AddNewItem extends AppCompatActivity {
 
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
+        activity = this;
+
+        final Photo photo = new Photo(null, "JPG", null , UUID.randomUUID());
         //Upload the photo
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataManager dataManager = DataManager.getInstance();
+                connectionManager.updateConnectivity(activity);
+                try {
+                    dataManager.storePhoto(photo);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
     public TextView getNameText(){
