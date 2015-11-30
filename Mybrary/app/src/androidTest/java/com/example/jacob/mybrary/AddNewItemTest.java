@@ -24,7 +24,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         final TextView text = activity.getNameText();
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                text.setText("testName");
+                text.setText("testName1");
             }
         });
         getInstrumentation().waitForIdleSync();
@@ -37,11 +37,10 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-
         final Inventory inv = inventoryController.getInventory();
-        Book book = inv.getBookByName("testName");
+        Book book = inv.getBookByName("testName1");
 
-        assertTrue(book.getName().equals("testName"));
+        assertTrue(book.getName().equals("testName1"));
 
     }
 
@@ -53,7 +52,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         final TextView text = activity.getQuantityText();
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                textName.setText("testName");
+                textName.setText("testName2");
                 text.setText("3");
             }
         });
@@ -68,7 +67,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         final Inventory inv = inventoryController.getInventory();
-        Book book = inv.getBookByName("testName");
+        Book book = inv.getBookByName("testName2");
 
         assertTrue(book.getQuantity() == 3);
 
@@ -81,7 +80,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         final Spinner text = activity.getCategoryText();
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                textName.setText("testName");
+                textName.setText("testName3");
                 text.setSelection(2);
             }
         });
@@ -96,9 +95,9 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         final Inventory inv = inventoryController.getInventory();
-        Book book = inv.getBookByName("testName");
+        Book book = inv.getBookByName("testName3");
 
-        assertTrue(book.getCategory().equals("Horror"));
+        assertTrue(book.getCategory().equals("Biography"));
 
     }
 
@@ -110,8 +109,8 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                textName.setText("testName");
-                checkBox.setEnabled(true);
+                textName.setText("testName4");
+                checkBox.setChecked(true);
             }
         });
         getInstrumentation().waitForIdleSync();
@@ -125,7 +124,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         final Inventory inv = inventoryController.getInventory();
-        Book book = inv.getBookByName("testName");
+        Book book = inv.getBookByName("testName4");
 
         assertTrue(book.isSharedWithOthers());
     }
@@ -141,7 +140,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
 
         activity.runOnUiThread(new Runnable() {
             public void run() {
-                textName.setText("testName");
+                textName.setText("testName5");
                 text.setText(string);
             }
         });
@@ -156,7 +155,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         getInstrumentation().waitForIdleSync();
 
         final Inventory inv = inventoryController.getInventory();
-        Book book = inv.getBookByName("testName");
+        Book book = inv.getBookByName("testName5");
 
         assertTrue(book.getComments().contains(string));
 

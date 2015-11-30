@@ -21,7 +21,6 @@ public class TopTradersActivity extends AppCompatActivity {
             }
         });
 
-        topController.fillView(this, true);
+        topController.fillView(this, false);
     }
-
 }

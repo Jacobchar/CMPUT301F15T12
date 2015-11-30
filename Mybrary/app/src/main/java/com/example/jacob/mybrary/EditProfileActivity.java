@@ -15,8 +15,6 @@ import java.io.IOException;
 /**
  * Activity to Edit a User object
  *
- * Loading and Saving User not yet implemented
- * MVC Style not Completely Implemented yet
  */
 public class EditProfileActivity extends AppCompatActivity {
     ProfileController myProfileController = new ProfileController();
@@ -40,45 +38,19 @@ public class EditProfileActivity extends AppCompatActivity {
     /**
      * Activity to take in the Text from the Edit Text boxes and Updates the User with
      * the information
-     * @param v
+     * @param v View required to be passed when called from the XML file
      */
     public void setUser(View v){
-        TextView nameView = (TextView) this.findViewById(R.id.nameEditView);
-        String name = nameView.getText().toString();
-        EditText cityView = (EditText) this.findViewById(R.id.cityEditView);
-        String city = cityView.getText().toString();
-        EditText genderView = (EditText) this.findViewById(R.id.genderEditView);
-        String gender = genderView.getText().toString();
-        EditText phoneView = (EditText) this.findViewById(R.id.phoneEditView);
-        String phone = phoneView.getText().toString();
-        if(!Patterns.PHONE.matcher(phone).matches()){
-            Toast phoneToast = Toast.makeText(this, "Phone Number Not Valid", Toast.LENGTH_SHORT);
-            phoneToast.show();
-            return;
+        Boolean state = myProfileController.updateUser(this);
+        if (state) {
+            Toast doneToast = Toast.makeText(this, "Profile Changed", Toast.LENGTH_SHORT);
+            doneToast.show();
+            finish();
         }
-        EditText emailView = (EditText) this.findViewById(R.id.emailEditView);
-        String email = emailView.getText().toString();
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast emailToast = Toast.makeText(this, "Email Not Valid", Toast.LENGTH_SHORT);
-            emailToast.show();
-            return;
-        }
-        EditText bioView = (EditText) this.findViewById(R.id.bioEditView);
-        String bio = bioView.getText().toString();
-        User gotUser = new User(name, email, phone, gender, bio, city);
-        LocalUser.getInstance().setSelf(gotUser);
-        try {
-            DataManager.getInstance().saveLocalUser();
-        }catch (IOException e){
-
-        }
-        Toast doneToast = Toast.makeText(this, "Profile Changed", Toast.LENGTH_SHORT);
-        doneToast.show();
-        finish();
     }
 
     /**
-     * Sets the Text within the Edit Text boxes to the values from a User
+     * Sets the Text within the Edit Text boxes to the values from the user
      *
      */
     public void setText(){

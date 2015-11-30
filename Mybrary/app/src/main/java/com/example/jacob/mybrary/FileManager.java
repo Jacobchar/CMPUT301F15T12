@@ -76,6 +76,12 @@ public class FileManager {
         return rv.toString();
     }
 
+    /**
+     * Loads the json string from a given file.
+     * @param file File object representing the desired file.
+     * @return Returns a string containing the contents of the file.
+     * @throws IOException Thrown if an error occured while reading the file.
+     */
     public String readFile(File file) throws IOException {
         StringBuilder rv = new StringBuilder();
         String line;
@@ -100,10 +106,19 @@ public class FileManager {
         return file.delete();
     }
 
+    /**
+     * Gets the path to the local app folder.
+     * @return Returns a string containing the local app folder path.
+     */
     public String getAppFolderName() {
         return appFolderName;
     }
 
+    /**
+     * Checks if a file exists at the given path relative to the local app folder.
+     * @param path String representing the relative path to the desired file.
+     * @return Returns a boolean indicating whether the file exists.
+     */
     public Boolean fileExists(String path) {
         File file = new File(appFolderName + path);
         return file.exists();
