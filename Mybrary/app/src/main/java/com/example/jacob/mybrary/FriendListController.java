@@ -40,6 +40,12 @@ public class FriendListController {
 
     }
 
+    /**
+     * This updates the UI via the adapter in FriendsListActivity
+     * @param view
+     * @param adapter
+     * @param parent
+     */
     public void updateUI(final ListView view, final ArrayAdapter<?> adapter, Activity parent) {
         parent.runOnUiThread(new Runnable() {
             @Override
@@ -51,6 +57,13 @@ public class FriendListController {
     }
 
 
+    /**
+     * Starts a new thread to update the network status, retrieves all friends from server if
+     * possible, and updates the UI appropriately
+     * @param parent
+     * @param friendListView
+     * @param context
+     */
     public void updateFriendList(final Activity parent, final ListView friendListView, final Context context) {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -65,6 +78,11 @@ public class FriendListController {
         t.start();
     }
 
+    /**
+     * starts a new thread to remove a friend from the localuser based on longpressed user
+     * @param friend
+     * @param context
+     */
     public void removeFriend(final String friend,final Context context) {
         Thread t = new Thread(new Runnable() {
             @Override
@@ -82,7 +100,12 @@ public class FriendListController {
         t.start();
     }
 
-
+    /**
+     * adds a new friend, with partial matches, based on the string entered by the user in the
+     * friendslist activity, and does so on a new thread
+     * @param friend
+     * @param context
+     */
     public void addNewFriend(final String friend, final Context context) {
         Thread t = new Thread(new Runnable() {
             @Override
