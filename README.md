@@ -35,5 +35,8 @@ Adding a recipient to an emailIntent:   http://stackoverflow.com/questions/90970
 Using collections to sort a list:
 https://docs.oracle.com/javase/6/docs/api/java/util/Collections.html
 
+Camera Tutorial:
+http://blog.rhesoft.com/2015/04/02/tutorial-how-to-use-camera-with-android-and-android-studio/
+
 Background music for demo:
 "Oceans Apart" by Scott Holmes, from freemusicarchive.org
