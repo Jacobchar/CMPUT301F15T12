@@ -2,7 +2,25 @@ package com.example.jacob.mybrary;
 
 import android.graphics.Bitmap;
 import java.util.UUID;
+/*
+Copyright (C) 2015  Ben Schreiber , David Ross,Dominic Trottier,
+                    Jake Charlebois, Mason Strong, Victoria Hessdorfer
 
+        This file is part of Mybrary.
+
+        This program is free software: you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation, either version 3 of the License, or
+        (at your option) any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 /**
  *
  * Basic photo class. Skeleton code(Not so skeleton anymore). Still needs to check valid format.
