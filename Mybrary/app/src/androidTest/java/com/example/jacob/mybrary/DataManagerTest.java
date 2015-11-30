@@ -27,7 +27,6 @@ public class DataManagerTest extends AndroidTestCase {
 
             if(!dataManager.storeBook(book)) {
                 fail();
-                //assertTrue(FileManager.getInstance().fileExists("Books/" + book.getItemID().toString()));
             }
 
             dataManager.removeBook(book.getItemID().toString());
@@ -259,7 +258,6 @@ public class DataManagerTest extends AndroidTestCase {
 
             if(!dataManager.storeTrade(trade)) {
                 fail();
-                //assertTrue(FileManager.getInstance().fileExists("Trades/" + trade.getTradeID().toString()));
             }
 
             dataManager.removeBook(trade.getTradeID().toString());
@@ -399,7 +397,6 @@ public class DataManagerTest extends AndroidTestCase {
             Photo photo = new Photo(100, "Bitmap", "This is so encoded", photoID);
 
             assertTrue(dataManager.storePhoto(photo));
-            //assertTrue(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
 
             dataManager.removePhoto(photo.getPhotoID().toString());
         } catch (Exception e) {
@@ -441,7 +438,6 @@ public class DataManagerTest extends AndroidTestCase {
 
             dataManager.storePhoto(photo);
             assertTrue(dataManager.removePhoto(photo.getPhotoID().toString()));
-            //assertFalse(FileManager.getInstance().fileExists("Photos/" + photo.getPhotoID().toString()));
         } catch (Exception e) {
             fail();
         } finally {

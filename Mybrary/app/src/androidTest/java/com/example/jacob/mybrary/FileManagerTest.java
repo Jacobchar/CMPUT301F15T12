@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Created by Dominic on 2015-11-13.
+ * Simple tests for FileManager.
  *
- * Simple tests for FileManager. Still need to test for expected failures.
+ * Created by Dominic on 2015-11-13.
  */
 public class FileManagerTest extends AndroidTestCase {
     public void testWriteFile() {
@@ -20,8 +20,8 @@ public class FileManagerTest extends AndroidTestCase {
             fail();
         }
 
-        File file = new File("test.json");
-        assertTrue(file.exists());
+        assertTrue(fm.fileExists("test.json"));
+        File file = new File(fm.getAppFolderName() + "test.json");
         file.delete();
     }
 
@@ -34,8 +34,36 @@ public class FileManagerTest extends AndroidTestCase {
             assertTrue(content.equals("{\"val\":2}"));
         } catch (IOException e) {
             fail();
+        } finally {
+            File file = new File("test.json");
+            file.delete();
         }
-        File file = new File("test.json");
-        file.delete();
+    }
+
+    public void testMissingFile() {
+        FileManager fm = FileManager.getInstance();
+
+        try {
+            String content = fm.readFile("DNE.json");
+        } catch (IOException e) {
+            return;
+        }
+
+        fail();
+    }
+
+    public void testEmptyFile() {
+        FileManager fm = FileManager.getInstance();
+
+        try {
+            fm.saveJson("test.json", "");
+            String content = fm.readFile("test.json");
+            assertTrue(content.equals(""));
+        } catch (IOException e) {
+            fail();
+        } finally {
+            File file = new File("test.json");
+            file.delete();
+        }
     }
 }
