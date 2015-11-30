@@ -3,6 +3,7 @@ package com.example.jacob.mybrary;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -80,8 +81,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     public void acceptTradeButton(View v){
         controller.setAcceptedStatus(this, true, currentTrade, false);
 
-       // controller.sendAcceptedEmail(this, currentTrade);
-
+        controller.startEmail(this,currentTrade);
 
     }
 

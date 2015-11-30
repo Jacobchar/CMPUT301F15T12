@@ -3,6 +3,8 @@ package com.example.jacob.mybrary;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Looper;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import java.util.UUID;
 public class TradeController {
     final private DataManager saver = DataManager.getInstance();
     private LocalUser localUser = LocalUser.getInstance();
+    private Activity localActivity = null;
 
     /**
      * Create a new trade between the current user, and the friend he is wanting to trade with
@@ -139,7 +142,7 @@ public class TradeController {
      * @param status         true or false for whether the user has accepted
      * @param currentTradeID the unique ID for the trade being altered
      */
-    public void setAcceptedStatus(final Activity parent,final Boolean status, final UUID currentTradeID, final Boolean setOtherUser) {
+    public void setAcceptedStatus(final Activity parent, final Boolean status, final UUID currentTradeID, final Boolean setOtherUser) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -154,10 +157,11 @@ public class TradeController {
                         }
                     } else {
                         trade.setUser2Accepted(status);
-                        if (setOtherUser) {
-                            trade.setUser1Accepted(!status);
-                        }
                     }
+                    if (setOtherUser) {
+                        trade.setUser1Accepted(!status);
+                    }
+
                     saver.storeTrade(trade);
                 } catch (IOException e) {
                     Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
@@ -298,14 +302,14 @@ public class TradeController {
         t.start();
     }
 
-                /**
-                 * Sets the selected trade to complete
-                 * Removes the trade from the server, and replaces it with the updated one
-                 *
-                 * @param currentTradeID trade to be completed
-                 */
+    /**
+     * Sets the selected trade to complete
+     * Removes the trade from the server, and replaces it with the updated one
+     *
+     * @param currentTradeID trade to be completed
+     */
 
-    public void setTradeComplete(final Activity parent,final UUID currentTradeID) {
+    public void setTradeComplete(final Activity parent, final UUID currentTradeID) {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -313,6 +317,8 @@ public class TradeController {
                     Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
                     saver.removeTrade(trade.getTradeID().toString());
                     trade.setIsComplete(true);
+                    saver.storeTrade(trade);
+
 
                     User user1 = saver.retrieveUser(trade.getUser1UUID().toString());
                     user1.setSuccTrades(user1.getSuccTrades() + 1);
@@ -324,7 +330,7 @@ public class TradeController {
                     saver.removeUser(user2.getUUID().toString());
                     saver.storeUser(user2);
 
-                    saver.storeTrade(trade);
+
                 } catch (IOException e) {
                     Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
                 } catch (JSONException e) {
@@ -332,16 +338,16 @@ public class TradeController {
                 }
             }
         }
-            );
-            t.start();
-        }
+        );
+        t.start();
+    }
 
-                /**
-                 * Check if both users have accepted the trade, then prompts if the trade is complete or not
-                 *
-                 * @param currentTradeID UUID for the trade currently being looked at
-                 * @param parent         the activity calling this method
-                 */
+    /**
+     * Check if both users have accepted the trade, then prompts if the trade is complete or not
+     *
+     * @param currentTradeID UUID for the trade currently being looked at
+     * @param parent         the activity calling this method
+     */
 
     public void checkIfAccepted(final UUID currentTradeID, final ViewIndividualTradeActivity parent) {
         Thread t = new Thread(new Runnable() {
@@ -365,37 +371,56 @@ public class TradeController {
                 }
             }
         }
-            );
-            t.start();
-        }
-    /*
+        );
+        t.start();
+    }
 
-    public void sendAcceptedEmail(final Activity parent, final UUID currentTradeID) {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" + currentTradeID.toString() + "\"}}}").get(0);
-                    UUID otherUser;
-                    if (trade.getUser1UUID().equals(localUser.getUUID())) {
-                        otherUser = trade.getUser2UUID();
-                    } else {
-                        otherUser = trade.getUser1UUID();
-                    }
-                    User user = saver.retrieveUser(otherUser.toString());
-                    final String emailAddress = user.getEmailAddress();
-                    final String tradeInfo = trade.getUser1Offer().toString() + "\n" + trade.getUser2Offer().toString();
+    public void startEmail(Activity parent, UUID tradeID){
+        this.localActivity = parent;
+        new emailHandler().execute(tradeID);
+    }
 
-                } catch (IOException e) {
-                    Toast.makeText(parent, "Error reading from file", Toast.LENGTH_SHORT);
-                } catch (JSONException e) {
-                    Toast.makeText(parent, "Error connecting to network", Toast.LENGTH_SHORT);
+
+    private class emailHandler extends AsyncTask<UUID, Void, ArrayList<String>> {
+        ArrayList<String> returnArray = new ArrayList<>();
+
+        @Override
+        protected ArrayList<String> doInBackground(UUID... currentTradeID) {
+            try {
+                Trade trade = saver.searchTrades("{\"query\":{\"query_string\":{\"default_field\":\"tradeID\",\"query\":\"" +currentTradeID[0].toString()+ "\"}}}").get(0);
+                UUID otherUser;
+                if (trade.getUser1UUID().equals(localUser.getUUID())) {
+                    otherUser = trade.getUser2UUID();
+                } else {
+                    otherUser = trade.getUser1UUID();
                 }
+                User user = saver.retrieveUser(otherUser.toString());
+                String emailAddress = user.getEmailAddress();
+                String tradeInfo = trade.getUser1Offer().toString() + "\n" + trade.getUser2Offer().toString();
+
+                returnArray.add(emailAddress);
+                returnArray.add(tradeInfo);
+
+
+            } catch (IOException e) {
+
+            } catch (JSONException e) {
+
+
             }
+            return returnArray;
         }
-            );
-            t.start();
+
+        @Override
+        protected void onPostExecute(ArrayList<String> returnVal) {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:"));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Trade Accepted");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { returnVal.get(0) });
+            emailIntent.putExtra(Intent.EXTRA_TEXT,returnVal.get(1));
+            localActivity.startActivity(emailIntent);
         }
-*/
+
 
     }
+}
