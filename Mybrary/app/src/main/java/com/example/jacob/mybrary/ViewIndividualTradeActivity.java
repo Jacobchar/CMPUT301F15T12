@@ -25,6 +25,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     AlertDialog alert;
     UUID currentTrade;
     TradeController controller = new TradeController();
+    ButtonController buttonHider = new ButtonController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +38,6 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
         if(extras !=null) {
             currentTrade = (UUID) extras.getSerializable("currentTrade");
         }
-
         controller.checkIfAccepted(currentTrade,this);
     }
 
