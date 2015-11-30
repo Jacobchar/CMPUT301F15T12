@@ -80,5 +80,6 @@ public class EditProfileActivityTest extends ActivityInstrumentationTestCase2 {
 
     }
 
+
 }
 

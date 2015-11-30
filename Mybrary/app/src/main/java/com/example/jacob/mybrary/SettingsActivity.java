@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         CheckBox checkBox = (CheckBox) findViewById(R.id.downloadImagesCheckBox);
         checkBox.setChecked(LocalUser.getInstance().getDownloadImages());
+
     }
 
     /**
@@ -35,7 +37,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     /**
-     * Toggles whether the User downloads images automatically based on if the Checkbox is checked
+     * Toggles whether the User downloads images automatically based on if the Checkbox is checkedo
      * @param v View required to be passed when called from the XML file
      */
     public void toggleDownloadImages(View v){

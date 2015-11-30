@@ -8,11 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.UUID;
 
-//Class to hold the data for an individual user of the app
-
 /**
- * Created by Ben
- *
  * Model class that represents a User of the app. Contains information specific to the User,
  * the User's inventory, and a unique User id generated on creation.
  *

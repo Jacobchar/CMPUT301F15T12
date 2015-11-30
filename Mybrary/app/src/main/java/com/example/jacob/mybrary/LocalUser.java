@@ -24,8 +24,4 @@ public class LocalUser extends User {
         ourInstance = instance;
     }
 
-    public static void setUserInstance(LocalUser instance){
-        ourInstance.setSelf(instance);
-        ourInstance.setUUID(instance.getUUID());
-    }
 }
