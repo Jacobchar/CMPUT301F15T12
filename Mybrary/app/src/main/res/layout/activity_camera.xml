@@ -24,8 +24,7 @@
         android:layout_width="114dp"
         android:layout_height="59dp"
         android:text="Capture"
-        android:id="@+id/captureButton"
-        android:layout_gravity="center_horizontal|bottom"
-        style="@style/ButtonStyle" />
+        android:id="@+id/button_capture"
+        android:layout_gravity="center_horizontal|bottom"/>
 
 </FrameLayout>

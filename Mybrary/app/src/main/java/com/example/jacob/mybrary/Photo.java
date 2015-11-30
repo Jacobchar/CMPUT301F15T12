@@ -31,7 +31,7 @@ public class Photo {
      * @return true/false if photo is in the valid format
      */
     public Boolean checkValidFormat(String format){
-        return format == "Bitmap";
+        return format == "JPG";
     }
 
 

@@ -14,7 +14,7 @@ public class PhotoTest extends AndroidTestCase {
 
 
     private Integer size = 100;
-    private String format = "Bitmap";
+    private String format = "JPG";
     private String encodedImage = "This is so encoded";
     private UUID photoID; // = test.fromString("test");
 
