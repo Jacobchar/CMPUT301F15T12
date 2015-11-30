@@ -37,7 +37,6 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-
         final Inventory inv = inventoryController.getInventory();
         Book book = inv.getBookByName("testName1");
 

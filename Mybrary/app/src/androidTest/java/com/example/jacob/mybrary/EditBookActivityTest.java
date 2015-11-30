@@ -1,5 +1,7 @@
 package com.example.jacob.mybrary;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,6 +21,20 @@ public class EditBookActivityTest  extends ActivityInstrumentationTestCase2 {
 
     public EditBookActivityTest(){
         super(EditBookActivity.class);
+    }
+
+    // need to set up conditions where inventory is not null.
+    public void setUp(){
+        LocalUser localUser = LocalUser.getInstance();
+        Book book = new Book();
+        localUser.getInventory().addBook(book);
+        Intent i = new Intent();
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable("id", book.getItemID());
+
+        i.putExtras(bundle);
+        setActivityIntent(i);
     }
 
     public void testSetNewName(){
@@ -101,7 +117,7 @@ public class EditBookActivityTest  extends ActivityInstrumentationTestCase2 {
         final Inventory inv = inventoryController.getInventory();
         Book book = inv.getBookByName("testName3");
 
-        assertTrue(book.getCategory().equals("Horror"));
+        assertTrue(book.getCategory().equals("Non Fiction"));
 
     }
 
