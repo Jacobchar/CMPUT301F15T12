@@ -1,10 +1,6 @@
 package com.example.jacob.mybrary;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.TouchUtils;
-import android.test.UiThreadTest;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -12,17 +8,14 @@ import android.widget.TextView;
  * Tests the Edit Profile Activity
  */
 public class EditProfileActivityTest extends ActivityInstrumentationTestCase2 {
-    private String name = "TestUser";
-    private String emailAddress = "user@test.com";
-    private String phoneNum = "555-5555";
-    private String gender = "Male";
-    private String bio = "Likes to take long walks on the beach";
-    private String city = "Edmonton";
 
     public EditProfileActivityTest (){
         super(EditProfileActivity.class);
     }
 
+    /**
+     * Tests the Automatic setting of the edit text boxes
+     */
     public void testSetText(){
         EditProfileActivity activity = (EditProfileActivity) getActivity();
         assertNotNull(activity);
@@ -44,6 +37,12 @@ public class EditProfileActivityTest extends ActivityInstrumentationTestCase2 {
      * Tests the input into the text boxes
      */
     public void testFillBoxes(){
+        String name = "TestUser";
+        String emailAddress = "user@test.com";
+        String phoneNum = "555-5555";
+        String gender = "Male";
+        String bio = "Likes to take long walks on the beach";
+        String city = "Edmonton";
         final User testUser = new User(name, emailAddress, phoneNum, gender, bio, city);
 
         final EditProfileActivity activity = (EditProfileActivity) getActivity();
@@ -79,55 +78,7 @@ public class EditProfileActivityTest extends ActivityInstrumentationTestCase2 {
             throwable.printStackTrace();
         }
 
-
     }
 
-    /**
-     * Tests the user pressing the "Set Profile" button
-     * Currently Overwrites the local user, so don't use
-     */
-    /*public void testClickSetProfile(){
-        User oldUser = LocalUser.getInstance();
-
-        final User testUser = new User(name, emailAddress, phoneNum, gender, bio, city);
-
-        final EditProfileActivity activity = (EditProfileActivity) getActivity();
-        assertNotNull(activity);
-
-        try {
-            runTestOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    EditText nameView = (EditText) activity.findViewById(R.id.nameEditView);
-                    nameView.setText(testUser.getName());
-                    EditText cityView = (EditText) activity.findViewById(R.id.cityEditView);
-                    cityView.setText(testUser.getCity());
-                    EditText genderView = (EditText) activity.findViewById(R.id.genderEditView);
-                    genderView.setText(testUser.getGender());
-                    EditText phoneView = (EditText) activity.findViewById(R.id.phoneEditView);
-                    phoneView.setText(testUser.getPhoneNumber());
-                    EditText emailView = (EditText) activity.findViewById(R.id.emailEditView);
-                    emailView.setText(testUser.getEmailAddress());
-                    EditText bioView = (EditText) activity.findViewById(R.id.bioEditView);
-                    bioView.setText(testUser.getBio());
-                }
-            });
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        }
-
-
-        Button setProfileButton = (Button) activity.findViewById(R.id.setProfileButton);
-        TouchUtils.clickView(this, setProfileButton);
-
-        assertEquals(LocalUser.getInstance().getName(), name);
-        assertEquals(LocalUser.getInstance().getCity(), city);
-        assertEquals(LocalUser.getInstance().getGender(), gender);
-        assertEquals(LocalUser.getInstance().getPhoneNumber(), phoneNum);
-        assertEquals(LocalUser.getInstance().getEmailAddress(), emailAddress);
-        assertEquals(LocalUser.getInstance().getBio(), bio);
-
-        LocalUser.getInstance().setSelf(oldUser);
-    }*/
 }
 

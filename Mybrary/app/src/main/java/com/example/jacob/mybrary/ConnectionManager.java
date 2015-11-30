@@ -14,11 +14,11 @@ import android.os.AsyncTask;
 import java.io.IOException;
 
 /**
- * Created by Dominic on 2015-10-31.
- *
  * Low level http manager. Allows json objects to be put and retrieved from the server at a
  * specific path. The path should not have a leading slash and should include the id at the end
  * when appropriate.
+ *
+ * Created by Dominic on 2015-10-31.
  */
 public class ConnectionManager {
     private final String connstr;
@@ -134,14 +134,25 @@ public class ConnectionManager {
         return isConnected;
     }
 
+    /**
+     * Gets the internal connection boolean. This is stored as a boolean because connectivity cannot
+     * be updated without an application context.
+     * @return Returns a boolean value indicating the internal connection state.
+     */
     public boolean isConnected() {
         return isConnected;
     }
 
+    /**
+     * Debug method to force the ConnectionManager to go into offline mode.
+     */
     protected void setDebugOffline() {
         isConnected = false;
     }
 
+    /**
+     * Debug method of force the ConnectionManager to go into online mode.
+     */
     protected  void setDebugOnline() {
         isConnected = true;
     }

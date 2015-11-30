@@ -23,6 +23,4 @@ public class TopTradersActivity extends AppCompatActivity {
 
         topController.fillView(this, false);
     }
-
-
 }
