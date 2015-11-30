@@ -60,6 +60,7 @@ public class TopTraderController {
      */
    private ArrayList<User> getTopFriends() throws IOException, JSONException {
        ArrayList<User> friendsList = saver.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"myUUID\",\"query\":\"" + localUser.getUUID().toString() + "\"}}}").get(0).getFriendsList().getUsers();
+       // https://docs.oracle.com/javase/6/docs/api/java/util/Collections.html
        Collections.sort(friendsList);
        return friendsList;
    }
@@ -72,7 +73,8 @@ public class TopTraderController {
      * @throws JSONException Error accessing files
      */
     private ArrayList<User> getTopUsers() throws IOException, JSONException{
-        ArrayList<User> userList = saver.searchUsers("{\"query\":{\"query_string\":{\"default_field\":\"*\",\"query\":\"*\"}}}");
+        ArrayList<User> userList = saver.searchUsers("{\"query\":{\"query_string\":{\"query\":\"_exists_:myUUID\"}}}");
+        //https://docs.oracle.com/javase/6/docs/api/java/util/Collections.html
         Collections.sort(userList);
         return userList;
     }
