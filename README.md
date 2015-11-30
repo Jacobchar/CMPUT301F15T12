@@ -31,3 +31,6 @@ Answered by yorkw
 
 Adding a recipient to an emailIntent:   http://stackoverflow.com/questions/9097080/intent-extra-email-not-populating-the-to-field  
              answered by MKJParekh   
+
+Using collections to sort a list:
+https://docs.oracle.com/javase/6/docs/api/java/util/Collections.html
