@@ -162,6 +162,7 @@ public class FriendsListActivity extends AppCompatActivity {
                         String username = input.getText().toString();
                         //Add friend on separate thread
                         friendListController.addNewFriend(username, FriendsListActivity.this);
+                        refresh();
                     }
                 });
 
@@ -170,6 +171,7 @@ public class FriendsListActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.cancel();
+                        refresh();
                     }
                 });
         fillFriendsList();
@@ -211,4 +213,8 @@ public class FriendsListActivity extends AppCompatActivity {
         }
     }
 
+    private void refresh() {
+        finish();
+        startActivity(getIntent());
+    }
 }
