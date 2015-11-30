@@ -21,12 +21,10 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * Created by Victoria.
- *
  * Inventory Activity, displays to the inventory to the user. Allows for deleting a book on a long
  * click, adding a book, and searching your inventory.
  *
- * Search functionality deferred to P5.
+ * Created by Victoria.
  *
  */
 
@@ -102,6 +100,10 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Opens Add New Item Activity.
+     * @param view Takes in a view
+     */
     public void addNewItem(View view) {
 
         Intent intent = new Intent(activity, AddNewItem.class);
@@ -109,7 +111,12 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * This function asks the user for a textual input, and to specify if they want to search
+     * for a book by Name or Category. It then delegates to inventoryController to search through
+     * all of the current users friends for the given book criteria.
+     * @param view Takes in a view.
+     */
     public void searchInventory(View view) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(InventoryActivity.this);
@@ -146,6 +153,10 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Opens the Edit Book Activity
+     * @param id Takes in the UUID of the book the User wants to edit
+     */
     public void editItem(UUID id) {
 
         Intent intent = new Intent(this, EditBookActivity.class);
@@ -158,17 +169,22 @@ public class InventoryActivity extends AppCompatActivity {
 
     }
 
-    public AlertDialog getAlertDialog(){
-        return this.alert;
-    }
-
     @Override
-    // cite http://stackoverflow.com/questions/17242713/how-to-pass-parcelable-object-from-child-to-parent-activity
+    /**
+     * Gets a notification of an activity started from this activity's completion. On completion,
+     * this function refreshes the user's inventory.
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // cite http://stackoverflow.com/questions/17242713/how-to-pass-parcelable-object-from-child-to-parent-activity
         super.onActivityResult(requestCode, resultCode, data);
 
         inventoryController.refreshList();
         inventoryController.fillInventory(activity, inventoryListView);
+    }
+
+
+    public AlertDialog getAlertDialog(){
+        return this.alert;
     }
 
 }

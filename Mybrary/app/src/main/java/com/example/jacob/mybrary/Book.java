@@ -7,11 +7,10 @@ import java.util.Iterator;
 import java.util.UUID;
 
 /**
- * Created by Victoria.
- *
  * Model class that represents the book class. Can create new books, add comments, and get and set
  * book attributes. The toString() method dictates what will be displayed in the inventory activity.
  *
+ * Created by Victoria.
  */
 
 public class Book implements Serializable {

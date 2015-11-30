@@ -1,5 +1,7 @@
 package com.example.jacob.mybrary;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.ArrayList;
@@ -22,6 +24,12 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
     private Collection<String> comments;
 
     public BookTest() { super(Book.class); }
+
+    public void setUp(){
+        LocalUser localUser = LocalUser.getInstance();
+        Book book = new Book();
+        localUser.getInventory().addBook(book);
+    }
 
     public void testCreateBook() {
         Book book = new Book(name, quantity, category, sharedWithOthers);
@@ -86,10 +94,13 @@ public class BookTest extends ActivityInstrumentationTestCase2 {
         Collection<String> t = testBook.getComments();
         Iterator i = t.iterator();
 
+        Boolean found = false;
         while (i.hasNext()){
-            Book book = (Book) i.next();
-            assertEquals(book.getComments().size(), testBook.getComments().size());
+            String tmp = (String) i.next();
+            if (tmp.equals(comment))
+                found = true;
         }
+        assertTrue(found);
 
     }
 

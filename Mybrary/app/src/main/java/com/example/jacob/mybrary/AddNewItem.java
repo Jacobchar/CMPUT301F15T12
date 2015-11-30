@@ -21,6 +21,12 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * This Activity allows the User to add a new item to their inventory.
+ *
+ * Created by Victoria.
+ */
+
 public class AddNewItem extends AppCompatActivity {
 
     private InventoryController inventoryController = new InventoryController();
@@ -91,7 +97,10 @@ public class AddNewItem extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Opens Camera intent.
+     * @param view Takes in a view
+     */
     public void takePhoto(View view) {
 
         Intent intent = new Intent(this, CameraActivity.class);

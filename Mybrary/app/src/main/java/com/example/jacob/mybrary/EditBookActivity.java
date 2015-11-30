@@ -17,6 +17,13 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.UUID;
 
+/**
+ * This Activity allows the User to edit a given item in their inventory. The item is chosen in
+ * the main Inventory Activity, and is passed to this activity, by Book ID, in a bundle.
+ *
+ * Created by Victoria.
+ */
+
 public class EditBookActivity extends AppCompatActivity {
 
     private InventoryController inventoryController = new InventoryController();
@@ -105,6 +112,10 @@ public class EditBookActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Starts Camera Activity.
+     * @param view Takes in a View
+     */
     public void takePhoto(View view) {
 
         Intent intent = new Intent(this, CameraActivity.class);

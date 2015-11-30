@@ -14,14 +14,11 @@ import java.util.Iterator;
 import java.util.UUID;
 
 /**
- * Created by Victoria.
- *
  * Model class that represents a user's inventory. Allows for basic inventory functionality such as
  * getting the inventory, deleting a book, searching for a book by name, deleting a book, checking
  * if it has a book, and checking the size of the Inventory.
  *
- * Still under construction.
- *
+ * Created by Victoria.
  */
 
 
@@ -195,6 +192,10 @@ public class Inventory implements Serializable {
         return false;
     }
 
+    /**
+     * Takes an ArrayList of books and converts it into an Inventory of books.
+     * @param arrayList Takes an ArrayList of books
+     */
     public void convertFriendsArrayListToInventory(ArrayList<Book> arrayList){
         Iterator<Book> iterator = arrayList.iterator();
         while(iterator.hasNext()) {
@@ -202,6 +203,10 @@ public class Inventory implements Serializable {
         }
     }
 
+    /**
+     * Returns an ArrayList of a given inventories public books.
+     * @return ArrayList of public books.
+     */
     public ArrayList<Book> getPublicBooks(){
         Inventory inv = new Inventory();
 
