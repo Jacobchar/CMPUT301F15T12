@@ -44,6 +44,10 @@ public class ProposeTradeActivity extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Update the interface every time it is opened
+     */
     @Override
     protected void onResume(){
         super.onResume();
@@ -56,6 +60,9 @@ public class ProposeTradeActivity extends AppCompatActivity {
         onClickListener(theirTradeOffer, currentTrade, 0);
     }
 
+    /**
+     * Disallow the back button being pressed to prevent placing of incomplete trades on the server
+     */
     @Override
     public void onBackPressed(){
         Toast.makeText(this,"Please confirm your trade",Toast.LENGTH_SHORT).show();
@@ -96,12 +103,20 @@ public class ProposeTradeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Activate the button which will send a new trade request
+     * @param v view being acted on
+     */
     public void sendRequestButton(View v){
         tradeController.setAcceptedStatus(this,true,currentTrade, true);
         Toast.makeText(this,"Trade offer sent",Toast.LENGTH_SHORT).show();
         finish();
     }
 
+    /**
+     * Activate the button allowing a user to add an item to their own trade offer
+     * @param v view being acted upon
+     */
     public void addYourOfferButton(View v){
         Intent intent = new Intent(ProposeTradeActivity.this, AddBookToTradeActivity.class);
         // http://stackoverflow.com/questions/2965109/passing-data-between-activities-in-android
@@ -112,6 +127,10 @@ public class ProposeTradeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Activate the button allowing a user to add an item to their friend's inventory
+     * @param v view being acted upon
+     */
     public void addTheirOfferButton(View v){
         Intent intent = new Intent(ProposeTradeActivity.this, AddBookToTradeActivity.class);
         // http://stackoverflow.com/questions/2965109/passing-data-between-activities-in-android

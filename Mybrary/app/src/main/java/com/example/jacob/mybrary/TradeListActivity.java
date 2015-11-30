@@ -43,6 +43,10 @@ public class TradeListActivity extends AppCompatActivity {
         onClickListener(completedTradeListView);
     }
 
+    /**
+     * Listens for a long click on the trade view, allowing the user to delete the chosen trade
+     * @param view view being listened to
+     */
     public void onLongClickListener(final ListView view){
         view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -72,6 +76,10 @@ public class TradeListActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Listens for regular clicks on a given trade so users can view hte trade
+     * @param view view being clicked on
+     */
     public void onClickListener(final ListView view){
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

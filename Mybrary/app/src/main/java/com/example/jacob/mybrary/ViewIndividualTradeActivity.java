@@ -50,6 +50,9 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
         controller.getCurrentTradeOffer(this, currentTrade, (ListView) findViewById(R.id.yourItemsListView), (ListView) findViewById(R.id.theirItemsListView));
     }
 
+    /**
+     * Prompts a user to answer whether the trade is completed
+     */
     public void bothUsersAcceptedPrompt(){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Is this trade complete?");
@@ -71,6 +74,10 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
         }
 
 
+    /**
+     * Activates the modify trade button to allow trade editing
+     * @param v view being acted on
+     */
     public void modifyTradeButton(View v){
         // note: FromActivity.class, ToActivity.class
         Intent intent = new Intent(this, ProposeTradeActivity.class);
@@ -78,6 +85,10 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * Activates the accepted trade button
+     * @param v view being acted on
+     */
     public void acceptTradeButton(View v){
         controller.setAcceptedStatus(this, true, currentTrade, false);
 
@@ -85,6 +96,10 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Activates the decline trade button
+     * @param v view being acted on
+     */
     public void declineTradeButton(View v){
         controller.setAcceptedStatus(this,false,currentTrade,false);
         AlertDialog.Builder builder = new AlertDialog.Builder(ViewIndividualTradeActivity.this);

@@ -34,6 +34,12 @@ public class AddBookToTradeActivity extends AppCompatActivity {
         onClickListener((ListView) findViewById(R.id.addBookToTradeListView), currentTrade, callingButton);
     }
 
+    /**
+     * Listen to clicks on the view
+     * @param view view being listened to
+     * @param tradeID trade that is having items added to it
+     * @param offerToEdit
+     */
     public void onClickListener(final ListView view, final UUID tradeID, final int offerToEdit) {
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
