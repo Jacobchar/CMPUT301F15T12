@@ -20,11 +20,11 @@ import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * Created by Victoria.
- *
  * Controller class that deals with changes to the Inventory, and helps with the InventoryActivity's
- * functionality.
+ * functionality. This class handles filling the inventory in an activity listView, cloning items
+ * from your Friends' inventories, and searching through inventories using elastisearch.
  *
+ * Created by Victoria.
  */
 
 public class InventoryController {
@@ -37,7 +37,7 @@ public class InventoryController {
 
 
     /**
-     * Fills your inventory ListView on opening the inventory activity.
+     * Fills your inventory ListView on opening the inventory activity, with localUser's inventory.
      */
     void fillInventory(Activity activity, ListView listView){
 
@@ -49,6 +49,9 @@ public class InventoryController {
         refreshList();
     }
 
+    /**
+     * Fills your inventory ListView on opening the inventory activity, with a given inventory.
+     */
     void fillInventory(Activity activity, ListView listView, Inventory inventory){
 
         localActivity = activity;
@@ -59,6 +62,13 @@ public class InventoryController {
         refreshList();
     }
 
+    /**
+     * This function takes a user's given book name parameter, turns it into a partial matching
+     * elastisearch query and passes it to an asynchronous task, runQuery()
+     * @param name The given book name the user wants to match. Can be full or partial match.
+     * @param activity The current activity
+     * @param context The current context
+     */
     public void searchForBookByName(String name, Activity activity, Context context){
 
         localActivity = activity;
@@ -88,6 +98,13 @@ public class InventoryController {
 
     }
 
+    /**
+     * This function takes a user's given category parameter, turns it into a partial matching
+     * elastisearch query and passes it to an asynchronous task, runQuery()
+     * @param category The given category the user wants to match. Can be full or partial match.
+     * @param activity The current activity
+     * @param context The current context
+     */
     public void searchForBookByCategory(String category, Activity activity, Context context){
 
         localActivity = activity;
@@ -116,6 +133,12 @@ public class InventoryController {
 
     }
 
+    /**
+     * Executes an elastisearch query and sorts through a resultset on an asynchronous task.
+     * This function also weeds out any books that
+     * belong to the user, or that don't belong to any of the user's friends. On completion, this
+     * function opens a new ViewGivenInventoryActivity and displays the results of the query.
+     */
     private class runQuery extends AsyncTask<String, Void, ArrayList<Book>> {
 
         @Override
@@ -189,6 +212,11 @@ public class InventoryController {
         }
     }
 
+    /**
+     * Clones an item clicked on from a friend's inventory, and creates a book in your inventory
+     * with the same attributes.
+     * @param book Book the user wants to clone
+     */
     public void cloneItem(Book book){
 
         Book clonedBook = new Book(book.getName(), book.getQuantity(), book.getCategory(), book.isSharedWithOthers());
@@ -202,6 +230,9 @@ public class InventoryController {
         return localUser.getInventory();
     }
 
+    /**
+     * Notifies the adapter that it needs to refresh the data set.
+     */
     public void refreshList(){
         adapter.notifyDataSetChanged();
     }

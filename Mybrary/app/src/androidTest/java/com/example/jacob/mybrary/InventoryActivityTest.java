@@ -168,7 +168,6 @@ public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
         int endNum = list.getAdapter().getCount();
         assertEquals(endNum, invSize - 1);
 
-
     }
 
 
