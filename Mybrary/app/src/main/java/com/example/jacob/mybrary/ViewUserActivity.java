@@ -53,6 +53,10 @@ public class ViewUserActivity extends AppCompatActivity {
         bioTextView.setText(myUser.getBio());
     }
 
+    /**
+     * Opens the Inventory of the User being viewed
+     * @param view View required to be passed when called from the XML file
+     */
     public void showInventory(View view){
         Intent intent = new Intent(this, ViewGivenInventoryActivity.class);
         intent.putExtra("inventory", myUser.getPublicInventory());

@@ -10,6 +10,9 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+/**
+ * Start Up and Main Menu activity
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -23,31 +26,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, CreateUserActivity.class);
             startActivity(intent);
         }
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    /**
+     * Opens the Friends List Activity
+     * @param view View required to be passed when called from the XML file
+     */
     public void openFriendsListActivity(View view) {
 
         // note: FromActivity.class, ToActivity.class
@@ -56,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Opens the Settings Activity
+     * @param view View required to be passed when called from the XML file
+     */
     public void openSettingsActivity(View view) {
 
         // note: FromActivity.class, ToActivity.class
@@ -64,23 +52,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Opens the Inventory Activity
+     * @param view View required to be passed when called from the XML file
+     */
     public void openInventoryActivity(View view) {
 
         // note: FromActivity.class, ToActivity.class
         Intent intent = new Intent(this, InventoryActivity.class);
         startActivity(intent);
-
     }
 
+    /**
+     * Opens the Trade List Activity
+     * @param view View required to be passed when called from the XML file
+     */
     public void openTradeListActivity(View view) {
 
         // note: FromActivity.class, ToActivity.class
         Intent intent = new Intent(this, TradeListActivity.class);
         startActivity(intent);
-
     }
 
+    /**
+     * Opens the View Profile Activity
+     * @param view View required to be passed when called from the XML file
+     */
     public void openProfileActivity(View view) {
         try {
             DataManager.getInstance().loadLocalUser();
@@ -92,9 +89,12 @@ public class MainActivity extends AppCompatActivity {
         User user = LocalUser.getInstance();
         intent.putExtra("user", user);
         startActivity(intent);
-
     }
 
+    /**
+     * Opens the Top Traders Activity
+     * @param view View required to be passed when called from the XML file
+     */
     public void openTopTradersActivity(View view){
         Intent intent = new Intent(this, TopTradersActivity.class);
         startActivity(intent);

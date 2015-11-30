@@ -52,72 +52,63 @@ public class User implements Parcelable, Comparable {
     }
 
     /**
-     * Returns the Name of the User
-     * @return
+     * @return Returns the Name of the User
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Returns the Email Address of the User
-     * @return
+     * @return Returns the Email Address of the User
      */
     public String getEmailAddress(){
         return emailAddress;
     }
 
     /**
-     * Returns the Phone Number of the User
-     * @return
+     * @return Returns the Phone Number of the User
      */
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
     /**
-     * Returns the Gender of the User
-     * @return
+     * @return Returns the Gender of the User
      */
     public String getGender() {
         return gender;
     }
 
     /**
-     * Returns the Bio of the User
-     * @return
+     * @return Returns the Bio of the User
      */
     public String getBio() {
         return bio;
     }
 
     /**
-     * Returns the City of the User
-     * @return
+     * @return Returns the City of the User
      */
     public String getCity(){
         return city;
     }
 
     /**
-     * Returns the UUID of the User
-     * @return
+     * @return Returns the UUID of the User
      */
     public UUID getUUID() {
         return myUUID;
     }
 
     /**
-     * Returns the Inventory of the User
-     * @return
+     * @return Returns the Inventory of the User
      */
     public Inventory getInventory() {
         return inventory;
     }
 
     /**
-     * Returns the Inventory of the User that is shared with Others
-     * @return
+     * @return Returns the Inventory of the User that is shared with Others
      */
     public Inventory getPublicInventory() {
 
@@ -128,26 +119,38 @@ public class User implements Parcelable, Comparable {
     }
 
     /**
-     * Returns the Friendslist of the User
-     * @return
+     * @return Returns the Friendslist of the User
      */
     public FriendsList getFriendsList() {
         return friendsList;
-        //return new FriendsList();
     }
 
+    /**
+     * @return returns the succTrades of the User
+     */
     public int getSuccTrades() {
         return succTrades;
     }
 
+    /**
+     * Sets the succTrades of the user to the inputted value
+     * @param succTrades Inputted Value
+     */
     public void setSuccTrades(int succTrades) {
         this.succTrades = succTrades;
     }
 
+    /**
+     * @return Returns the state of the downloadImages boolean
+     */
     public Boolean getDownloadImages() {
         return downloadImages;
     }
 
+    /**
+     * Sets the downloadImages boolean of the User to the inputted value
+     * @param downloadImages inputted value
+     */
     public void setDownloadImages(Boolean downloadImages) {
         this.downloadImages = downloadImages;
     }
@@ -188,6 +191,10 @@ public class User implements Parcelable, Comparable {
         return result;
     }
 
+    /**
+     * Sets the information fields of the User to that of an inputted user
+     * @param newUser inputted User to change the user
+     */
     public void setSelf(User newUser){
         this.name = newUser.getName();
         this.emailAddress = newUser.getEmailAddress();
@@ -197,8 +204,12 @@ public class User implements Parcelable, Comparable {
         this.city = newUser.getCity();
     }
 
-    public void setUUID(UUID myUUID) {
-        this.myUUID = myUUID;
+    /**
+     * Sets the UUID of the User to an Inputted UUID
+     * @param newUUID inputted UUID to
+     */
+    public void setUUID(UUID newUUID) {
+        this.myUUID = newUUID;
     }
 
     @Override
@@ -248,6 +259,12 @@ public class User implements Parcelable, Comparable {
         }
     };
 
+    /**
+     *
+     * @param o User object to be compared with this user
+     * @return Returns the difference between the inputted object and the user's successful trades
+     * parameter
+     */
     @Override
     public int compareTo(Object o) {
         if (o.getClass().equals(User.class)){
