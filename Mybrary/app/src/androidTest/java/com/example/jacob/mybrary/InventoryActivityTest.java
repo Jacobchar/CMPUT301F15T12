@@ -13,6 +13,8 @@ import android.widget.ListView;
  */
 public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
 
+    InventoryController inventoryController = new InventoryController();
+
     public InventoryActivityTest(){
         super(InventoryActivity.class);
     }
@@ -23,9 +25,11 @@ public class InventoryActivityTest extends ActivityInstrumentationTestCase2 {
         inventory.addBook(book);
 
         InventoryActivity activity = (InventoryActivity) getActivity();
-        activity.fillInventory(); // doesn't work, problem with thread
 
         ListView list = (ListView) activity.findViewById(R.id.inventoryListView);
+
+        inventoryController.fillInventory(activity,list); // doesn't work, problem with thread
+
         Book grabBook = (Book) list.getAdapter().getItem(0);
         assertNotNull(grabBook);
 

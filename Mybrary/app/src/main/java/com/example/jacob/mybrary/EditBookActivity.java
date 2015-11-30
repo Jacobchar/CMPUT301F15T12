@@ -112,6 +112,30 @@ public class EditBookActivity extends AppCompatActivity {
         //Upload the photo
     }
 
+    public TextView getNameText(){
+        return (TextView) findViewById(R.id.nameEditView);
+    }
+
+    public TextView getQuantityText(){
+        return (TextView) findViewById(R.id.QuantityEditView);
+    }
+
+    public Spinner getCategoryText(){
+        return (Spinner) findViewById(R.id.categorySpinner);
+    }
+
+    public CheckBox getCheckBox(){
+        return (CheckBox) findViewById(R.id.shareEditView);
+    }
+
+    public TextView getCommentText(){
+        return (TextView) findViewById(R.id.commentEditView);
+    }
+
+    public Button getSaveButton(){
+        return (Button) findViewById(R.id.saveEditBookButton);
+    }
+
     @Override
     public void onPause(){
         super.onPause();

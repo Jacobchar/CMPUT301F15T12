@@ -3,6 +3,7 @@ package com.example.jacob.mybrary;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
@@ -10,6 +11,8 @@ import android.widget.TextView;
  * Created by Victoria on 2015-11-16.
  */
 public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
+
+    private InventoryController inventoryController = new InventoryController();
 
     public AddNewItemTest(){
             super(AddNewItem.class);
@@ -34,13 +37,13 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        final Inventory inv = activity.getInventory();
+
+        final Inventory inv = inventoryController.getInventory();
         Book book = inv.getBookByName("testName");
 
         assertTrue(book.getName().equals("testName"));
 
     }
-
 
 
     public void testsetNewQuantity(){
@@ -64,7 +67,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        final Inventory inv = activity.getInventory();
+        final Inventory inv = inventoryController.getInventory();
         Book book = inv.getBookByName("testName");
 
         assertTrue(book.getQuantity() == 3);
@@ -75,11 +78,11 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         AddNewItem activity = (AddNewItem) getActivity();
 
         final TextView textName = activity.getNameText();
-        final TextView text = activity.getCategoryText();
+        final Spinner text = activity.getCategoryText();
         activity.runOnUiThread(new Runnable() {
             public void run() {
                 textName.setText("testName");
-                text.setText("Horror");
+                text.setSelection(2);
             }
         });
         getInstrumentation().waitForIdleSync();
@@ -92,7 +95,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        final Inventory inv = activity.getInventory();
+        final Inventory inv = inventoryController.getInventory();
         Book book = inv.getBookByName("testName");
 
         assertTrue(book.getCategory().equals("Horror"));
@@ -121,7 +124,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        final Inventory inv = activity.getInventory();
+        final Inventory inv = inventoryController.getInventory();
         Book book = inv.getBookByName("testName");
 
         assertTrue(book.isSharedWithOthers());
@@ -152,7 +155,7 @@ public class AddNewItemTest  extends ActivityInstrumentationTestCase2 {
         });
         getInstrumentation().waitForIdleSync();
 
-        final Inventory inv = activity.getInventory();
+        final Inventory inv = inventoryController.getInventory();
         Book book = inv.getBookByName("testName");
 
         assertTrue(book.getComments().contains(string));

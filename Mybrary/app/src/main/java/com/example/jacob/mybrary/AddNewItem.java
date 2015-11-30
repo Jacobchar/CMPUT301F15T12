@@ -91,11 +91,36 @@ public class AddNewItem extends AppCompatActivity {
 
     }
 
+
     public void takePhoto(View view) {
 
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
         //Upload the photo
+    }
+
+    public TextView getNameText(){
+        return (TextView) findViewById(R.id.nameEditView);
+    }
+
+    public TextView getQuantityText(){
+        return (TextView) findViewById(R.id.QuantityEditView);
+    }
+
+    public Spinner getCategoryText(){
+        return (Spinner) findViewById(R.id.categorySpinner);
+    }
+
+    public CheckBox getCheckBox(){
+        return (CheckBox) findViewById(R.id.shareEditView);
+    }
+
+    public TextView getCommentText(){
+        return (TextView) findViewById(R.id.commentEditView);
+    }
+
+    public Button getSaveButton(){
+        return (Button) findViewById(R.id.SaveNewBookButton);
     }
 
     @Override
