@@ -25,7 +25,7 @@ public class InventoryControllerTest extends ActivityInstrumentationTestCase2 {
 
     }
 
-    // these two are incredibly hard to test. need to make sure user has a set of local friends
+    // these two are incredibly harInd to test. need to make sure user has a set of local friends
     public void testSearchForBookByName(){}
 
     public void testSearchForBookByCategory(){}

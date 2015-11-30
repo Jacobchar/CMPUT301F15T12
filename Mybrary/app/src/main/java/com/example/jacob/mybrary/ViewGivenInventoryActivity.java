@@ -16,6 +16,14 @@ import android.widget.TextView;
 import java.sql.Connection;
 import java.util.UUID;
 
+/**
+ * This activity allows a user to view either the results of a inventory search, or their friends'
+ * inventory. It takes in a title, which is the title displayed at the top of the activity, such as
+ * "John's Inventory" or "Search Results", and a given inventory to display. On long click, a user
+ * can clone a shown item into their inventory.
+ *
+ * Created by Victoria.
+ */
 public class ViewGivenInventoryActivity extends AppCompatActivity {
 
     private InventoryController inventoryController = new InventoryController();
@@ -25,6 +33,7 @@ public class ViewGivenInventoryActivity extends AppCompatActivity {
     private Activity activity;
     private String activityTitle = "";
     private ConnectionManager connectionManager = ConnectionManager.getInstance();
+    private AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,13 +92,17 @@ public class ViewGivenInventoryActivity extends AppCompatActivity {
                     }
                 });
 
-                AlertDialog alert = builder.create();
+                alert = builder.create();
                 alert.show();
 
                 return true;
             }
         });
 
+    }
+
+    public AlertDialog getAlertDialog(){
+        return alert;
     }
 
 
