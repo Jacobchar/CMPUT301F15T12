@@ -16,51 +16,27 @@ import java.io.IOException;
  */
 public class CreateUserActivity extends AppCompatActivity {
 
+    CreateUserController myCreateUserController = new CreateUserController();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_user);
-
         }
 
         /**
-         * Activity to take in the Text from the Edit Text boxes and Updates the User with
+         * Activity to take in the Text from the Edit Text boxes and Creates a User with
          * the information
-         * @param v
+         * @param v View required to be passed when called from the XML file
          */
         public void setUser(View v){
-            TextView nameView = (TextView) this.findViewById(R.id.nameEditCreateView);
-            String name = nameView.getText().toString();
-            EditText cityView = (EditText) this.findViewById(R.id.cityEditCreateView);
-            String city = cityView.getText().toString();
-            EditText genderView = (EditText) this.findViewById(R.id.genderEditCreateView);
-            String gender = genderView.getText().toString();
-            EditText phoneView = (EditText) this.findViewById(R.id.phoneEditCreateView);
-            String phone = phoneView.getText().toString();
-            if(!Patterns.PHONE.matcher(phone).matches()){
-                Toast phoneToast = Toast.makeText(this, "Phone Number Not Valid", Toast.LENGTH_SHORT);
-                phoneToast.show();
-                return;
+            Boolean state = myCreateUserController.updateUser(this);
+            if (state) {
+                Toast doneToast = Toast.makeText(this, "Profile Created", Toast.LENGTH_SHORT);
+                doneToast.show();
+                finish();
             }
-            EditText emailView = (EditText) this.findViewById(R.id.emailEditCreateView);
-            String email = emailView.getText().toString();
-            if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-                Toast emailToast = Toast.makeText(this, "Email Not Valid", Toast.LENGTH_SHORT);
-                emailToast.show();
-                return;
-            }
-            EditText bioView = (EditText) this.findViewById(R.id.bioEditCreateView);
-            String bio = bioView.getText().toString();
-            User gotUser = new User(name, email, phone, gender, bio, city);
-            LocalUser.getInstance().setSelf(gotUser);
-            try {
-                DataManager.getInstance().saveLocalUser();
-            }catch (IOException e){
-
-            }
-            Toast doneToast = Toast.makeText(this, "Profile Created", Toast.LENGTH_SHORT);
-            doneToast.show();
-            finish();
         }
+
 
 }
