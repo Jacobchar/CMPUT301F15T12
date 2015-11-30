@@ -72,6 +72,10 @@
             android:name=".TopTradersActivity"
             android:label="TopTradesActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ViewGivenInventoryActivity"
+            android:label="ViewGivenInventoryActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 </application>
 
 </manifest>
