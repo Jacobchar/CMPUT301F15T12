@@ -101,6 +101,6 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         // TODO Auto-generated method stub
-         mCamera.release();
+        mCamera.release();
     }
 }

@@ -40,6 +40,7 @@ Copyright (C) 2015  Ben Schreiber , David Ross,Dominic Trottier,
  * Created by Victoria.
  */
 
+
 public class AddNewItem extends AppCompatActivity {
 
     private InventoryController inventoryController = new InventoryController();
@@ -118,9 +119,8 @@ public class AddNewItem extends AppCompatActivity {
 
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
-        activity = this;
+        final CameraActivity cam = new CameraActivity();
 
-        final Photo photo = new Photo(null, "JPG", null , UUID.randomUUID());
         //Upload the photo
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -128,13 +128,16 @@ public class AddNewItem extends AppCompatActivity {
                 DataManager dataManager = DataManager.getInstance();
                 connectionManager.updateConnectivity(activity);
                 try {
-                    dataManager.storePhoto(photo);
+                    dataManager.storePhoto(cam.getPhoto());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
         thread.start();
+
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     public TextView getNameText(){

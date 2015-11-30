@@ -3,6 +3,7 @@ package com.example.jacob.mybrary;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -19,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 /*
 Copyright (C) 2015  Ben Schreiber , David Ross,Dominic Trottier,
                     Jake Charlebois, Mason Strong, Victoria Hessdorfer
@@ -50,11 +52,31 @@ Copyright (C) 2015  Ben Schreiber , David Ross,Dominic Trottier,
 public class CameraActivity extends AppCompatActivity {
     private Camera mCamera;
     private CameraView mPreview;
-    private Camera.PictureCallback mPicture;
+    private PictureCallback mPicture;
     private Button capture, switchCamera;
     private Context myContext;
     private FrameLayout cameraPreview;
     private boolean cameraFront = false;
+    private Photo photo;
+
+    /**
+     * To string method of mPicture
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "CameraActivity{" +
+                "mPicture=" + mPicture +
+                '}';
+    }
+
+    /**
+     * Getter for our mPicture
+     * @return
+     */
+    public Photo getPhoto() {
+        return photo;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -199,8 +221,8 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
-    private Camera.PictureCallback getPictureCallback() {
-        Camera.PictureCallback picture = new Camera.PictureCallback() {
+    private PictureCallback getPictureCallback() {
+        PictureCallback picture = new PictureCallback() {
 
             @Override
             public void onPictureTaken(byte[] data, Camera camera) {
@@ -233,6 +255,7 @@ public class CameraActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             mCamera.takePicture(null, null, mPicture);
+            photo = new Photo(10, "JPG", mPicture.toString(), UUID.randomUUID());
         }
     };
 
