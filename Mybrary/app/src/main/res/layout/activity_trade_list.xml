@@ -35,7 +35,7 @@
     android:layout_below="@+id/inProgressTradeTitleView"
     android:layout_alignParentEnd="true"
     android:background="@color/secondary_color"
-    android:layout_above="@+id/completedTradesListView" />
+    android:layout_above="@+id/completedTradesTextView" />
 
 <TextView
     android:layout_width="wrap_content"
@@ -45,7 +45,9 @@
     android:background="@color/secondary_color"
     android:id="@+id/completedTradesTextView"
     android:layout_centerVertical="true"
-    android:layout_alignParentStart="true" />
+    android:layout_alignParentStart="true"
+    android:paddingTop="25dp"
+    android:layout_alignEnd="@+id/completedTradesListView" />
 
 <ListView
     android:layout_width="wrap_content"

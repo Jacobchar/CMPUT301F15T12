@@ -408,6 +408,8 @@ public class TradeController {
 
 
             }
+            returnArray.add("No email found");
+            returnArray.add("No trade data found");
             return returnArray;
         }
 
