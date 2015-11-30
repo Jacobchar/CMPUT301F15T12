@@ -34,3 +34,6 @@ Adding a recipient to an emailIntent:   http://stackoverflow.com/questions/90970
 
 Using collections to sort a list:
 https://docs.oracle.com/javase/6/docs/api/java/util/Collections.html
+
+Background music for demo:
+"Oceans Apart" by Scott Holmes, from freemusicarchive.org
