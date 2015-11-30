@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by Mason Strong on 11/18/2015.
+ * Interacts between the model and the activity to start processes on new threads
  */
 public class FriendListController {
     DataManager dataManager = DataManager.getInstance();

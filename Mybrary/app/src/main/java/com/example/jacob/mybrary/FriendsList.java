@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created by Mason Strong on 11/3/2015.
+ * Model for the FriendsList to add, remove, and get list of friends and their names
  */
 public class FriendsList implements Parcelable{
     private Collection<UUID> friendList;

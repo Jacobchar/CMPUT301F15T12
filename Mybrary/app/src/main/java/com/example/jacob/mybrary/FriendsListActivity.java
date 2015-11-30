@@ -15,6 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+/**
+ * Displays a list of friends, a button to add friends, and methods to long and normal
+ * click to remove friends and interact with friends
+ */
+
 public class FriendsListActivity extends AppCompatActivity {
 
     private ListView listView;
@@ -66,6 +71,11 @@ public class FriendsListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Listens for long clicks on listview, prompts to delete user with dialog,
+     * and starts a new process to update on the backend accordingly
+     * @param view
+     */
     public void onLongClickListener(final ListView view){
         view.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -96,11 +106,16 @@ public class FriendsListActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Listens for regular clicks on listview, then prompts user with a dialog to offer a new
+     * trade, cancel, or view that user's profile.
+     * @param view
+     */
     public void onClickListener(final ListView view){
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               final String name = (String) parent.getItemAtPosition(position);
+                final String name = (String) parent.getItemAtPosition(position);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(FriendsListActivity.this);
                 builder.setMessage("");
@@ -133,16 +148,21 @@ public class FriendsListActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * populates the listView by calling new thread from the friendsListController
+     * which retrieves the new friends list from the server when connected to the network
+     */
     public void fillFriendsList(){
         listView = (ListView) findViewById(R.id.listView);
         //ArrayList<String> friends = localUser.getFriendsList().getNames();
         friendListController.updateFriendList(this, listView, FriendsListActivity.this);
      }
 
-    public void deleteFriend(){
-
-    }
-
+    /**
+     * Prompts user with a dialog, which they can can enter the name of a friend to add,
+     * and then starts a process to add that friend
+     * @param view
+     */
     public void addNewFriend(View view){
 
         // http://stackoverflow.com/questions/10903754/input-text-dialog-android
@@ -178,6 +198,9 @@ public class FriendsListActivity extends AppCompatActivity {
         infoDialog.show();
     }
 
+    /**
+     * Starts new activity based on friend that was clicked on
+     */
     private class showFriend extends AsyncTask<String, Void, User> {
         @Override
         protected User doInBackground(String... name) {
@@ -195,6 +218,9 @@ public class FriendsListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * start a new activity to offer trade based on friend clicked on
+     */
     private class offerTrade extends AsyncTask<String, Void, User> {
         @Override
         protected User doInBackground(String... name) {
