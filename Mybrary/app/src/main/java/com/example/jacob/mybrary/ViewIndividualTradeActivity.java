@@ -25,7 +25,7 @@ public class ViewIndividualTradeActivity extends AppCompatActivity {
     AlertDialog alert;
     UUID currentTrade;
     TradeController controller = new TradeController();
-    ButtonController buttonHider = new ButtonController();
+    //ButtonController buttonHider = new ButtonController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
