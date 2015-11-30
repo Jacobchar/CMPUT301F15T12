@@ -22,5 +22,9 @@ Sorting a List using compareTo and collections:
 https://docs.oracle.com/javase/6/docs/api/java/util/Collections.html#sort(java.util.List)
 
 Using parcelable objects:
-http://stackoverflow.com/questions/17242713/how-to-pass-parcelable-object-from-child-to-parent-activity
+http://stackoverflow.com/questions/17242713/how-to-pass-parcelable-object-from-child-to-parent-activity   
 Answered by Riccardo Ciovati
+
+For testing if an activity opened:
+http://stackoverflow.com/questions/9405561/test-if-a-button-starts-a-new-activity-in-android-junit-pref-without-robotium   
+Answered by yorkw
