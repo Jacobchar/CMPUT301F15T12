@@ -375,15 +375,28 @@ public class TradeController {
         t.start();
     }
 
+    /**
+     * Starts the send email async task
+     * @param parent activity which is calling this method
+     * @param tradeID UUID for the trade being looked at
+     */
     public void startEmail(Activity parent, UUID tradeID){
         this.localActivity = parent;
         new emailHandler().execute(tradeID);
     }
 
 
+    /**
+     * Starts a second thread to handle the email app
+     */
     private class emailHandler extends AsyncTask<UUID, Void, ArrayList<String>> {
         ArrayList<String> returnArray = new ArrayList<>();
 
+        /**
+         * fetch info from the server in the background
+         * @param currentTradeID UUID for te trade being looked at
+         * @return an arraylist containing the email of the other user in the trade, and the items being traded
+         */
         @Override
         protected ArrayList<String> doInBackground(UUID... currentTradeID) {
             try {
@@ -413,11 +426,17 @@ public class TradeController {
             return returnArray;
         }
 
+        /**
+         * Starts up the email app and fills in some of the fields, after the data has been fetched
+         * @param returnVal values returned by the do in background method
+         */
         @Override
         protected void onPostExecute(ArrayList<String> returnVal) {
             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
             emailIntent.setData(Uri.parse("mailto:"));
             emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Trade Accepted");
+            //http://stackoverflow.com/questions/9097080/intent-extra-email-not-populating-the-to-field
+            // answered by MKJParekh
             emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { returnVal.get(0) });
             emailIntent.putExtra(Intent.EXTRA_TEXT,returnVal.get(1));
             localActivity.startActivity(emailIntent);

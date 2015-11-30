@@ -5,6 +5,10 @@ package com.example.jacob.mybrary;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+/**
+ * Activity to display the top 10 traders, either friends or all users
+ */
+
 public class TopTradersActivity extends AppCompatActivity {
     TopTraderController topController = new TopTraderController();
 

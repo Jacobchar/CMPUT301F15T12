@@ -8,6 +8,9 @@ import android.widget.ListView;
 
 import java.util.UUID;
 
+/**
+ * Allows users to see the books they are allowed to choose as a trade offer
+ */
 public class AddBookToTradeActivity extends AppCompatActivity {
     UUID currentTrade;
     TradeController controller;
