@@ -109,6 +109,7 @@ public class FriendsListActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int id) {
                         friendListController.removeFriend(name, FriendsListActivity.this);
                         dialog.cancel();
+                        refresh();
                     }
                 });
 
