@@ -1,5 +1,8 @@
-# CMPUT301F15T12
-CMPUT301 TEAM CMPUT301F15T12 Git Repository  
+# MyBrary Trading App for Android
+## This is the Github repository for "MyBrary" library trading app, created for CMPUT 301 Class, University Of Alberta, Fall 2015. 
+## [Watch our demo video here!](https://youtu.be/FeBMnDcWpNU)
+
+### Sources Used In Creation of This Project:
   
 HTTP done using OkHttp (http://square.github.io/okhttp/) and okio (https://github.com/square/okio)
 
